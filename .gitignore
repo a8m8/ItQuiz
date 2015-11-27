@@ -1,0 +1,7 @@
+/target/
+.*~
+.classpath
+.project
+.settings/
+/src/test
+/src/main/resources/config.properties
