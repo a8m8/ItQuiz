@@ -42,7 +42,7 @@
 			<td>${accounts.active ? "Activated" : "Deactivated" }</td>
 			<td>${accounts.confirmed ? "Yes" : "No" }</td>
 			<td><a href="<c:url value="/admin/edit-account?id=${accounts.idAccount }"/>">Edit</a></td>
-			<td><a href="<c:url value="/admin/delete-account?id=${accounts.idAccount }"/>">Delete</a></td>
+			<td><a href="<c:url value="/admin/delete?id=${accounts.idAccount }"/>">Delete</a></td>
 		</tr>
 		</c:forEach>
 	</table>

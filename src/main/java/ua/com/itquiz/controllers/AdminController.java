@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.itquiz.entities.Account;
+import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.services.AdminService;
 
 /**
@@ -27,6 +29,17 @@ public class AdminController extends AbstractController {
 	List<Account> accounts = adminService.getAllAccounts();
 	model.addAttribute("accounts", accounts);
 	return "admin/home";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String removeAccount(@RequestParam("id") int id) {
+	try {
+	    adminService.removeAccount(id);
+	    return "redirect:/admin/home";
+	} catch (InvalidUserInputException e) {
+	    return "redirect:/boom";
+	}
+	// FIXME error message
     }
 
 }

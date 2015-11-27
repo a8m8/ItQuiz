@@ -3,6 +3,7 @@ package ua.com.itquiz.services;
 import java.util.List;
 
 import ua.com.itquiz.entities.Account;
+import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.IForm;
 
 /**
@@ -19,7 +20,7 @@ public interface AdminService {
 
     void editAccount(IForm form);
 
-    void removeAccount(int accountId);
+    void removeAccount(int accountId) throws InvalidUserInputException;
 
     void activateAccount(int accountId);
 

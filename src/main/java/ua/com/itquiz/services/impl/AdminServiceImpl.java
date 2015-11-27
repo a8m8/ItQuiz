@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.entities.Account;
+import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.IForm;
 import ua.com.itquiz.services.AdminService;
 
@@ -23,8 +26,10 @@ import ua.com.itquiz.services.AdminService;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    AccountDao accountDao;
+    private AccountDao accountDao;
 
+    @Autowired
+    private MessageSource messageSource;
     // TODO Implementation of AdminService here
 
     @Override
@@ -46,9 +51,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void removeAccount(int accountId) {
-	// TODO Auto-generated method stub
-
+    public void removeAccount(int accountId) throws InvalidUserInputException {
+	Account account = accountDao.findById(accountId);
+	if (account == null) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("login.badcredentials", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	accountDao.delete(account);
     }
 
     @Override
