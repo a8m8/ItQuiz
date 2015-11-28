@@ -104,12 +104,21 @@ public class EntranceServiceImpl implements EntranceService {
 	    return account;
 	} else {
 	    SingUpForm form = new SingUpForm();
+	    if (user.getEmail() == null) {
+		throw new InvalidUserInputException(messageSource.getMessage("facebook.cannotcreate", new Object[] {},
+			LocaleContextHolder.getLocale()));
+	    }
 	    form.setEmail(user.getEmail());
 	    form.setLogin(String.valueOf(user.getEmail().hashCode()));
-	    form.setFio(user.getName());
+	    if (user.getName() == null) {
+		form.setFio("User");
+	    } else {
+		form.setFio(user.getName());
+	    }
 	    UUID password = UUID.randomUUID();
 	    form.setPassword(password.toString());
 	    form.setPassword2(password.toString());
+	    form.setConfirmed(Boolean.TRUE);
 
 	    return singUp(form, false, true);
 	}

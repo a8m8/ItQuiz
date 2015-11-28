@@ -24,6 +24,15 @@ public class SingUpForm implements IForm, Copyable<Account> {
     private String password;
     private String password2;
     private String fio;
+    private Boolean confirmed = Boolean.FALSE;
+
+    public Boolean getConfirmed() {
+	return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+	this.confirmed = confirmed;
+    }
 
     public String getEmail() {
 	return email;
@@ -99,7 +108,7 @@ public class SingUpForm implements IForm, Copyable<Account> {
 	account.setLogin(login);
 	account.setPassword(password);
 	account.setFio(fio);
-
+	account.setConfirmed(confirmed);
     }
 
 }

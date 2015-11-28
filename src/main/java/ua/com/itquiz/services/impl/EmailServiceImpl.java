@@ -40,7 +40,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendPasswordToEmail(Account account) {
 	String content = emailTemplateService.getEmailText(account, recoveryText);
-	sendMail(account, content, "Password recovery");
+	sendMail(account, content, "Your password");
     }
 
     private void sendMail(final Account account, final String content, final String subject) {

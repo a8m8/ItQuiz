@@ -16,8 +16,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ItQuiz</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css?v=${CSS_JS_VERSION}">
+	<link rel="stylesheet" type="text/css" href="{context}/resources/css/bootstrap-theme.min.css?v=${CSS_JS_VERSION}">
 	<link rel="stylesheet" type="text/css" href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}" />
 	<link rel="stylesheet" type="text/css" href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
 </head>
@@ -49,9 +49,8 @@
 		</div>
 	</div>
 		
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="${context}/resources/js/jquery-1.10.2.js?v=${CSS_JS_VERSION}"></script>
+	<script src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
+	<script src="${context}/resources/js/jquery-1.11.3.min.js?v=${CSS_JS_VERSION}"></script>
 	<script>
 		$(document).ready(function(){
 	

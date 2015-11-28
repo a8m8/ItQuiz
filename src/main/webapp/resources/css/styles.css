@@ -164,3 +164,7 @@ table thead {
 	text-transform: uppercase;
 	font-weight: bold;
 }
+
+#globalerror {
+	color: red;
+}

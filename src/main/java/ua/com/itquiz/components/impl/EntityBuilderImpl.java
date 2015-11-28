@@ -18,7 +18,6 @@ public class EntityBuilderImpl implements EntityBuilder {
     @Override
     public Account buildAccount() {
 	Account account = new Account();
-	account.setConfirmed(Boolean.FALSE);
 	return account;
     }
 

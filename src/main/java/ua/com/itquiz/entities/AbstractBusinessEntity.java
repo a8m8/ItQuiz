@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
- * 
+ *
  * @author Artur Meshcheriakov
  */
 @MappedSuperclass
