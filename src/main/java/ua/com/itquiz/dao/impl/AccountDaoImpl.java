@@ -9,7 +9,7 @@ import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.entities.Account;
 
 /**
- * 
+ *
  * @author Artur Meshcheriakov
  */
 @Repository("accountDao")
@@ -23,15 +23,15 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public Account findByEmail(final String email) {
-	return (Account) getSession().createCriteria(getEntityClass())
-	    .add(Restrictions.eq("email", email)).uniqueResult();
+	return (Account) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("email", email).ignoreCase())
+		.uniqueResult();
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public Account findByLogin(final String login) {
-	return (Account) getSession().createCriteria(getEntityClass())
-	    .add(Restrictions.eq("login", login)).uniqueResult();
+	return (Account) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("login", login))
+		.uniqueResult();
     }
 
 }

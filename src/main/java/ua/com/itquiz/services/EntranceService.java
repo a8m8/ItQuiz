@@ -13,13 +13,13 @@ import ua.com.itquiz.forms.SingUpForm;
  */
 public interface EntranceService {
 
-    Account login(String login, String password, int role) throws InvalidUserInputException;
+    Account login(String email, String password, int role) throws InvalidUserInputException;
 
     List<Role> getAllRoles();
 
     Account singUp(SingUpForm form) throws InvalidUserInputException;
 
-    void sendPasswordForRecovery(String login) throws InvalidUserInputException;
+    void sendPasswordForRecovery(String email) throws InvalidUserInputException;
 
     void verifyAccount(int id, String hash) throws InvalidUserInputException;
 

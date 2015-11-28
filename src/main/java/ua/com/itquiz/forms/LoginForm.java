@@ -14,7 +14,7 @@ public class LoginForm implements IForm {
 
     private static final long serialVersionUID = -6655327847890728394L;
 
-    private String login;
+    private String email;
     private String password;
     private int idRole;
 
@@ -26,12 +26,12 @@ public class LoginForm implements IForm {
 	this.idRole = idRole;
     }
 
-    public String getLogin() {
-	return login;
+    public String getEmail() {
+	return email;
     }
 
-    public void setLogin(String login) {
-	this.login = login;
+    public void setEmail(String email) {
+	this.email = email;
     }
 
     public String getPassword() {
@@ -44,9 +44,9 @@ public class LoginForm implements IForm {
 
     @Override
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
-	if(StringUtils.isBlank(login)) {
+	if (StringUtils.isBlank(email)) {
 	    throw new InvalidUserInputException(
-		    messageSource.getMessage("login.required", new Object[] {}, LocaleContextHolder.getLocale()));
+		    messageSource.getMessage("email.required", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (StringUtils.isBlank(password)) {
 	    throw new InvalidUserInputException(

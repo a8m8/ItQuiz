@@ -38,8 +38,8 @@ public class EntranceController extends AbstractController implements Initializi
 
     @Override
     public void afterPropertiesSet() throws Exception {
-	redirects.put(Roles.ADMIN_ROLE.getID(), "/admin/home");
-	redirects.put(Roles.ADVANCED_TUTOR_ROLE.getID(), "/advanced_tutor/home");
+	redirects.put(Roles.ADMIN_ROLE.getID(), "/admin/all-accounts");
+	redirects.put(Roles.ADVANCED_TUTOR_ROLE.getID(), "/advanced-tutor/home");
 	redirects.put(Roles.TUTOR_ROLE.getID(), "/tutor/home");
 	redirects.put(Roles.STUDENT_ROLE.getID(), "/home");
     }
@@ -50,7 +50,13 @@ public class EntranceController extends AbstractController implements Initializi
     @Autowired
     private EntranceService entranceService;
 
-    @RequestMapping(value = "/login/account_confirmation", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+	session.invalidate();
+	return "redirect:login";
+    }
+
+    @RequestMapping(value = "/login/account-confirmation", method = RequestMethod.GET)
     public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash) {
 	try {
 	    entranceService.verifyAccount(id, hash);
@@ -73,7 +79,7 @@ public class EntranceController extends AbstractController implements Initializi
 	    HttpSession session) {
 	try {
 	    loginForm.validate(messageSource);
-	    Account account = entranceService.login(loginForm.getLogin(), loginForm.getPassword(),
+	    Account account = entranceService.login(loginForm.getEmail(), loginForm.getPassword(),
 		    loginForm.getIdRole());
 	    session.setAttribute("CURRENT_ACCOUNT_ID", account.getIdAccount());
 	    return "redirect:" + redirects.get(loginForm.getIdRole());
@@ -118,7 +124,7 @@ public class EntranceController extends AbstractController implements Initializi
 	    BindingResult result, Model model) {
 	try {
 	    passwordRecoveryForm.validate(messageSource);
-	    entranceService.sendPasswordForRecovery(passwordRecoveryForm.getLogin());
+	    entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
 	    return "redirect:login";
 	} catch (InvalidUserInputException ex) {
 	    result.addError(new ObjectError("", ex.getMessage()));

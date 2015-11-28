@@ -21,9 +21,9 @@
 		<form:form class="form-horizontal" method="POST" action="${context }/login" commandName="loginForm" >
 			<p class="errors" align=center><strong><form:errors path="*"/></strong></p>
 			<div class="form-group">
-				<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+				<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
 				<div class="col-md-4">
-					<form:input id="log" class="form-control" path="login" />
+					<form:input type="email" id="mail" class="form-control" path="email" />
 				</div>
 			</div>
 			<div class="form-group">

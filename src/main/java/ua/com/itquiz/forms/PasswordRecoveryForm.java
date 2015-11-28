@@ -13,21 +13,21 @@ import ua.com.itquiz.exceptions.InvalidUserInputException;
 public class PasswordRecoveryForm implements IForm {
 
     private static final long serialVersionUID = -4089527274880027630L;
-    private String login;
+    private String email;
 
-    public String getLogin() {
-	return login;
+    public String getEmail() {
+	return email;
     }
 
-    public void setLogin(String login) {
-	this.login = login;
+    public void setEmail(String email) {
+	this.email = email;
     }
 
     @Override
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
-	if (StringUtils.isBlank(login)) {
+	if (StringUtils.isBlank(email)) {
 	    throw new InvalidUserInputException(
-		    messageSource.getMessage("login.required", new Object[] {}, LocaleContextHolder.getLocale()));
+		    messageSource.getMessage("email.required", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
     }
 

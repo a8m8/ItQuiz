@@ -45,7 +45,7 @@
 			<p>Support email: <a href="mailto: itquiz@gmail.com">itquiz@gmail.com</a><p>
 		</div>
 		<div class="col-md-offset-2 col-md-3">
-			<p>&copy; 2015 Arthur Meshcheriakov</p>
+			<p>&copy; 2015 Artur Meshcheriakov</p>
 		</div>
 	</div>
 		

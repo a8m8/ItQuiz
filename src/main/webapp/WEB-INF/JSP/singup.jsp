@@ -28,12 +28,6 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
-			<div class="col-md-4">
-				<form:input id="log" class="form-control" path="login"/>
-			</div>
-		</div>
-		<div class="form-group">
 			<form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
 			<div class="col-md-4">
 				<form:input id="pass" class="form-control" path="password"/>
@@ -43,6 +37,12 @@
 			<form:label for="pass2" path="password2" class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
 			<div class="col-md-4">
 				<form:input id="pass2" class="form-control" path="password2"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+			<div class="col-md-4">
+				<form:input id="log" class="form-control" path="login"/>
 			</div>
 		</div>
 		<div class="form-group">

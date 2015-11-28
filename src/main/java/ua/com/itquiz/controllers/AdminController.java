@@ -24,18 +24,18 @@ public class AdminController extends AbstractController {
     @Autowired
     protected AdminService adminService;
 
-    @RequestMapping(value="/home", method=RequestMethod.GET)
+    @RequestMapping(value = "/all-accounts", method = RequestMethod.GET)
     public String home(Model model) {
 	List<Account> accounts = adminService.getAllAccounts();
 	model.addAttribute("accounts", accounts);
-	return "admin/home";
+	return "admin/all-accounts";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String removeAccount(@RequestParam("id") int id) {
 	try {
 	    adminService.removeAccount(id);
-	    return "redirect:/admin/home";
+	    return "redirect:/admin/all-accounts";
 	} catch (InvalidUserInputException e) {
 	    return "redirect:/boom";
 	}

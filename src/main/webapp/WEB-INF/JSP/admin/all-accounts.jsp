@@ -13,7 +13,7 @@
 		<li id="thirdtab">
 			<a href="${context}/add-user"><strong>Add user</strong></a>
 		<li id="fourthtab">
-			<a href="${context}/login"><strong>Exit</strong></a>
+			<a href="${context}/logout"><strong>Exit</strong></a>
 	</ul>
 
 <h3 align=center><strong>Accounts management</strong></h3>
@@ -32,17 +32,17 @@
 			<td width="7.5%"></td>			
 			
 		</tr></thead>
-		<c:forEach items="${accounts}" var="accounts">
+		<c:forEach items="${accounts}" var="account">
 		<tr>
-			<td class="overflowable">${accounts.login}</td>
-			<td class="overflowable"><a href="mailto:${accounts.email}">${accounts.email}</a></td>
-			<td><c:forEach items="${accounts.accountRoles }" var="accountRoles">${accountRoles.role.idRole }</c:forEach></td>
-			<td><fmt:formatDate value="${accounts.created }" pattern="dd-MM-yyyy"/></td>
-			<td><fmt:formatDate value="${accounts.updated }" pattern="dd-MM-yyyy"/></td>
-			<td>${accounts.active ? "Activated" : "Deactivated" }</td>
-			<td>${accounts.confirmed ? "Yes" : "No" }</td>
-			<td><a href="<c:url value="/admin/edit-account?id=${accounts.idAccount }"/>">Edit</a></td>
-			<td><a href="<c:url value="/admin/delete?id=${accounts.idAccount }"/>">Delete</a></td>
+			<td class="overflowable">${account.login}</td>
+			<td class="overflowable"><a href="mailto:${account.email}">${account.email}</a></td>
+			<td><c:forEach items="${account.accountRoles }" var="accountRoles">${accountRoles.role.idRole }</c:forEach></td>
+			<td><fmt:formatDate value="${account.created }" pattern="dd-MM-yyyy"/></td>
+			<td><fmt:formatDate value="${account.updated }" pattern="dd-MM-yyyy"/></td>
+			<td>${account.active ? "Activated" : "Deactivated" }</td>
+			<td>${account.confirmed ? "Yes" : "No" }</td>
+			<td><a href="<c:url value="/admin/edit-account?id=${account.idAccount }"/>">Edit</a></td>
+			<td><a href="<c:url value="/admin/delete?id=${account.idAccount }"/>">Delete</a></td>
 		</tr>
 		</c:forEach>
 	</table>

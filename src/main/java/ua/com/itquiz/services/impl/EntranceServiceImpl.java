@@ -60,8 +60,8 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
-    public Account login(String login, String password, int role) throws InvalidUserInputException {
-	Account account = accountDao.findByLogin(login);
+    public Account login(String email, String password, int role) throws InvalidUserInputException {
+	Account account = accountDao.findByEmail(email);
 	if (account == null) {
 	    throw new InvalidUserInputException(messageSource.getMessage("login.badcredentials",
 		new Object[] {}, LocaleContextHolder.getLocale()));
@@ -87,7 +87,7 @@ public class EntranceServiceImpl implements EntranceService {
 	    }
 	}
 	if (!found) {
-	    throw new InvalidUserInputException(messageSource.getMessage("login.doesnothaverole",
+	    throw new InvalidUserInputException(messageSource.getMessage("account.doesnothaverole",
 		new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	return account;
@@ -102,8 +102,8 @@ public class EntranceServiceImpl implements EntranceService {
     @Transactional(readOnly = false,
 		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
     public Account singUp(SingUpForm form) throws InvalidUserInputException {
-	Account tempAccount = accountDao.findByLogin(form.getLogin());
-	if (tempAccount != null) {
+	Account exsistingAccount = accountDao.findByEmail(form.getEmail());
+	if (exsistingAccount != null) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("login.busy", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
@@ -126,8 +126,8 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
-    public void sendPasswordForRecovery(String login) throws InvalidUserInputException {
-	Account account = accountDao.findByLogin(login);
+    public void sendPasswordForRecovery(String email) throws InvalidUserInputException {
+	Account account = accountDao.findByEmail(email);
 	if (account == null) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("login.badcredentials",
@@ -152,6 +152,10 @@ public class EntranceServiceImpl implements EntranceService {
 	if (account == null) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("confirmation.failed", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (account.getConfirmed()) {
+	    throw new InvalidUserInputException(messageSource.getMessage("confirmation.confirmed", new Object[] {},
+		    LocaleContextHolder.getLocale()));
 	}
 	if (!StringUtils.equals(account.getAccountRegistration().getHash(), hash)) {
 	    throw new InvalidUserInputException(
