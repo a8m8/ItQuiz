@@ -10,6 +10,6 @@ public interface EmailService {
 
     void sendVerificationEmail(Account account);
 
-    void sendPasswordForRecovery(Account account);
+    void sendPasswordToEmail(Account account);
 
 }

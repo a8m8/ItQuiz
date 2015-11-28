@@ -46,5 +46,12 @@
 					<button type="submit" class="btn btn-warning btn-block">Login</button>
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4 col-md-4" id="fblink">
+					<a href="${context }/fbLogin">
+						<img alt="fbLogin" src="${context }/resources/images/login-facebook.png"/>
+					</a>
+				</div>
+			</div>
 		</form:form>
 	</div>

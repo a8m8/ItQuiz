@@ -137,6 +137,10 @@ li:hover {
 	width: 33.33%;
 }
 
+#fblink {
+	text-align: center;
+}
+
 #admin-nav li {
 	width: 25%;
 }

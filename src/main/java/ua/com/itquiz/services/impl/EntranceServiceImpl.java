@@ -1,6 +1,7 @@
 package ua.com.itquiz.services.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.restfb.types.User;
 
 import ua.com.itquiz.components.EntityBuilder;
 import ua.com.itquiz.dao.AccountDao;
@@ -94,14 +97,37 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
+    @Transactional(readOnly = false, rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+    public Account login(User user) throws InvalidUserInputException {
+	Account account = accountDao.findByEmail(user.getEmail());
+	if (account != null) {
+	    return account;
+	} else {
+	    SingUpForm form = new SingUpForm();
+	    form.setEmail(user.getEmail());
+	    form.setLogin(String.valueOf(user.getEmail().hashCode()));
+	    form.setFio(user.getName());
+	    UUID password = UUID.randomUUID();
+	    form.setPassword(password.toString());
+	    form.setPassword2(password.toString());
+
+	    return singUp(form, false, true);
+	}
+    }
+
+    @Override
     public List<Role> getAllRoles() {
 	return roleDao.findAll();
     }
 
     @Override
-    @Transactional(readOnly = false,
-		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+    @Transactional(readOnly = false, rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
     public Account singUp(SingUpForm form) throws InvalidUserInputException {
+	return singUp(form, true, false);
+    }
+
+    private Account singUp(SingUpForm form, boolean sendVerificationEmail, boolean sendPasswordToEmail)
+	    throws InvalidUserInputException {
 	Account exsistingAccount = accountDao.findByEmail(form.getEmail());
 	if (exsistingAccount != null) {
 	    throw new InvalidUserInputException(
@@ -118,9 +144,14 @@ public class EntranceServiceImpl implements EntranceService {
 	AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
 	accountRoleDao.save(accountRole);
 
-	account.setAccountRegistration(accountRegistration);
+	if (sendVerificationEmail) {
+	    account.setAccountRegistration(accountRegistration);
+	    emailService.sendVerificationEmail(account);
+	}
 
-	emailService.sendVerificationEmail(account);
+	if (sendPasswordToEmail) {
+	    emailService.sendPasswordToEmail(account);
+	}
 
 	return account;
     }
@@ -142,7 +173,7 @@ public class EntranceServiceImpl implements EntranceService {
 		    messageSource.getMessage("account.notconfirmed", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 
-	emailService.sendPasswordForRecovery(account);
+	emailService.sendPasswordToEmail(account);
     }
 
     @Override
