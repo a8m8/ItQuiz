@@ -27,4 +27,10 @@ public interface EntranceService {
 
     void verifyAccount(int id, String hash) throws InvalidUserInputException;
 
+    boolean isEmailExist(String email);
+
+    boolean isLoginExist(String login);
+
+    Account getAccount(String email);
+
 }

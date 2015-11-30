@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ua.com.itquiz.constants.Roles;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.forms.EmailForm;
 import ua.com.itquiz.forms.LoginForm;
-import ua.com.itquiz.forms.PasswordRecoveryForm;
 import ua.com.itquiz.forms.SingUpForm;
 import ua.com.itquiz.services.EntranceService;
 
@@ -50,6 +51,27 @@ public class EntranceController extends AbstractController implements Initializi
     @Autowired
     private EntranceService entranceService;
 
+    @RequestMapping(value = "/verify-email", method = RequestMethod.GET)
+    public @ResponseBody String verifyEmail(@RequestParam("email") String email) {
+	return (entranceService.isEmailExist(email)) ? "false" : "true";
+    }
+
+    @RequestMapping(value = "/verify-email-recov", method = RequestMethod.GET)
+    public @ResponseBody String verifyEmailRec(@RequestParam("email") String email) {
+	Account account = entranceService.getAccount(email);
+
+	if (account == null || !account.getActive() || !account.getConfirmed()) {
+	    return "false";
+	}
+
+	return "true";
+    }
+
+    @RequestMapping(value="/verify-login", method = RequestMethod.GET)
+    public @ResponseBody String verifyLogin(@RequestParam("login") String login) {
+	return (entranceService.isLoginExist(login)) ? "false" : "true";
+    }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
 	session.invalidate();
@@ -75,8 +97,7 @@ public class EntranceController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result, Model model,
-	    HttpSession session) {
+    public String login(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpSession session) {
 	try {
 	    loginForm.validate(messageSource);
 	    Account account = entranceService.login(loginForm.getEmail(), loginForm.getPassword(),
@@ -84,7 +105,7 @@ public class EntranceController extends AbstractController implements Initializi
 	    session.setAttribute("CURRENT_ACCOUNT_ID", account.getIdAccount());
 	    return "redirect:" + redirects.get(loginForm.getIdRole());
 	} catch (InvalidUserInputException e) {
-	    result.addError(new ObjectError("", e.getMessage()));
+
 	    initRoles(model);
 	    return "login";
 	}
@@ -115,12 +136,12 @@ public class EntranceController extends AbstractController implements Initializi
 
     @RequestMapping(value = "/password-recovery", method = RequestMethod.GET)
     public String showPasswordRecovery(Model model) {
-	model.addAttribute("passwordRecoveryForm", new PasswordRecoveryForm());
+	model.addAttribute("passwordRecoveryForm", new EmailForm());
 	return "password-recovery";
     }
 
     @RequestMapping(value = "/password-recovery", method = RequestMethod.POST)
-    public String passwordRecovery(@ModelAttribute("passwordRecoveryForm") PasswordRecoveryForm passwordRecoveryForm,
+    public String passwordRecovery(@ModelAttribute("passwordRecoveryForm") EmailForm passwordRecoveryForm,
 	    BindingResult result, Model model) {
 	try {
 	    passwordRecoveryForm.validate(messageSource);

@@ -19,12 +19,12 @@
 	<h3 align=center><strong>Creating new user</strong></h3>
 	
 	
-	<form:form class="form-horizontal" method="POST" action="${context }/singup" commandName="singUpForm" >
+	<form:form id="singup-form" class="form-horizontal" method="POST" action="${context }/singup" commandName="singUpForm" >
 		<p class="errors" align=center><strong><form:errors path="*"/></strong></p>
 		<div class="form-group">
 			<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
 			<div class="col-md-4">
-				<form:input type="email" id="mail" class="form-control" path="email"/>
+				<form:input id="mail" class="form-control" path="email"/>
 			</div>
 		</div>
 		<div class="form-group">

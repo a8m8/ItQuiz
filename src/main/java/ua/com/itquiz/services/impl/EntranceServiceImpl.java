@@ -140,6 +140,11 @@ public class EntranceServiceImpl implements EntranceService {
 	Account exsistingAccount = accountDao.findByEmail(form.getEmail());
 	if (exsistingAccount != null) {
 	    throw new InvalidUserInputException(
+		    messageSource.getMessage("email.exist", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	exsistingAccount = accountDao.findByLogin(form.getLogin());
+	if (exsistingAccount != null) {
+	    throw new InvalidUserInputException(
 		    messageSource.getMessage("login.busy", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	Account account = entityBuilder.buildAccount();
@@ -170,7 +175,7 @@ public class EntranceServiceImpl implements EntranceService {
 	Account account = accountDao.findByEmail(email);
 	if (account == null) {
 	    throw new InvalidUserInputException(
-		    messageSource.getMessage("login.badcredentials",
+		    messageSource.getMessage("email.notexist",
 		new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!account.getActive()) {
@@ -204,6 +209,21 @@ public class EntranceServiceImpl implements EntranceService {
 
 	account.setConfirmed(Boolean.TRUE);
 	accountDao.update(account);
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
+	return (accountDao.findByEmail(email) == null) ? false : true;
+    }
+
+    @Override
+    public boolean isLoginExist(String login) {
+	return (accountDao.findByLogin(login) == null) ? false : true;
+    }
+
+    @Override
+    public Account getAccount(String email) {
+	return accountDao.findByEmail(email);
     }
 
 }

@@ -10,14 +10,14 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8 br-ie7"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9 br-ie8"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-																																							js">
 <!--<![endif]-->
-	<head>
+<head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ItQuiz</title>
 	<link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css?v=${CSS_JS_VERSION}">
-	<link rel="stylesheet" type="text/css" href="{context}/resources/css/bootstrap-theme.min.css?v=${CSS_JS_VERSION}">
+	<link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap-theme.min.css?v=${CSS_JS_VERSION}">
 	<link rel="stylesheet" type="text/css" href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}" />
 	<link rel="stylesheet" type="text/css" href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}" />
 </head>
@@ -48,14 +48,12 @@
 			<p>&copy; 2015 Artur Meshcheriakov</p>
 		</div>
 	</div>
-		
-	<script src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
-	<script src="${context}/resources/js/jquery-1.11.3.min.js?v=${CSS_JS_VERSION}"></script>
-	<script>
-		$(document).ready(function(){
 	
-		});
-	</script>
-
+	<script type="text/javascript" src="${context}/resources/js/jquery-1.11.3.min.js?v=${CSS_JS_VERSION}"></script>																																					
+	<script type="text/javascript" src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
+	<script type="text/javascript" src="${context}/resources/js/jquery.validate.min.js?v=${CSS_JS_VERSION}"></script>
+	<script type="text/javascript" src="${context}/resources/js/jquery.form.min.js?v=${CSS_JS_VERSION}"></script>
+	<script type="text/javascript" src="${context}/resources/js/validation-scripts.js?v=${CSS_JS_VERSION}"></script>
+	
 </body>
 </html>

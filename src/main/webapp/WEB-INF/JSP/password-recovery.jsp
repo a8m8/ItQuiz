@@ -16,14 +16,14 @@
 	
 <div id="password-recovery-box">
 
-	<h3 align=center><strong>Please, enter your login</strong></h3>
+	<h3 align=center><strong>Please, enter your email</strong></h3>
 	
-	<form:form class="form-horizontal" method="POST" action="${context }/password-recovery" commandName="passwordRecoveryForm" >
+	<form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery" commandName="passwordRecoveryForm" >
 	<p class="errors" align=center><strong><form:errors path="*"/></strong></p>
 		<div class="form-group">
 			<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
 			<div class="col-md-4">
-				<form:input type="email" id="mail" class="form-control" path="email" />
+				<form:input id="mail" class="form-control" path="email" />
 			</div>
 		</div>
 		<div class="form-group">

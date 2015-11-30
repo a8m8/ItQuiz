@@ -5,15 +5,19 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.utils.EmailValidator;
 
 /**
  *
  * @author Artur Meshcheriakov
  */
-public class PasswordRecoveryForm implements IForm {
+public class EmailForm implements IForm {
 
     private static final long serialVersionUID = -4089527274880027630L;
-    private String email;
+
+    protected EmailValidator emailValidator = new EmailValidator();
+
+    protected String email;
 
     public String getEmail() {
 	return email;
@@ -28,6 +32,14 @@ public class PasswordRecoveryForm implements IForm {
 	if (StringUtils.isBlank(email)) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("email.required", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (!emailValidator.isValid(email)) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("email.invalid", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (email.length() > 60) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("email.invalid", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
     }
 

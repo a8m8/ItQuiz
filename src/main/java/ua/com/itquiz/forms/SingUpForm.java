@@ -6,20 +6,16 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.utils.EmailValidator;
 
 /**
  *
  * @author Artur Meshcheriakov
  */
 
-public class SingUpForm implements IForm, Copyable<Account> {
+public class SingUpForm extends EmailForm implements Copyable<Account> {
 
     private static final long serialVersionUID = 2155252411443776689L;
 
-    private EmailValidator emailValidator = new EmailValidator();
-
-    private String email;
     private String login;
     private String password;
     private String password2;
@@ -32,14 +28,6 @@ public class SingUpForm implements IForm, Copyable<Account> {
 
     public void setConfirmed(Boolean confirmed) {
 	this.confirmed = confirmed;
-    }
-
-    public String getEmail() {
-	return email;
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
     }
 
     public String getLogin() {
@@ -76,25 +64,30 @@ public class SingUpForm implements IForm, Copyable<Account> {
 
     @Override
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
-	if (StringUtils.isBlank(email)) {
-	    throw new InvalidUserInputException(messageSource.getMessage("email.required",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	if (!emailValidator.isValid(email)) {
-	    throw new InvalidUserInputException(messageSource.getMessage("email.invalid",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
+	super.validate(messageSource);
 	if (StringUtils.isBlank(login)) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("login.required", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (login.length() > 60) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("volume.exceed", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (StringUtils.isBlank(fio)) {
 	    throw new InvalidUserInputException(messageSource.getMessage("fio.required",
 		new Object[] {}, LocaleContextHolder.getLocale()));
 	}
+	if (fio.length() > 200) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("volume.exceed", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
 	if (StringUtils.isBlank(password)) {
 	    throw new InvalidUserInputException(messageSource.getMessage("passwords.required",
 		new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (password.length() > 60) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("volume.exceed", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!StringUtils.equals(password, password2)) {
 	    throw new InvalidUserInputException(messageSource.getMessage("passwords.notmatch",

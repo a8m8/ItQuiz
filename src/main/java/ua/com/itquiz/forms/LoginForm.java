@@ -10,11 +10,10 @@ import ua.com.itquiz.exceptions.InvalidUserInputException;
  *
  * @author Artur Meshcheriakov
  */
-public class LoginForm implements IForm {
+public class LoginForm extends EmailForm {
 
     private static final long serialVersionUID = -6655327847890728394L;
 
-    private String email;
     private String password;
     private int idRole;
 
@@ -24,14 +23,6 @@ public class LoginForm implements IForm {
 
     public void setIdRole(int idRole) {
 	this.idRole = idRole;
-    }
-
-    public String getEmail() {
-	return email;
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
     }
 
     public String getPassword() {
@@ -44,13 +35,14 @@ public class LoginForm implements IForm {
 
     @Override
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
-	if (StringUtils.isBlank(email)) {
-	    throw new InvalidUserInputException(
-		    messageSource.getMessage("email.required", new Object[] {}, LocaleContextHolder.getLocale()));
-	}
+	super.validate(messageSource);
 	if (StringUtils.isBlank(password)) {
 	    throw new InvalidUserInputException(
 		    messageSource.getMessage("password.required", new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+	if (password.length() > 60) {
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("passwords.notmatch", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (idRole == 0) {
 	    throw new InvalidUserInputException(
