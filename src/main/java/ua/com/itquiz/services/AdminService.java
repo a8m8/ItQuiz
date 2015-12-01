@@ -22,8 +22,4 @@ public interface AdminService {
 
     void removeAccount(int accountId) throws InvalidUserInputException;
 
-    void activateAccount(int accountId);
-
-    void deactivateAccount(int accountId);
-
 }

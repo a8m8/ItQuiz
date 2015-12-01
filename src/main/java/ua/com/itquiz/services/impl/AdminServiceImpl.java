@@ -10,7 +10,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.IForm;
@@ -23,10 +22,7 @@ import ua.com.itquiz.services.AdminService;
 @Service("adminService")
 @Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class AdminServiceImpl implements AdminService {
-
-    @Autowired
-    private AccountDao accountDao;
+public class AdminServiceImpl extends CommonServiceImpl implements AdminService {
 
     @Autowired
     private MessageSource messageSource;
@@ -58,18 +54,6 @@ public class AdminServiceImpl implements AdminService {
 		    messageSource.getMessage("login.badcredentials", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	accountDao.delete(account);
-    }
-
-    @Override
-    public void activateAccount(int accountId) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void deactivateAccount(int accountId) {
-	// TODO Auto-generated method stub
-
     }
 
     @Override
