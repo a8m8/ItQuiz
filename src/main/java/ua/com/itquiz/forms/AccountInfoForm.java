@@ -14,9 +14,9 @@ public class AccountInfoForm extends EmailForm {
 
     private static final long serialVersionUID = -1080403923686666060L;
 
-    protected String login;
     protected String password;
     protected String password2;
+    protected String login;
     protected String fio;
 
     public String getLogin() {

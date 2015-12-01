@@ -66,17 +66,16 @@ public class EntranceServiceImpl implements EntranceService {
     public Account login(String email, String password, int role) throws InvalidUserInputException {
 	Account account = accountDao.findByEmail(email);
 	if (account == null) {
-	    throw new InvalidUserInputException(messageSource.getMessage("login.badcredentials",
-		new Object[] {}, LocaleContextHolder.getLocale()));
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("login.badcredentials", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!StringUtils.equals(password, account.getPassword())) {
-	    throw new InvalidUserInputException(messageSource.getMessage("login.badcredentials",
-		new Object[] {}, LocaleContextHolder.getLocale()));
+	    throw new InvalidUserInputException(
+		    messageSource.getMessage("login.badcredentials", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!account.getActive()) {
 	    throw new InvalidUserInputException(
-		    messageSource.getMessage("account.notactive",
-		new Object[] {}, LocaleContextHolder.getLocale()));
+		    messageSource.getMessage("account.notactive", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!account.getConfirmed()) {
 	    throw new InvalidUserInputException(
@@ -90,8 +89,8 @@ public class EntranceServiceImpl implements EntranceService {
 	    }
 	}
 	if (!found) {
-	    throw new InvalidUserInputException(messageSource.getMessage("account.doesnothaverole",
-		new Object[] {}, LocaleContextHolder.getLocale()));
+	    throw new InvalidUserInputException(messageSource.getMessage("account.doesnothaverole", new Object[] {},
+		    LocaleContextHolder.getLocale()));
 	}
 	return account;
     }
@@ -175,8 +174,7 @@ public class EntranceServiceImpl implements EntranceService {
 	Account account = accountDao.findByEmail(email);
 	if (account == null) {
 	    throw new InvalidUserInputException(
-		    messageSource.getMessage("email.notexist",
-		new Object[] {}, LocaleContextHolder.getLocale()));
+		    messageSource.getMessage("email.notexist", new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	if (!account.getActive()) {
 	    throw new InvalidUserInputException(

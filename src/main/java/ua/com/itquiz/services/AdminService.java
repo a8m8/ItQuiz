@@ -4,7 +4,7 @@ import java.util.List;
 
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.IForm;
+import ua.com.itquiz.forms.AdminUserForm;
 
 /**
  *
@@ -16,9 +16,9 @@ public interface AdminService {
 
     List<Account> getAllAccounts();
 
-    void addUser(IForm form);
+    void addUser(AdminUserForm form) throws InvalidUserInputException;
 
-    void editAccount(IForm form);
+    void editUser(AdminUserForm form) throws InvalidUserInputException;
 
     void removeAccount(int accountId) throws InvalidUserInputException;
 

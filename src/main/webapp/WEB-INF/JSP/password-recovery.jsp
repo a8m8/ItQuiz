@@ -14,10 +14,10 @@
 		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
 </ul>
 
-<h3 align=center><strong>Please, enter your email</strong></h3>
+<h3>Please, enter your email</h3>
 
 <c:if test="${not empty errorMessage}">
-	<h4 id="error-message" align="center">${errorMessage }</h4>
+	<h4 id="error-message">${errorMessage }</h4>
 </c:if>
 
 <form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery" commandName="passwordRecoveryForm" >

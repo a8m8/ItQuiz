@@ -2,5 +2,5 @@
 
 
 <div id="globalerror">
-	<h2 align=center>Service temporary unavailable, please try again later</h2>
+	<h3>Service temporary unavailable, please try again later</h3>
 </div>

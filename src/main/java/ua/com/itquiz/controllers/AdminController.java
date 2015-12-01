@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
+import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.services.AdminService;
 
 /**
@@ -47,10 +49,35 @@ public class AdminController extends CommonController {
     }
 
     @RequestMapping(value = "/all-accounts", method = RequestMethod.GET)
-    public String home(Model model) {
+    public String showAllAccounts(HttpSession session, Model model) {
+	if (session.getAttribute("message") != null) {
+	    model.addAttribute("message", session.getAttribute("message"));
+	    session.removeAttribute("message");
+	}
 	List<Account> accounts = adminService.getAllAccounts();
 	model.addAttribute("accounts", accounts);
 	return "admin/all-accounts";
+    }
+
+    @RequestMapping(value = "/add-user", method = RequestMethod.GET)
+    public String showAddUser(Model model) {
+	model.addAttribute("adminUserForm", new AdminUserForm());
+	return "admin/add-user";
+    }
+
+    @RequestMapping(value = "/add-user", method = RequestMethod.POST)
+    public String addNewUser(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm, Model model,
+	    HttpSession session) {
+	try {
+	    adminUserForm.validate(messageSource);
+	    adminService.addUser(adminUserForm);
+	    session.setAttribute("message",
+		    messageSource.getMessage("admin.usercreated", new Object[] {}, LocaleContextHolder.getLocale()));
+	    return "redirect:/admin/all-accounts";
+	} catch (InvalidUserInputException e) {
+	    model.addAttribute("errorMessage", e.getMessage());
+	    return "admin/add-user";
+	}
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

@@ -16,7 +16,11 @@
 		<a href="${context }/logout"><strong>Exit</strong></a>
 </ul>
 
-<h3 align=center><strong>Accounts management</strong></h3>
+<h3>Accounts management</h3>
+
+<c:if test="${not empty message}">
+	<h4 id="message">${message }</h4>
+</c:if>
 
 <div id="table-box">
 	<table class="table table-striped">
