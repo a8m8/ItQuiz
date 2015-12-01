@@ -9,7 +9,7 @@
 			<p><i>Login: <b>${user.login}</b></i></p>
 			<p><i>Password: <b>${user.password}</b></i></p>
 			<p><i>For confirmation this account, please, follow this link
-			<a href="http://localhost:8080/it-quiz/login/account-confirmation?id=${user.idAccount}&hash=${user.accountRegistration.hash}">
+			<a href="http://localhost:8080/it-quiz/account-confirmation?id=${user.idAccount}&hash=${user.accountRegistration.hash}">
 			itquiz.com.ua/account-confirmation</a></i></p>
 			<p><i>If you have not registered on ItQuiz, just ignore this message</i></p>
 			<h4 align=center><b>Best regards,</b></h4>

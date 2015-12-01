@@ -9,10 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -67,7 +66,7 @@ public class EntranceController extends AbstractController implements Initializi
 	return "true";
     }
 
-    @RequestMapping(value="/verify-login", method = RequestMethod.GET)
+    @RequestMapping(value = "/verify-login", method = RequestMethod.GET)
     public @ResponseBody String verifyLogin(@RequestParam("login") String login) {
 	return (entranceService.isLoginExist(login)) ? "false" : "true";
     }
@@ -78,19 +77,29 @@ public class EntranceController extends AbstractController implements Initializi
 	return "redirect:login";
     }
 
-    @RequestMapping(value = "/login/account-confirmation", method = RequestMethod.GET)
-    public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash) {
+    @RequestMapping(value = "/account-confirmation", method = RequestMethod.GET)
+    public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash, HttpSession session) {
 	try {
 	    entranceService.verifyAccount(id, hash);
-	    return "redirect:";
+	    session.setAttribute("message",
+		    messageSource.getMessage("confirmation.success", new Object[] {}, LocaleContextHolder.getLocale()));
+	    return "redirect:login";
 	} catch (InvalidUserInputException e) {
-	    return "boom";
+	    session.setAttribute("errorMessage", e.getMessage());
+	    return "redirect:login";
 	}
-	// FIXME DISPLAING MESSAGE!!! and BindingResult
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String showLogin(Model model) {
+    public String showLogin(HttpSession session, Model model) {
+	if (session.getAttribute("message") != null) {
+	    model.addAttribute("message", session.getAttribute("message"));
+	    session.removeAttribute("message");
+	}
+	if (session.getAttribute("errorMessage") != null) {
+	    model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
+	    session.removeAttribute("errorMessage");
+	}
 	model.addAttribute("loginForm", new LoginForm());
 	initRoles(model);
 	return "login";
@@ -105,7 +114,7 @@ public class EntranceController extends AbstractController implements Initializi
 	    session.setAttribute("CURRENT_ACCOUNT_ID", account.getIdAccount());
 	    return "redirect:" + redirects.get(loginForm.getIdRole());
 	} catch (InvalidUserInputException e) {
-
+	    model.addAttribute("errorMessage", e.getMessage());
 	    initRoles(model);
 	    return "login";
 	}
@@ -116,20 +125,22 @@ public class EntranceController extends AbstractController implements Initializi
 	model.addAttribute("roles", roles);
     }
 
-    @RequestMapping(value="/singup",method=RequestMethod.GET)
+    @RequestMapping(value = "/singup", method = RequestMethod.GET)
     public String showSingUp(Model model) {
 	model.addAttribute("singUpForm", new SingUpForm());
 	return "singup";
     }
 
     @RequestMapping(value = "/singup", method = RequestMethod.POST)
-    public String singup(@ModelAttribute("singUpForm") SingUpForm singUpForm, BindingResult result, Model model) {
+    public String singup(@ModelAttribute("singUpForm") SingUpForm singUpForm, Model model, HttpSession session) {
 	try {
 	    singUpForm.validate(messageSource);
 	    entranceService.singUp(singUpForm);
+	    session.setAttribute("message",
+		    messageSource.getMessage("singup.emailsend", new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:login";
-	} catch (InvalidUserInputException ex) {
-	    result.addError(new ObjectError("", ex.getMessage()));
+	} catch (InvalidUserInputException e) {
+	    model.addAttribute("errorMessage", e.getMessage());
 	    return "singup";
 	}
     }
@@ -141,14 +152,16 @@ public class EntranceController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/password-recovery", method = RequestMethod.POST)
-    public String passwordRecovery(@ModelAttribute("passwordRecoveryForm") EmailForm passwordRecoveryForm,
-	    BindingResult result, Model model) {
+    public String passwordRecovery(@ModelAttribute("passwordRecoveryForm") EmailForm passwordRecoveryForm, Model model,
+	    HttpSession session) {
 	try {
 	    passwordRecoveryForm.validate(messageSource);
 	    entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
+	    session.setAttribute("message",
+		    messageSource.getMessage("password.send", new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:login";
-	} catch (InvalidUserInputException ex) {
-	    result.addError(new ObjectError("", ex.getMessage()));
+	} catch (InvalidUserInputException e) {
+	    model.addAttribute("errorMessage", e.getMessage());
 	    return "password-recovery";
 	}
     }

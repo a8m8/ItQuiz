@@ -14,47 +14,46 @@
 		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
 </ul>
 
-<div id="singup-box">
+<h3 align=center><strong>Creating new user</strong></h3>
 
-	<h3 align=center><strong>Creating new user</strong></h3>
-	
-	
-	<form:form id="singup-form" class="form-horizontal" method="POST" action="${context }/singup" commandName="singUpForm" >
-		<p class="errors" align=center><strong><form:errors path="*"/></strong></p>
-		<div class="form-group">
-			<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
-			<div class="col-md-4">
-				<form:input id="mail" class="form-control" path="email"/>
-			</div>
+<c:if test="${not empty errorMessage}">
+	<h4 id="error-message" align="center">${errorMessage }</h4>
+</c:if>
+
+<form:form id="singup-form" class="form-horizontal" method="POST" action="${context }/singup" commandName="singUpForm" >
+	<div class="form-group">
+		<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+		<div class="col-md-4">
+			<form:input id="mail" class="form-control" path="email"/>
 		</div>
-		<div class="form-group">
-			<form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
-			<div class="col-md-4">
-				<form:input id="pass" class="form-control" path="password"/>
-			</div>
+	</div>
+	<div class="form-group">
+		<form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
+		<div class="col-md-4">
+			<form:input id="pass" class="form-control" path="password"/>
 		</div>
-		<div class="form-group">
-			<form:label for="pass2" path="password2" class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
-			<div class="col-md-4">
-				<form:input id="pass2" class="form-control" path="password2"/>
-			</div>
+	</div>
+	<div class="form-group">
+		<form:label for="pass2" path="password2" class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
+		<div class="col-md-4">
+			<form:input id="pass2" class="form-control" path="password2"/>
 		</div>
-		<div class="form-group">
-			<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
-			<div class="col-md-4">
-				<form:input id="log" class="form-control" path="login"/>
-			</div>
+	</div>
+	<div class="form-group">
+		<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+		<div class="col-md-4">
+			<form:input id="log" class="form-control" path="login"/>
 		</div>
-		<div class="form-group">
-			<form:label for="name" path="fio" class="col-md-offset-2 col-md-2 control-label" >Your name:</form:label>
-			<div class="col-md-4">
-				<form:input id="name" class="form-control" path="fio"/>
-			</div>
+	</div>
+	<div class="form-group">
+		<form:label for="name" path="fio" class="col-md-offset-2 col-md-2 control-label" >Your name:</form:label>
+		<div class="col-md-4">
+			<form:input id="name" class="form-control" path="fio"/>
 		</div>
-		<div class="form-group">
-			<div class="col-md-offset-4 col-md-4">
-				<button type="submit" class="btn btn-warning btn-block">Create user</button>
-			</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-4 col-md-4">
+			<button type="submit" class="btn btn-warning btn-block">Create user</button>
 		</div>
-	</form:form>	
-</div>
+	</div>
+</form:form>	

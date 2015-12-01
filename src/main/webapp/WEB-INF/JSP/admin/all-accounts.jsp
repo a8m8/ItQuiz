@@ -5,20 +5,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-	<ul id="admin-nav">
-		<li id="firsttab">	
-			<a href="${context}/profile"><strong>Profile</strong></a>
-		<li id="secondtab" class="active">
-			<a href="${context}/all-accounts"><strong>All accounts</strong></a>
-		<li id="thirdtab">
-			<a href="${context}/add-user"><strong>Add user</strong></a>
-		<li id="fourthtab">
-			<a href="${context}/logout"><strong>Exit</strong></a>
-	</ul>
+<ul id="admin-nav">
+	<li id="firsttab">	
+		<a href="${context }/admin/myaccount"><strong>My account</strong></a>
+	<li id="secondtab" class="active">
+		<a href="${context }/admin/all-accounts"><strong>All accounts</strong></a>
+	<li id="thirdtab">
+		<a href="${context }/admin/add-user"><strong>Add user</strong></a>
+	<li id="fourthtab">
+		<a href="${context }/logout"><strong>Exit</strong></a>
+</ul>
 
 <h3 align=center><strong>Accounts management</strong></h3>
 
-<div id="table">
+<div id="table-box">
 	<table class="table table-striped">
 		<thead><tr>
 			<td width="15%">Login</td>

@@ -13,23 +13,23 @@
 	<li id="thirdtab" class="active">
 		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
 </ul>
-	
-<div id="password-recovery-box">
 
-	<h3 align=center><strong>Please, enter your email</strong></h3>
-	
-	<form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery" commandName="passwordRecoveryForm" >
-	<p class="errors" align=center><strong><form:errors path="*"/></strong></p>
-		<div class="form-group">
-			<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
-			<div class="col-md-4">
-				<form:input id="mail" class="form-control" path="email" />
-			</div>
+<h3 align=center><strong>Please, enter your email</strong></h3>
+
+<c:if test="${not empty errorMessage}">
+	<h4 id="error-message" align="center">${errorMessage }</h4>
+</c:if>
+
+<form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery" commandName="passwordRecoveryForm" >
+	<div class="form-group">
+		<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+		<div class="col-md-4">
+			<form:input id="mail" class="form-control" path="email" />
 		</div>
-		<div class="form-group">
-			<div class="col-md-offset-4 col-md-4">
-				<button type="submit" class="btn btn-warning btn-block">Confirm</button>
-			</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-4 col-md-4">
+			<button type="submit" class="btn btn-warning btn-block">Confirm</button>
 		</div>
-	</form:form>
-</div>
+	</div>
+</form:form>

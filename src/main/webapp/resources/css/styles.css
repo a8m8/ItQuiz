@@ -37,12 +37,12 @@ body {
 	width: 100%;
 }
 
-#header #welcome {
-	color: #000;
-	text-shadow: 1px 1px 2px #F38630;
-	text-align:center;
-	font-size: 18px;
-}
+	#header #welcome {
+		color: #000;
+		text-shadow: 1px 1px 2px #F38630;
+		text-align:center;
+		font-size: 18px;
+	}
 
 #content {
 	padding: 125px 0 100px 0;
@@ -60,21 +60,17 @@ body {
 	position: relative;
 }
 
-#footer p {
-	color: #FFF;
-	font-size: 16px;
-}
+	#footer p {
+		color: #FFF;
+		font-size: 16px;
+	}
 
-#footer .col-md-3{
-	display: inline-block;
-	vertical-align: middle;
-	text-align: center;
-	line-height: 1,25;
-}
-
-#login-box, #singup-box, #password-recovery-box {
-	margin-top: 20px;
-}
+	#footer .col-md-3{
+		display: inline-block;
+		vertical-align: middle;
+		text-align: center;
+		line-height: 1,25;
+	}
 
 .form-control {
 	text-align: center;
@@ -82,10 +78,6 @@ body {
 
 .control-label {
 	padding-right: 0px;
-}
-
-.error {
-	color: red;
 }
 
 ul {
@@ -107,45 +99,46 @@ li {
 	
 }
 
-li a {
-	text-decoration: none;
-	display: inline-block;
-	height: 100%;
-	width: 100%;
-	color: #44749D;
-}
-
-li a:hover {
-	text-decoration: none;
-	color: #44749D;
-}
-
-li a:visited {
-	text-decoration: none;
-	color: #44749D;
-}
-
-li.active {
-    background-color: #FFF;
-}
-
 li:hover {
 	background: #FFF;
 }
 
+	li a {
+		text-decoration: none;
+		display: inline-block;
+		height: 100%;
+		width: 100%;
+		color: #44749D;
+	}
+	
+	li a:hover {
+		text-decoration: none;
+		color: #44749D;
+	}
+	
+	li a:visited {
+		text-decoration: none;
+		color: #44749D;
+	}
+	
+	li.active {
+	    background-color: #FFF;
+	}
+
+
 #log-nav li {
 	width: 33.33%;
-}
-
-#fblink {
-	text-align: center;
 }
 
 #admin-nav li {
 	width: 25%;
 }
 
-#table {
+#fblink {
+	text-align: center;
+}
+
+#table-box {
 	padding: 0 20px 0 20px;
 }
 
@@ -154,17 +147,21 @@ table {
 	text-align: center;																								
 }
 
-table .overflowable {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+	table .overflowable {
+	  white-space: nowrap;
+	  text-overflow: ellipsis;
+	  overflow: hidden;
+	}
+	
+	table thead {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+
+#message {
+	color: #92d13d;
 }
 
-table thead {
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
-#globalerror {
+#error-message, .error {
 	color: red;
 }
