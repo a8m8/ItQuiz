@@ -122,4 +122,9 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 	return result;
     }
 
+    @Override
+    public List<Account> getAccounts(int offset, int count) {
+	return accountDao.list(offset, count);
+    }
+
 }

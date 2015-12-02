@@ -1,5 +1,7 @@
 package ua.com.itquiz.controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,15 +51,26 @@ public class AdminController extends CommonController {
 	}
     }
 
-    @RequestMapping(value = "/all-accounts", method = RequestMethod.GET)
-    public String showAllAccounts(HttpSession session, Model model) {
+    @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
+    public String showAllAccounts(@PathVariable int pageNumber, HttpSession session, Model model) {
 	if (session.getAttribute("message") != null) {
 	    model.addAttribute("message", session.getAttribute("message"));
 	    session.removeAttribute("message");
 	}
-	List<Account> accounts = adminService.getAllAccounts();
+	int count = 1;
+	int maximum = new BigDecimal(adminService.accountCount() / count).setScale(0, RoundingMode.UP).intValue();
+	int current = pageNumber;
+	int begin = Math.max(1, current - 5);
+	int end = Math.min(begin + 10, maximum);
+
+	List<Account> accounts = adminService.getAccounts(((pageNumber - 1) * count), count);
 	model.addAttribute("accounts", accounts);
-	return "admin/all-accounts";
+	model.addAttribute("beginIndex", begin);
+	model.addAttribute("endIndex", end);
+	model.addAttribute("currentIndex", current);
+	model.addAttribute("maximum", maximum);
+
+	return "admin/accounts";
     }
 
     @RequestMapping(value = "/add-user", method = RequestMethod.GET)
@@ -73,7 +87,7 @@ public class AdminController extends CommonController {
 	    adminService.addUser(adminUserForm);
 	    session.setAttribute("message",
 		    messageSource.getMessage("admin.usercreated", new Object[] {}, LocaleContextHolder.getLocale()));
-	    return "redirect:/admin/all-accounts";
+	    return "redirect:/admin/accounts/page/1";
 	} catch (InvalidUserInputException e) {
 	    model.addAttribute("errorMessage", e.getMessage());
 	    return "admin/add-user";
@@ -84,7 +98,7 @@ public class AdminController extends CommonController {
     public String removeAccount(@RequestParam("id") int id) {
 	try {
 	    adminService.removeAccount(id);
-	    return "redirect:/admin/all-accounts";
+	    return "redirect:/admin/accounts/page/1";
 	} catch (InvalidUserInputException e) {
 	    return "redirect:/boom";
 	}

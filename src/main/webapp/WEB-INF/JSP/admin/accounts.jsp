@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<ul id="admin-nav">
+<ul id="main-nav" class="admin">
 	<li id="firsttab">	
 		<a href="${context }/admin/myaccount"><strong>My account</strong></a>
 	<li id="secondtab" class="active">
@@ -51,3 +51,43 @@
 		</c:forEach>
 	</table>
 </div>
+<c:url var="firstUrl" value="/admin/accounts/page/1" />
+<c:url var="lastUrl" value="/admin/accounts/page/${maximum}" />
+<c:url var="prevUrl" value="/admin/accounts/page/${currentIndex - 1}" />
+<c:url var="nextUrl" value="/admin/accounts/page/${currentIndex + 1}" />
+
+<nav id="pagination">
+    <ul class="pagination">
+        <c:choose>
+            <c:when test="${currentIndex == 1}">
+                <li class="disabled"><a href="#">&lt;&lt;</a></li>
+                <li class="disabled"><a href="#">&lt;</a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="${firstUrl}">&lt;&lt;</a></li>
+                <li><a href="${prevUrl}">&lt;</a></li>
+            </c:otherwise>
+        </c:choose>
+        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+            <c:url var="pageUrl" value="/admin/accounts/page/${i}" />
+            <c:choose>
+                <c:when test="${i == currentIndex}">
+                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:choose>
+            <c:when test="${currentIndex == maximum}">
+                <li class="disabled"><a href="#">&gt;</a></li>
+                <li class="disabled"><a href="#">&gt;&gt;</a></li>
+            </c:when>
+            <c:otherwise>
+                <li><a href="${nextUrl}">&gt;</a></li>
+                <li><a href="${lastUrl}">&gt;&gt;</a></li>
+            </c:otherwise>
+        </c:choose>
+    </ul>
+</nav>

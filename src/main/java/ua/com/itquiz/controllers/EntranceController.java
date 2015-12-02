@@ -38,7 +38,7 @@ public class EntranceController extends AbstractController implements Initializi
 
     @Override
     public void afterPropertiesSet() throws Exception {
-	redirects.put(Roles.ADMIN_ROLE.getID(), "/admin/all-accounts");
+	redirects.put(Roles.ADMIN_ROLE.getID(), "/admin/accounts/page/1");
 	redirects.put(Roles.ADVANCED_TUTOR_ROLE.getID(), "/advanced-tutor/home");
 	redirects.put(Roles.TUTOR_ROLE.getID(), "/tutor/home");
 	redirects.put(Roles.STUDENT_ROLE.getID(), "/home");

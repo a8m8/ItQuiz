@@ -16,6 +16,8 @@ public interface AdminService {
 
     List<Account> getAllAccounts();
 
+    List<Account> getAccounts(int offset, int count);
+
     void addUser(AdminUserForm form) throws InvalidUserInputException;
 
     void editUser(AdminUserForm form) throws InvalidUserInputException;

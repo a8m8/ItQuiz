@@ -5,7 +5,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<ul id="log-nav">
+<ul id="main-nav" class="login">
 	<li id="firsttab" class="active">
 		<a href="${context}/singup"><strong>SingUp</strong></a>
 	<li id="secondtab">

@@ -5,11 +5,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<ul id="admin-nav">
+<ul id="main-nav" class="admin">
 	<li id="firsttab" class="active">	
 		<a href="${context }/admin/myaccount"><strong>My account</strong></a>
 	<li id="secondtab">
-		<a href="${context }/admin/all-accounts"><strong>All accounts</strong></a>
+		<a href="${context }/admin/accounts/page/1"><strong>All accounts</strong></a>
 	<li id="thirdtab">
 		<a href="${context }/admin/add-user"><strong>Add user</strong></a>
 	<li id="fourthtab">

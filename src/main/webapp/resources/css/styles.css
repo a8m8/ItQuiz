@@ -88,7 +88,7 @@ h3, h4 {
 	padding-right: 0px;
 }
 
-ul {
+#main-nav {
     text-align: center;
     overflow: hidden;
     cursor: pointer;
@@ -97,48 +97,47 @@ ul {
     line-height: 40px;
 }
 
-li {
-	line-height: 1,25;
-	height: 40px;
-    list-style: outside none none;
-    display : inline-block;
-    background-color: #454545;
-    text-transform: uppercase;
-	
-}
-
-li:hover {
-	background: #FFF;
-}
-
-	li a {
-		text-decoration: none;
-		display: inline-block;
-		height: 100%;
-		width: 100%;
-		color: #44749D;
-	}
-	
-	li a:hover {
-		text-decoration: none;
-		color: #44749D;
-	}
-	
-	li a:visited {
-		text-decoration: none;
-		color: #44749D;
-	}
-	
-	li.active {
-	    background-color: #FFF;
+	#main-nav li {
+		line-height: 1,25;
+		height: 40px;
+	    list-style: outside none none;
+	    display : inline-block;
+	    background-color: #454545;
+	    text-transform: uppercase;
 	}
 
+	#main-nav li:hover {
+		background: #FFF;
+	}
 
-#log-nav li {
+		#main-nav li a {
+			text-decoration: none;
+			display: inline-block;
+			height: 100%;
+			width: 100%;
+			color: #44749D;
+		}
+		
+		#main-nav li a:hover {
+			text-decoration: none;
+			color: #44749D;
+		}
+		
+		#main-nav li a:visited {
+			text-decoration: none;
+			color: #44749D;
+		}
+		
+		#main-nav li.active {
+		    background-color: #FFF;
+		}
+
+
+.login li {
 	width: 33.33%;
 }
 
-#admin-nav li {
+.admin li {
 	width: 25%;
 }
 
@@ -176,4 +175,7 @@ table {
 
 #checkbox-label {
 	font-weight: bold;
+}
+#pagination {
+	text-align: center;
 }
