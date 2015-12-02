@@ -1,7 +1,5 @@
 package ua.com.itquiz.controllers;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -57,8 +55,9 @@ public class AdminController extends CommonController {
 	    model.addAttribute("message", session.getAttribute("message"));
 	    session.removeAttribute("message");
 	}
-	int count = 1;
-	int maximum = new BigDecimal(adminService.accountCount() / count).setScale(0, RoundingMode.UP).intValue();
+	int count = 2;
+	int temp = adminService.accountCount() / count;
+	int maximum = (adminService.accountCount() % count == 0) ? temp : temp + 1;
 	int current = pageNumber;
 	int begin = Math.max(1, current - 5);
 	int end = Math.min(begin + 10, maximum);
