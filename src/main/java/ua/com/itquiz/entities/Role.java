@@ -1,14 +1,12 @@
 package ua.com.itquiz.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
- * 
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -28,24 +26,24 @@ public class Role extends AbstractEntity {
     }
 
     public Short getIdRole() {
-	return idRole;
+        return idRole;
     }
 
     public void setIdRole(Short idRole) {
-	this.idRole = idRole;
+        this.idRole = idRole;
     }
 
     public String getTitle() {
-	return title;
+        return title;
     }
 
     public void setTitle(String title) {
-	this.title = title;
+        this.title = title;
     }
 
     @Override
     public Serializable getId() {
-	return getIdRole();
+        return getIdRole();
     }
 
 }

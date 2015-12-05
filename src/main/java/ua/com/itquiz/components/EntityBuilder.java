@@ -6,7 +6,6 @@ import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.entities.Role;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface EntityBuilder {

@@ -3,7 +3,6 @@ package ua.com.itquiz.components;
 import java.util.Map;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface ExpressionResolver {

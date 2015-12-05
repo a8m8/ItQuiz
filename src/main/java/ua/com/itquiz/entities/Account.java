@@ -1,20 +1,10 @@
 package ua.com.itquiz.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 /**
- *
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -25,7 +15,7 @@ public class Account extends AbstractBusinessEntity {
 
     @Id
     @SequenceGenerator(name = "ACCOUNT_IDACCOUNT_GENERATOR", sequenceName = "ACCOUNT_SEQ",
-		       allocationSize = 1)
+            allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCOUNT_IDACCOUNT_GENERATOR")
     @Column(name = "id_account", unique = true, nullable = false)
     private Integer idAccount;
@@ -55,72 +45,72 @@ public class Account extends AbstractBusinessEntity {
     }
 
     public Integer getIdAccount() {
-	return idAccount;
+        return idAccount;
     }
 
     public void setIdAccount(Integer idAccount) {
-	this.idAccount = idAccount;
+        this.idAccount = idAccount;
     }
 
     public String getLogin() {
-	return login;
+        return login;
     }
 
     public void setLogin(String login) {
-	this.login = login;
+        this.login = login;
     }
 
     public String getEmail() {
-	return email;
+        return email;
     }
 
     public void setEmail(String email) {
-	this.email = email;
+        this.email = email;
     }
 
     public String getFio() {
-	return fio;
+        return fio;
     }
 
     public void setFio(String fio) {
-	this.fio = fio;
+        this.fio = fio;
     }
 
     public Boolean getConfirmed() {
-	return confirmed;
+        return confirmed;
     }
 
     public void setConfirmed(Boolean confirmed) {
-	this.confirmed = confirmed;
+        this.confirmed = confirmed;
     }
 
     public String getPassword() {
-	return password;
+        return password;
     }
 
     public void setPassword(String password) {
-	this.password = password;
+        this.password = password;
     }
 
     public List<AccountRole> getAccountRoles() {
-	return accountRoles;
+        return accountRoles;
     }
 
     public void setAccountRoles(List<AccountRole> accountRoles) {
-	this.accountRoles = accountRoles;
+        this.accountRoles = accountRoles;
     }
 
     public AccountRegistration getAccountRegistration() {
-	return accountRegistration;
+        return accountRegistration;
     }
 
     public void setAccountRegistration(AccountRegistration accountRegistration) {
-	this.accountRegistration = accountRegistration;
+        this.accountRegistration = accountRegistration;
     }
 
     @Override
     public Serializable getId() {
-	return getIdAccount();
+        return getIdAccount();
     }
 
 }

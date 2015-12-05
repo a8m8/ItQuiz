@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface ApplicationConstants {
@@ -14,6 +13,6 @@ public interface ApplicationConstants {
     int TUTOR_ROLE = 3;
     int STUDENT_ROLE = 4;
     HashSet<Integer> ROLES = new HashSet<>(
-	Arrays.asList(new Integer[] { ADMIN_ROLE, ADVANCED_TUTOR_ROLE, TUTOR_ROLE, STUDENT_ROLE }));
+            Arrays.asList(new Integer[]{ADMIN_ROLE, ADVANCED_TUTOR_ROLE, TUTOR_ROLE, STUDENT_ROLE}));
 
 }

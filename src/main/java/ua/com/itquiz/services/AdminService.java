@@ -1,13 +1,12 @@
 package ua.com.itquiz.services;
 
-import java.util.List;
-
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AdminUserForm;
 
+import java.util.List;
+
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface AdminService {

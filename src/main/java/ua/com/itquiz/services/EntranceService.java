@@ -1,16 +1,14 @@
 package ua.com.itquiz.services;
 
-import java.util.List;
-
 import com.restfb.types.User;
-
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.SignUpForm;
 
+import java.util.List;
+
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface EntranceService {

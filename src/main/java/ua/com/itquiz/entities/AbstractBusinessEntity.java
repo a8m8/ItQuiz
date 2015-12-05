@@ -1,12 +1,10 @@
 package ua.com.itquiz.entities;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import java.sql.Timestamp;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 @MappedSuperclass
@@ -24,27 +22,27 @@ public abstract class AbstractBusinessEntity extends AbstractEntity {
     private Boolean active;
 
     public Timestamp getCreated() {
-	return this.created;
+        return this.created;
     }
 
     public void setCreated(Timestamp created) {
-	this.created = created;
+        this.created = created;
     }
 
     public Boolean getActive() {
-	return this.active;
+        return this.active;
     }
 
     public void setActive(Boolean active) {
-	this.active = active;
+        this.active = active;
     }
 
     public Timestamp getUpdated() {
-	return this.updated;
+        return this.updated;
     }
 
     public void setUpdated(Timestamp updated) {
-	this.updated = updated;
+        this.updated = updated;
     }
 
 }

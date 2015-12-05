@@ -1,21 +1,10 @@
 package ua.com.itquiz.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 /**
- * 
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -54,64 +43,64 @@ public class TestResult extends AbstractEntity {
     }
 
     public String getTestTitle() {
-	return testTitle;
+        return testTitle;
     }
 
     public void setTestTitle(String testTitle) {
-	this.testTitle = testTitle;
+        this.testTitle = testTitle;
     }
 
     public Long getIdTestResult() {
-	return idTestResult;
+        return idTestResult;
     }
 
     public void setIdTestResult(Long idTestResult) {
-	this.idTestResult = idTestResult;
+        this.idTestResult = idTestResult;
     }
 
     public Account getAccount() {
-	return account;
+        return account;
     }
 
     public void setAccount(Account account) {
-	this.account = account;
+        this.account = account;
     }
 
     public Test getTest() {
-	return test;
+        return test;
     }
 
     public void setTest(Test test) {
-	this.test = test;
+        this.test = test;
     }
 
     public Integer getCorrectCount() {
-	return correctCount;
+        return correctCount;
     }
 
     public void setCorrectCount(Integer correctCount) {
-	this.correctCount = correctCount;
+        this.correctCount = correctCount;
     }
 
     public Integer getAllCorrectCount() {
-	return allCorrectCount;
+        return allCorrectCount;
     }
 
     public void setAllCorrectCount(Integer allCorrectCount) {
-	this.allCorrectCount = allCorrectCount;
+        this.allCorrectCount = allCorrectCount;
     }
 
     public Timestamp getCreated() {
-	return created;
+        return created;
     }
 
     public void setCreated(Timestamp created) {
-	this.created = created;
+        this.created = created;
     }
 
     @Override
     public Serializable getId() {
-	return getIdTestResult();
+        return getIdTestResult();
     }
 
 }

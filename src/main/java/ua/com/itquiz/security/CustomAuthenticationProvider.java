@@ -1,7 +1,5 @@
 package ua.com.itquiz.security;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,11 +10,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import ua.com.itquiz.constants.ApplicationConstants;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
- *
  * @author Artur Meshcheriakov
  */
 @Component("customAuthenticationProvider")
@@ -26,33 +24,33 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
     @Autowired
     @Qualifier("accountAuthentificationService")
     public void setUserDetailsService(UserDetailsService userDetailsService) {
-	super.setUserDetailsService(userDetailsService);
+        super.setUserDetailsService(userDetailsService);
     }
 
     @Override
     @Autowired
     @Qualifier("pwdEncoder")
     public void setPasswordEncoder(Object passwordEncoder) {
-	super.setPasswordEncoder(passwordEncoder);
+        super.setPasswordEncoder(passwordEncoder);
     }
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,
-	UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-	super.additionalAuthenticationChecks(userDetails, authentication);
-	CurrentAccount account = (CurrentAccount) userDetails;
+                                                  UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+        super.additionalAuthenticationChecks(userDetails, authentication);
+        CurrentAccount account = (CurrentAccount) userDetails;
 
-	HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-	    .getRequestAttributes()).getRequest();
-	int role = Integer.parseInt(request.getParameter("idRole"));
-	if (!ApplicationConstants.ROLES.contains(role)) {
-	    throw new AuthenticationException("Invalid role") {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes()).getRequest();
+        int role = Integer.parseInt(request.getParameter("idRole"));
+        if (!ApplicationConstants.ROLES.contains(role)) {
+            throw new AuthenticationException("Invalid role") {
 
-		private static final long serialVersionUID = -2778071393179081488L;
+                private static final long serialVersionUID = -2778071393179081488L;
 
-	    };
-	}
-	account.setRole(role);
+            };
+        }
+        account.setRole(role);
     }
 
 }

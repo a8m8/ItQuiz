@@ -1,23 +1,10 @@
 package ua.com.itquiz.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 /**
- * 
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -28,7 +15,7 @@ public class Question extends AbstractBusinessEntity {
 
     @Id
     @SequenceGenerator(name = "QUESTION_ID_GENERATOR", sequenceName = "QUESTION_SEQ",
-		       allocationSize = 1)
+            allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QUESTION_ID_GENERATOR")
     @Column(name = "id_question", unique = true, nullable = false)
     private Long idQuestion;
@@ -48,40 +35,40 @@ public class Question extends AbstractBusinessEntity {
     }
 
     public Long getIdQuestion() {
-	return idQuestion;
+        return idQuestion;
     }
 
     public void setIdQuestion(Long idQuestion) {
-	this.idQuestion = idQuestion;
+        this.idQuestion = idQuestion;
     }
 
     public String getContent() {
-	return content;
+        return content;
     }
 
     public void setContent(String content) {
-	this.content = content;
+        this.content = content;
     }
 
     public List<Answer> getAnswers() {
-	return answers;
+        return answers;
     }
 
     public void setAnswers(List<Answer> answers) {
-	this.answers = answers;
+        this.answers = answers;
     }
 
     public Test getTest() {
-	return test;
+        return test;
     }
 
     public void setTest(Test test) {
-	this.test = test;
+        this.test = test;
     }
 
     @Override
     public Serializable getId() {
-	return getIdQuestion();
+        return getIdQuestion();
     }
 
 }

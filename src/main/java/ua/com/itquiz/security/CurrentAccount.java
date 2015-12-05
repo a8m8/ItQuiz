@@ -1,11 +1,9 @@
 package ua.com.itquiz.security;
 
 import org.springframework.security.core.userdetails.User;
-
 import ua.com.itquiz.entities.Account;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 public class CurrentAccount extends User {
@@ -16,21 +14,21 @@ public class CurrentAccount extends User {
     private int role;
 
     public CurrentAccount(Account account) {
-	super(account.getEmail(), account.getPassword(), account.getConfirmed(), true, true,
-	    account.getActive(), AuthentificationService.convert(account.getAccountRoles()));
-	this.idAccount = account.getIdAccount();
+        super(account.getEmail(), account.getPassword(), account.getConfirmed(), true, true,
+                account.getActive(), AuthentificationService.convert(account.getAccountRoles()));
+        this.idAccount = account.getIdAccount();
     }
 
     public int getRole() {
-	return role;
+        return role;
     }
 
     public void setRole(int role) {
-	this.role = role;
+        this.role = role;
     }
 
     public int getIdAccount() {
-	return idAccount;
+        return idAccount;
     }
 
 }

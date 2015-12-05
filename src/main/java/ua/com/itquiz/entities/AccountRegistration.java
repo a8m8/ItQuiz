@@ -1,20 +1,9 @@
 package ua.com.itquiz.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 /**
- *
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -40,32 +29,32 @@ public class AccountRegistration extends AbstractEntity {
     }
 
     public Integer getIdAccountRegistration() {
-	return idAccountRegistration;
+        return idAccountRegistration;
     }
 
     public void setIdAccountRegistration(Integer idAccountRegistration) {
-	this.idAccountRegistration = idAccountRegistration;
+        this.idAccountRegistration = idAccountRegistration;
     }
 
     public Account getAccount() {
-	return account;
+        return account;
     }
 
     public void setAccount(Account account) {
-	this.account = account;
+        this.account = account;
     }
 
     public String getHash() {
-	return hash;
+        return hash;
     }
 
     public void setHash(String hash) {
-	this.hash = hash;
+        this.hash = hash;
     }
 
     @Override
     public Serializable getId() {
-	return getIdAccountRegistration();
+        return getIdAccountRegistration();
     }
 
 }

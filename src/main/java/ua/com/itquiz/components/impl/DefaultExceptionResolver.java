@@ -1,17 +1,15 @@
 package ua.com.itquiz.components.impl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
-
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * 
  * @author Artur Meshcheriakov
  */
 @Component
@@ -20,34 +18,34 @@ public class DefaultExceptionResolver extends AbstractHandlerExceptionResolver {
     private static final Logger LOGGER = Logger.getLogger(DefaultExceptionResolver.class);
 
     public DefaultExceptionResolver() {
-	setOrder(0);
+        setOrder(0);
     }
 
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request,
-	HttpServletResponse response, Object handler, Exception ex) {
+                                              HttpServletResponse response, Object handler, Exception ex) {
 
-	try {
-	    Throwable causeException = ex.getCause() == null ? ex : ex.getCause();
-	    if (handler != null && !(causeException instanceof InvalidUserInputException)) {
-		Logger.getLogger(handler.getClass()).error("", ex);
-	    }
-	    LOGGER.warn("Unsupported exception: " + ex.getClass(), ex);
-	    return new ModelAndView("redirect:/error?url=" + request.getRequestURI());
-	} catch (Exception ex1) {
-	    LOGGER.error("Can't send error", ex1);
-	    return new ModelAndView();
-	}
+        try {
+            Throwable causeException = ex.getCause() == null ? ex : ex.getCause();
+            if (handler != null && !(causeException instanceof InvalidUserInputException)) {
+                Logger.getLogger(handler.getClass()).error("", ex);
+            }
+            LOGGER.warn("Unsupported exception: " + ex.getClass(), ex);
+            return new ModelAndView("redirect:/error?url=" + request.getRequestURI());
+        } catch (Exception ex1) {
+            LOGGER.error("Can't send error", ex1);
+            return new ModelAndView();
+        }
     }
 
     @Override
     protected void logException(Exception ex, HttpServletRequest request) {
-	// do nothing
+        // do nothing
     }
 
     @Override
     protected boolean shouldApplyTo(HttpServletRequest arg0, Object arg1) {
-	return true;
+        return true;
     }
 
 }

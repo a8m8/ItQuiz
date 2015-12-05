@@ -1,141 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xmlns:p="http://www.springframework.org/schema/p"
-        xmlns:mvc="http://www.springframework.org/schema/mvc"
-        xmlns:context="http://www.springframework.org/schema/context"
-	   	xmlns:security="http://www.springframework.org/schema/security"
-	   	
-        xsi:schemaLocation="http://www.springframework.org/schema/context 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/context
         					http://www.springframework.org/schema/context/spring-context-4.2.xsd
         					http://www.springframework.org/schema/beans 
         					http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
        						http://www.springframework.org/schema/tx 
         					http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-        					http://www.springframework.org/schema/aop 
-        					http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+
+
         					http://www.springframework.org/schema/mvc 
         					http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
         					http://www.springframework.org/schema/security
             				http://www.springframework.org/schema/security/spring-security-4.0.xsd">
-							 
-	<bean id="config" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations">
-			<list>	
-				<value>classpath:/config.properties</value>
-			</list>
-		</property>
-	</bean>
-	
-	<context:component-scan base-package="ua.com.itquiz.dao.impl"/>
-	<context:component-scan base-package="ua.com.itquiz.services.impl"/>
-	<context:component-scan base-package="ua.com.itquiz.components.impl"/>
-	<context:component-scan base-package="ua.com.itquiz.controllers"/>
-	
-	<mvc:resources location="/resources/" mapping="/resources/**"/>
-	<mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
-	
-	<mvc:annotation-driven/>
-	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/JSP/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
-	
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="classpath:/message"/>
-		<property name="defaultEncoding" value="UTF-8"/>
-	</bean>
-	
-	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="resourceLoaderPath" value="classpath:/mailtemplates/"/>
-		<property name="preferFileSystemAccess" value="false"/>
-	</bean>
-	
-	<bean id="defaultMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.mail.ru"/>
-		<property name="username" value="${email.username}"/>
-		<property name="password" value="${email.password}"/>
-		<property name="port" value="587"/>
-		<property name="defaultEncoding" value="utf8"/>
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.starttls.enable">true</prop>
-			</props>
-		</property>
-	</bean>
-	
-	<bean id="dataSource" class="org.postgresql.jdbc2.optional.PoolingDataSource">
-		<property name="dataSourceName" value="htppl-ds"/>
-		<property name="serverName" value="${db.serverName}"/>
-		<property name="databaseName" value="${db.databaseName}"/>
-		<property name="user" value="${db.username}"/>
-		<property name="password" value="${db.password}"/>
-		<property name="initialConnections" value="${db.initConnections}"/>
-		<property name="maxConnections" value="${db.maxConnections}"/>
-	</bean>
-	
-	<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-		<property name="configLocation" value="classpath:/hibernate.cfg.xml"/>
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-    <!-- ======================================================================================= -->
-	<!-- =================   				Security settings    			==================== -->
-	<!-- ======================================================================================= -->
 
-	<context:component-scan base-package="ua.com.itquiz.security"/>
-	
-	<security:http use-expressions="true" auto-config="true">
-		<security:intercept-url pattern="/login"					access="permitAll"/>
-		<security:intercept-url pattern="/logout"					access="permitAll"/>
-		<security:intercept-url pattern="/signup"					access="permitAll"/>
-		<security:intercept-url pattern="/password-recovery"		access="permitAll"/>
-		<security:intercept-url pattern="/error"					access="permitAll"/>
-		<security:intercept-url pattern="/resources/**"				access="permitAll"/>
-		<security:intercept-url pattern="/favicon.ico"				access="permitAll"/>
-		<security:intercept-url pattern="/fbLogin"					access="permitAll"/>
-		<security:intercept-url pattern="/fbSignup"					access="permitAll"/>
-		<security:intercept-url pattern="/fromfb"					access="permitAll"/>
-		<security:intercept-url pattern="/index.jsp"				access="permitAll"/>
-		<security:intercept-url pattern="/crossing"					access="hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED_TUTOR','ROLE_TUTOR','ROLE_STUDENT')"/>
-		<security:intercept-url pattern="/admin/**"					access="hasRole('ROLE_ADMIN')"/>
-		<security:intercept-url pattern="/advanced-tutor/**"		access="hasRole('ROLE_ADVANCED_TUTOR')"/>
-		<security:intercept-url pattern="/tutor/**"					access="hasRole('ROLE_TUTOR')"/>
-		<security:intercept-url pattern="/**"						access="hasRole('ROLE_STUDENT')"/>
-		
-		<security:form-login
-			login-page="/login"
-			authentication-failure-url="/login?error=1"
-			default-target-url="/crossing"/>
-			
-		<security:logout
-			logout-success-url="/login?logout=1"
-			delete-cookies="JSESSIONID"
-			invalidate-session="true"
-			/>
-		
-		<security:csrf />
-		
-		<security:remember-me key="testOnlineKey" token-repository-ref="tokenRepository"/>
-				
-	</security:http>
-	
-	<security:authentication-manager>
-		<security:authentication-provider ref="customAuthenticationProvider"/>
-	</security:authentication-manager>
-	
-	<bean id="tokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	
+    <bean id="config" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="ua.com.itquiz.dao.impl"/>
+    <context:component-scan base-package="ua.com.itquiz.services.impl"/>
+    <context:component-scan base-package="ua.com.itquiz.components.impl"/>
+    <context:component-scan base-package="ua.com.itquiz.controllers"/>
+
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
+    <mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
+
+    <mvc:annotation-driven/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/JSP/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:/message"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="resourceLoaderPath" value="classpath:/mailtemplates/"/>
+        <property name="preferFileSystemAccess" value="false"/>
+    </bean>
+
+    <bean id="defaultMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.mail.ru"/>
+        <property name="username" value="${email.username}"/>
+        <property name="password" value="${email.password}"/>
+        <property name="port" value="587"/>
+        <property name="defaultEncoding" value="utf8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.postgresql.jdbc2.optional.PoolingDataSource">
+        <property name="dataSourceName" value="htppl-ds"/>
+        <property name="serverName" value="${db.serverName}"/>
+        <property name="databaseName" value="${db.databaseName}"/>
+        <property name="user" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="initialConnections" value="${db.initConnections}"/>
+        <property name="maxConnections" value="${db.maxConnections}"/>
+    </bean>
+
+    <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:/hibernate.cfg.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- ======================================================================================= -->
+    <!-- =================   				Security settings    			==================== -->
+    <!-- ======================================================================================= -->
+
+    <context:component-scan base-package="ua.com.itquiz.security"/>
+
+    <security:http use-expressions="true" auto-config="true">
+        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/logout" access="permitAll"/>
+        <security:intercept-url pattern="/signup" access="permitAll"/>
+        <security:intercept-url pattern="/password-recovery" access="permitAll"/>
+        <security:intercept-url pattern="/error" access="permitAll"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll"/>
+        <security:intercept-url pattern="/favicon.ico" access="permitAll"/>
+        <security:intercept-url pattern="/fbLogin" access="permitAll"/>
+        <security:intercept-url pattern="/fbSignup" access="permitAll"/>
+        <security:intercept-url pattern="/fromfb" access="permitAll"/>
+        <security:intercept-url pattern="/index.jsp" access="permitAll"/>
+        <security:intercept-url pattern="/crossing"
+                                access="hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED_TUTOR','ROLE_TUTOR','ROLE_STUDENT')"/>
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/advanced-tutor/**" access="hasRole('ROLE_ADVANCED_TUTOR')"/>
+        <security:intercept-url pattern="/tutor/**" access="hasRole('ROLE_TUTOR')"/>
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_STUDENT')"/>
+
+        <security:form-login
+                login-page="/login"
+                authentication-failure-url="/login?error=1"
+                default-target-url="/crossing"/>
+
+        <security:logout
+                logout-success-url="/login?logout=1"
+                delete-cookies="JSESSIONID"
+                invalidate-session="true"
+                />
+
+        <security:csrf/>
+
+        <security:remember-me key="testOnlineKey" token-repository-ref="tokenRepository"/>
+
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider ref="customAuthenticationProvider"/>
+    </security:authentication-manager>
+
+    <bean id="tokenRepository"
+          class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
 </beans>

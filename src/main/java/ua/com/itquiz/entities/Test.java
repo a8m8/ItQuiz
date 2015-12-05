@@ -1,23 +1,10 @@
 package ua.com.itquiz.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
 /**
- * 
  * @author Artur Meshcheriakov
  */
 @Entity
@@ -53,56 +40,56 @@ public class Test extends AbstractBusinessEntity {
     }
 
     public Long getIdTest() {
-	return idTest;
+        return idTest;
     }
 
     public void setIdTest(Long idTest) {
-	this.idTest = idTest;
+        this.idTest = idTest;
     }
 
     public Account getAccount() {
-	return account;
+        return account;
     }
 
     public void setAccount(Account account) {
-	this.account = account;
+        this.account = account;
     }
 
     public String getTitle() {
-	return title;
+        return title;
     }
 
     public void setTitle(String title) {
-	this.title = title;
+        this.title = title;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String desctiption) {
-	this.description = desctiption;
+        this.description = desctiption;
     }
 
     public Integer getTimePerQuestion() {
-	return timePerQuestion;
+        return timePerQuestion;
     }
 
     public void setTimePerQuestion(Integer timePerQuestion) {
-	this.timePerQuestion = timePerQuestion;
+        this.timePerQuestion = timePerQuestion;
     }
 
     public List<Question> getQuestions() {
-	return questions;
+        return questions;
     }
 
     public void setQuestions(List<Question> questions) {
-	this.questions = questions;
+        this.questions = questions;
     }
 
     @Override
     public Serializable getId() {
-	return getIdTest();
+        return getIdTest();
     }
 
 }

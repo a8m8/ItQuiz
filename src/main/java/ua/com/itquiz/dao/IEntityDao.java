@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Artur Meshcheriakov
  */
 public interface IEntityDao<T> {

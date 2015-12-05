@@ -1,9 +1,6 @@
 package ua.com.itquiz.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import com.restfb.types.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -12,9 +9,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.restfb.types.User;
-
 import ua.com.itquiz.components.EntityBuilder;
 import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.dao.AccountRegistrationDao;
@@ -30,8 +24,11 @@ import ua.com.itquiz.security.DefaultPasswordEncoder;
 import ua.com.itquiz.services.EmailService;
 import ua.com.itquiz.services.EntranceService;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 /**
- *
  * @author Artur Meshcheriakov
  */
 @Service("entranceService")
@@ -64,146 +61,146 @@ public class EntranceServiceImpl implements EntranceService {
     private DefaultPasswordEncoder defaultPasswordEncoder;
 
     public EntranceServiceImpl() {
-	super();
+        super();
     }
 
     @Override
     @Transactional(readOnly = false,
-		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public Account login(User user) throws InvalidUserInputException {
-	Account account = accountDao.findByEmail(user.getEmail());
-	if (account != null) {
-	    return account;
-	} else {
-	    SignUpForm form = new SignUpForm();
-	    if (user.getEmail() == null) {
-		throw new InvalidUserInputException(messageSource.getMessage(
-		    "facebook.cannotcreate", new Object[] {}, LocaleContextHolder.getLocale()));
-	    }
-	    form.setEmail(user.getEmail());
-	    form.setLogin(String.valueOf(user.getEmail().hashCode()));
-	    if (user.getName() == null) {
-		form.setFio("User");
-	    } else {
-		form.setFio(user.getName());
-	    }
-	    UUID password = UUID.randomUUID();
-	    form.setPassword(password.toString());
-	    form.setPassword2(password.toString());
-	    form.setConfirmed(Boolean.TRUE);
+        Account account = accountDao.findByEmail(user.getEmail());
+        if (account != null) {
+            return account;
+        } else {
+            SignUpForm form = new SignUpForm();
+            if (user.getEmail() == null) {
+                throw new InvalidUserInputException(messageSource.getMessage(
+                        "facebook.cannotcreate", new Object[]{}, LocaleContextHolder.getLocale()));
+            }
+            form.setEmail(user.getEmail());
+            form.setLogin(String.valueOf(user.getEmail().hashCode()));
+            if (user.getName() == null) {
+                form.setFio("User");
+            } else {
+                form.setFio(user.getName());
+            }
+            UUID password = UUID.randomUUID();
+            form.setPassword(password.toString());
+            form.setPassword2(password.toString());
+            form.setConfirmed(Boolean.TRUE);
 
-	    return singUp(form, false, true);
-	}
+            return singUp(form, false, true);
+        }
     }
 
     @Override
     public List<Role> getAllRoles() {
-	return roleDao.findAll();
+        return roleDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = false,
-		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public Account signUp(SignUpForm signUpForm) throws InvalidUserInputException {
-	return singUp(signUpForm, true, false);
+        return singUp(signUpForm, true, false);
     }
 
     private Account singUp(SignUpForm signUpForm, boolean sendVerificationEmail,
-	boolean sendPasswordToEmail) throws InvalidUserInputException {
-	Account exsistingAccount = accountDao.findByEmail(signUpForm.getEmail());
-	if (exsistingAccount != null) {
-	    throw new InvalidUserInputException(messageSource.getMessage("email.exist",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	exsistingAccount = accountDao.findByLogin(signUpForm.getLogin());
-	if (exsistingAccount != null) {
-	    throw new InvalidUserInputException(messageSource.getMessage("login.busy",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	Account account = entityBuilder.buildAccount();
-	String encodedPassword = defaultPasswordEncoder.encode(signUpForm.getPassword());
-	signUpForm.setPassword(encodedPassword);
-	signUpForm.copyFieldsTo(account);
-	accountDao.save(account);
+                           boolean sendPasswordToEmail) throws InvalidUserInputException {
+        Account exsistingAccount = accountDao.findByEmail(signUpForm.getEmail());
+        if (exsistingAccount != null) {
+            throw new InvalidUserInputException(messageSource.getMessage("email.exist",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        exsistingAccount = accountDao.findByLogin(signUpForm.getLogin());
+        if (exsistingAccount != null) {
+            throw new InvalidUserInputException(messageSource.getMessage("login.busy",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        Account account = entityBuilder.buildAccount();
+        String encodedPassword = defaultPasswordEncoder.encode(signUpForm.getPassword());
+        signUpForm.setPassword(encodedPassword);
+        signUpForm.copyFieldsTo(account);
+        accountDao.save(account);
 
-	AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);
-	accountRegistrationDao.save(accountRegistration);
+        AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);
+        accountRegistrationDao.save(accountRegistration);
 
-	Role role = roleDao.getStudentRole();
-	AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
-	accountRoleDao.save(accountRole);
-	accountRoleDao.flush();
+        Role role = roleDao.getStudentRole();
+        AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
+        accountRoleDao.save(accountRole);
+        accountRoleDao.flush();
 
-	List<AccountRole> accountRoles = new ArrayList<>();
-	accountRoles.add(accountRole);
-	account.setAccountRoles(accountRoles);
+        List<AccountRole> accountRoles = new ArrayList<>();
+        accountRoles.add(accountRole);
+        account.setAccountRoles(accountRoles);
 
-	if (sendVerificationEmail) {
-	    account.setAccountRegistration(accountRegistration);
-	    emailService.sendVerificationEmail(account);
-	}
+        if (sendVerificationEmail) {
+            account.setAccountRegistration(accountRegistration);
+            emailService.sendVerificationEmail(account);
+        }
 
-	if (sendPasswordToEmail) {
-	    emailService.sendPasswordToEmail(account);
-	}
+        if (sendPasswordToEmail) {
+            emailService.sendPasswordToEmail(account);
+        }
 
-	return accountDao.findById(account.getId());
+        return accountDao.findById(account.getId());
     }
 
     @Override
     public void sendPasswordForRecovery(String email) throws InvalidUserInputException {
-	Account account = accountDao.findByEmail(email);
-	if (account == null) {
-	    throw new InvalidUserInputException(messageSource.getMessage("email.notexist",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	if (!account.getActive()) {
-	    throw new InvalidUserInputException(messageSource.getMessage("account.notactive",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	if (!account.getConfirmed()) {
-	    throw new InvalidUserInputException(messageSource.getMessage("account.notconfirmed",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
+        Account account = accountDao.findByEmail(email);
+        if (account == null) {
+            throw new InvalidUserInputException(messageSource.getMessage("email.notexist",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (!account.getActive()) {
+            throw new InvalidUserInputException(messageSource.getMessage("account.notactive",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (!account.getConfirmed()) {
+            throw new InvalidUserInputException(messageSource.getMessage("account.notconfirmed",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
 
-	emailService.sendPasswordToEmail(account);
+        emailService.sendPasswordToEmail(account);
     }
 
     @Override
     @Transactional(readOnly = false,
-		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void verifyAccount(int id, String hash) throws InvalidUserInputException {
-	Account account = accountDao.findById(id);
-	if (account == null) {
-	    throw new InvalidUserInputException(messageSource.getMessage("confirmation.failed",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	if (account.getConfirmed()) {
-	    throw new InvalidUserInputException(messageSource.getMessage("confirmation.confirmed",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	if (!StringUtils.equals(account.getAccountRegistration().getHash(), hash)) {
-	    throw new InvalidUserInputException(messageSource.getMessage("confirmation.failed",
-		new Object[] {}, LocaleContextHolder.getLocale()));
-	}
+        Account account = accountDao.findById(id);
+        if (account == null) {
+            throw new InvalidUserInputException(messageSource.getMessage("confirmation.failed",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (account.getConfirmed()) {
+            throw new InvalidUserInputException(messageSource.getMessage("confirmation.confirmed",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (!StringUtils.equals(account.getAccountRegistration().getHash(), hash)) {
+            throw new InvalidUserInputException(messageSource.getMessage("confirmation.failed",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
 
-	account.setConfirmed(Boolean.TRUE);
-	accountDao.update(account);
+        account.setConfirmed(Boolean.TRUE);
+        accountDao.update(account);
     }
 
     @Override
     public boolean isEmailExist(String email) {
-	return (accountDao.findByEmail(email) == null) ? false : true;
+        return (accountDao.findByEmail(email) != null);
     }
 
     @Override
     public boolean isLoginExist(String login) {
-	return (accountDao.findByLogin(login) == null) ? false : true;
+        return (accountDao.findByLogin(login) != null);
     }
 
     @Override
     public Account getAccount(String email) {
-	return accountDao.findByEmail(email);
+        return accountDao.findByEmail(email);
     }
 
 }
