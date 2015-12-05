@@ -2,6 +2,7 @@ package ua.com.itquiz.services.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -52,18 +53,11 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    @Transactional(readOnly = false, rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+    @Transactional(readOnly = false,
+		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
     public void addUser(AdminUserForm adminUserForm) throws InvalidUserInputException {
-	Account exsistingAccount = accountDao.findByEmail(adminUserForm.getEmail());
-	if (exsistingAccount != null) {
-	    throw new InvalidUserInputException(
-		    messageSource.getMessage("email.exist", new Object[] {}, LocaleContextHolder.getLocale()));
-	}
-	exsistingAccount = accountDao.findByLogin(adminUserForm.getLogin());
-	if (exsistingAccount != null) {
-	    throw new InvalidUserInputException(
-		    messageSource.getMessage("login.busy", new Object[] {}, LocaleContextHolder.getLocale()));
-	}
+	isEmailExist(adminUserForm.getEmail());
+	isLoginExist(adminUserForm.getLogin());
 
 	Account account = entityBuilder.buildAccount();
 	adminUserForm.copyFieldsTo(account);
@@ -97,29 +91,53 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    @Transactional(readOnly = false, rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
-    public void editUser(AdminUserForm adminUserForm) {
-	// TODO Auto-generated method stub
+    @Transactional(readOnly = false,
+		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+    public void editUser(Account account, AdminUserForm adminUserForm)
+	throws InvalidUserInputException {
+	boolean isNewValue = false;
+	if (!StringUtils.equals(account.getLogin(), adminUserForm.getLogin())) {
+	    isLoginExist(adminUserForm.getLogin());
+	    account.setLogin(adminUserForm.getLogin());
+	    isNewValue = true;
+	}
+	if (!StringUtils.equals(account.getFio(), adminUserForm.getFio())) {
+	    account.setFio(adminUserForm.getFio());
+	    isNewValue = true;
+	}
+	if (!StringUtils.equals(account.getPassword(), adminUserForm.getPassword())) {
+	    account.setPassword(adminUserForm.getPassword());
+	    isNewValue = true;
+	}
+	// TODO EDIT USER SERVICE
+    }
+
+    private void isEmailExist(String email) throws InvalidUserInputException {
+	Account exsistingAccount = accountDao.findByEmail(email);
+	if (exsistingAccount != null) {
+	    throw new InvalidUserInputException(messageSource.getMessage("email.exist",
+		new Object[] {}, LocaleContextHolder.getLocale()));
+	}
+    }
+
+    private void isLoginExist(String login) throws InvalidUserInputException {
+	Account exsistingAccount = accountDao.findByLogin(login);
+	if (exsistingAccount != null) {
+	    throw new InvalidUserInputException(messageSource.getMessage("login.busy",
+		new Object[] {}, LocaleContextHolder.getLocale()));
+	}
     }
 
     @Override
-    @Transactional(readOnly = false, rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
+    @Transactional(readOnly = false,
+		   rollbackFor = { InvalidUserInputException.class, RuntimeException.class })
     public void removeAccount(int accountId) throws InvalidUserInputException {
 	Account account = accountDao.findById(accountId);
 	if (account == null) {
-	    throw new InvalidUserInputException(
-		    messageSource.getMessage("login.badcredentials", new Object[] {}, LocaleContextHolder.getLocale()));
+	    throw new InvalidUserInputException(messageSource.getMessage("login.badcredentials",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	}
 	accountDao.delete(account);
-    }
-
-    @Override
-    public List<Account> getAllAccounts() {
-	List<Account> result = accountDao.findAll();
-	for (Account account : result) {
-	    account.getAccountRoles();
-	}
-	return result;
     }
 
     @Override

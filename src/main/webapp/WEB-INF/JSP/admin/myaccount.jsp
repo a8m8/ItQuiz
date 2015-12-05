@@ -3,17 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<c:url var="logoutUrl" value="/logout"/>
+<form action="${logoutUrl }" method="POST">
+	<button type="submit" id="logout" class="btn btn-success">Log Out</button>
+	<sec:csrfInput />
+</form>
 
 <ul id="main-nav" class="admin">
 	<li id="firsttab" class="active">	
-		<a href="${context }/admin/myaccount"><strong>My account</strong></a>
+		<a href="${context }/admin/myaccount">My account</a>
 	<li id="secondtab">
-		<a href="${context }/admin/accounts/page/1"><strong>All accounts</strong></a>
+		<a href="${context }/admin/accounts/page/1">All accounts</a>
 	<li id="thirdtab">
-		<a href="${context }/admin/add-user"><strong>Add user</strong></a>
-	<li id="fourthtab">
-		<a href="${context }/logout"><strong>Exit</strong></a>
+		<a href="${context }/admin/add-user">Add user</a>
 </ul>
 	
 <h3>My Account</h3>

@@ -3,15 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <ul id="main-nav" class="login">
 	<li id="firsttab">
-		<a href="${context}/singup"><strong>SingUp</strong></a>
+		<a href="${context}/signup">SignUp</a>
 	<li id="secondtab">
-		<a href="${context}/login"><strong>Welcome</strong></a>
+		<a href="${context}/login">Welcome</a>
 	<li id="thirdtab" class="active">
-		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
+		<a href="${context}/password-recovery">Password recovery</a>
 </ul>
 
 <h3>Please, enter your email</h3>

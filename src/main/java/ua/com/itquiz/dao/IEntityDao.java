@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Artur Meshcheriakov
  */
 public interface IEntityDao<T> {
@@ -16,6 +16,8 @@ public interface IEntityDao<T> {
     void delete(T t);
 
     void remove(T t);
+
+    void flush();
 
     T findById(Serializable id);
 

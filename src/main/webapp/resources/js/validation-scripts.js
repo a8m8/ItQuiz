@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('#login-form').validate({
+	$('#login-form').validate({ 
 		focusCleanup: true,
 		focusInvalid: false,
 		onkeyup: false,
@@ -35,7 +35,7 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-	$('#singup-form').validate({
+	$('#signup-form').validate({
 		focusCleanup: true,
 		focusInvalid: false,
 		onkeyup: false,

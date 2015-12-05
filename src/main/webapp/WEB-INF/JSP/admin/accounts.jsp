@@ -3,17 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<c:url var="logoutUrl" value="/logout"/>
+<form action="${logoutUrl }" method="POST">
+	<button type="submit" id="logout" class="btn btn-success">Log Out</button>
+	<sec:csrfInput />
+</form>
 
 <ul id="main-nav" class="admin">
 	<li id="firsttab">	
-		<a href="${context }/admin/myaccount"><strong>My account</strong></a>
+		<a href="${context }/admin/myaccount">My account</a>
 	<li id="secondtab" class="active">
-		<a href="${context }/admin/all-accounts"><strong>All accounts</strong></a>
+		<a href="${context }/admin/accounts/page/1">All accounts</a>
 	<li id="thirdtab">
-		<a href="${context }/admin/add-user"><strong>Add user</strong></a>
-	<li id="fourthtab">
-		<a href="${context }/logout"><strong>Exit</strong></a>
+		<a href="${context }/admin/add-user">Add user</a>
 </ul>
 
 <h3>Accounts management</h3>
@@ -51,6 +56,7 @@
 		</c:forEach>
 	</table>
 </div>
+
 <c:url var="firstUrl" value="/admin/accounts/page/1" />
 <c:url var="lastUrl" value="/admin/accounts/page/${maximum}" />
 <c:url var="prevUrl" value="/admin/accounts/page/${currentIndex - 1}" />
@@ -75,7 +81,7 @@
                     <li class="active"><a href="${pageUrl}"><c:out value="${i}" /></a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                    <li><a href="${pageUrl}">${i}</a></li>
                 </c:otherwise>
             </c:choose>
         </c:forEach>

@@ -5,3 +5,4 @@
 .settings/
 /src/test
 /src/main/resources/config.properties
+tasks.todo

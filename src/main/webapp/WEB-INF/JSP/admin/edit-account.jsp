@@ -17,45 +17,47 @@
 		<a href="${context }/admin/myaccount">My account</a>
 	<li id="secondtab">
 		<a href="${context }/admin/accounts/page/1">All accounts</a>
-	<li id="thirdtab" class="active">
+	<li id="thirdtab">
 		<a href="${context }/admin/add-user">Add user</a>
 </ul>
 
-<h3>Add new user</h3>
+<h3>Edit User</h3>
 
 <c:if test="${not empty errorMessage}">
 	<h4 id="error-message">${errorMessage }</h4>
 </c:if>
 
-<form:form id="admin-add-user-form" class="form-horizontal" method="POST" action="${context }/admin/add-user" commandName="adminUserForm">
+<input type="hidden" name="id" value="${user.idAccount }"/>
+
+<form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-user" commandName="adminUserForm">
 	<div class="form-group">
 		<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
 		<div class="col-md-4">
-			<form:input type="text" id="mail" class="form-control" path="email"/>
+			<form:input type="text" id="mail" class="form-control" path="email" value="${user.email}" readonly="true"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
 		<div class="col-md-4">
-			<form:input id="pass" class="form-control" path="password"/>
+			<form:input id="pass" class="form-control" path="password" value="${user.password }"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<form:label for="pass2" path="password2" class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
 		<div class="col-md-4">
-			<form:input id="pass2" class="form-control" path="password2"/>
+			<form:input id="pass2" class="form-control" path="password2" value="${user.password }"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
 		<div class="col-md-4">
-			<form:input id="log" class="form-control" path="login"/>
+			<form:input id="log" class="form-control" path="login" value="${user.login }"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<form:label for="name" path="fio" class="col-md-offset-2 col-md-2 control-label" >Name:</form:label>
 		<div class="col-md-4">
-			<form:input id="name" class="form-control" path="fio"/>
+			<form:input id="name" class="form-control" path="fio" value="${user.fio }"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -102,5 +104,4 @@
 			<button type="submit" class="btn btn-warning btn-block">Save</button>
 		</div>
 	</div>
-
 </form:form>

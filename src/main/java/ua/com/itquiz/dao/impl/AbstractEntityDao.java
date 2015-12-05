@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.com.itquiz.dao.IEntityDao;
 
 /**
- * 
+ *
  * @author Artur Meshcheriakov
  */
 public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
@@ -33,6 +33,12 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     @Override
     public void save(final T t) {
 	getSession().save(t);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void flush() {
+	getSession().flush();
     }
 
     @Transactional(propagation = Propagation.MANDATORY)

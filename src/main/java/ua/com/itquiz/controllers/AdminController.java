@@ -1,5 +1,6 @@
 package ua.com.itquiz.controllers;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.entities.Account;
+import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
 import ua.com.itquiz.forms.AdminUserForm;
@@ -38,11 +41,12 @@ public class AdminController extends CommonController {
     }
 
     @RequestMapping(value = "/myaccount", method = RequestMethod.POST)
-    public String editPersonalInformation(@ModelAttribute("personalInfoForm") AccountInfoForm accountInfoForm,
-	    Model model, HttpSession session) {
+    public String editPersonalInformation(
+	@ModelAttribute("personalInfoForm") AccountInfoForm accountInfoForm, Model model,
+	HttpSession session) {
 	try {
-	    model.addAttribute("message", super.editPersonalData(session, accountInfoForm));
-	    return "admin/myaccount";
+	    session.setAttribute("message", super.editPersonalData(session, accountInfoForm));
+	    return "redirect:/admin/accounts/page/1";
 	} catch (InvalidUserInputException ex) {
 	    model.addAttribute("errorMessage", ex.getMessage());
 	    return "admin/myaccount";
@@ -55,7 +59,12 @@ public class AdminController extends CommonController {
 	    model.addAttribute("message", session.getAttribute("message"));
 	    session.removeAttribute("message");
 	}
-	int count = 2;
+	if (session.getAttribute("errorMessage") != null) {
+	    model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
+	    session.removeAttribute("errorMessage");
+	}
+
+	int count = 1; // Count of accounts which are displayed at the page
 	int temp = adminService.accountCount() / count;
 	int maximum = (adminService.accountCount() % count == 0) ? temp : temp + 1;
 	int current = pageNumber;
@@ -79,13 +88,13 @@ public class AdminController extends CommonController {
     }
 
     @RequestMapping(value = "/add-user", method = RequestMethod.POST)
-    public String addNewUser(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm, Model model,
-	    HttpSession session) {
+    public String addNewUser(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
+	Model model, HttpSession session) {
 	try {
 	    adminUserForm.validate(messageSource);
 	    adminService.addUser(adminUserForm);
-	    session.setAttribute("message",
-		    messageSource.getMessage("admin.usercreated", new Object[] {}, LocaleContextHolder.getLocale()));
+	    session.setAttribute("message", messageSource.getMessage("admin.usercreated",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:/admin/accounts/page/1";
 	} catch (InvalidUserInputException e) {
 	    model.addAttribute("errorMessage", e.getMessage());
@@ -94,14 +103,57 @@ public class AdminController extends CommonController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String removeAccount(@RequestParam("id") int id) {
+    public String removeAccount(@RequestParam("id") int id, HttpSession session) {
 	try {
 	    adminService.removeAccount(id);
 	    return "redirect:/admin/accounts/page/1";
 	} catch (InvalidUserInputException e) {
-	    return "redirect:/boom";
+	    session.setAttribute("errorMessage", e.getMessage());
+	    return "redirect:/admin/accounts/page/1";
 	}
-	// FIXME error message
+    }
+
+    @RequestMapping(value = "/edit-account", method = RequestMethod.GET)
+    public String showEditUser(@RequestParam("id") int id, Model model) {
+	Account account = commonService.getAccountById(id);
+	AdminUserForm adminUserForm = new AdminUserForm();
+	if (account.getActive()) {
+	    adminUserForm.setActive(Boolean.TRUE);
+	}
+	if (account.getConfirmed()) {
+	    adminUserForm.setConfirmed(Boolean.TRUE);
+	}
+	HashSet<Integer> accountRolesSet = new HashSet<>();
+	for (AccountRole accountRole : account.getAccountRoles()) {
+	    accountRolesSet.add(accountRole.getRole().getIdRole().intValue());
+	}
+	if (accountRolesSet.contains(ApplicationConstants.ADMIN_ROLE)) {
+	    adminUserForm.setAdministrator(Boolean.TRUE);
+	}
+	if (accountRolesSet.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
+	    adminUserForm.setAdvancedTutor(Boolean.TRUE);
+	}
+	if (accountRolesSet.contains(ApplicationConstants.TUTOR_ROLE)) {
+	    adminUserForm.setTutor(Boolean.TRUE);
+	}
+	if (accountRolesSet.contains(ApplicationConstants.STUDENT_ROLE)) {
+	    adminUserForm.setStudent(Boolean.TRUE);
+	}
+	model.addAttribute("adminUserForm", adminUserForm);
+	model.addAttribute("user", account);
+	return "admin/edit-account";
+    }
+
+    @RequestMapping(value = "/edit-account", method = RequestMethod.POST)
+    public String editAccount(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
+	@RequestParam("id") int id, Model model, HttpSession session) {
+	try {
+	    adminUserForm.validate(messageSource);
+	} catch (InvalidUserInputException e) {
+
+	}
+	// TODO EDIT USER CONTROLLER
+	return null;
     }
 
 }

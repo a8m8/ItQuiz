@@ -7,7 +7,7 @@ import com.restfb.types.User;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.SingUpForm;
+import ua.com.itquiz.forms.SignUpForm;
 
 /**
  *
@@ -15,13 +15,11 @@ import ua.com.itquiz.forms.SingUpForm;
  */
 public interface EntranceService {
 
-    Account login(String email, String password, int role) throws InvalidUserInputException;
-
     Account login(User user) throws InvalidUserInputException;
 
     List<Role> getAllRoles();
 
-    Account singUp(SingUpForm form) throws InvalidUserInputException;
+    Account signUp(SignUpForm form) throws InvalidUserInputException;
 
     void sendPasswordForRecovery(String email) throws InvalidUserInputException;
 

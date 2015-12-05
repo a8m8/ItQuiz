@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ua.com.itquiz.constants.Roles;
+import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.EmailForm;
-import ua.com.itquiz.forms.LoginForm;
-import ua.com.itquiz.forms.SingUpForm;
+import ua.com.itquiz.forms.SignUpForm;
+import ua.com.itquiz.security.CurrentAccount;
+import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.EntranceService;
 
 /**
@@ -38,10 +39,10 @@ public class EntranceController extends AbstractController implements Initializi
 
     @Override
     public void afterPropertiesSet() throws Exception {
-	redirects.put(Roles.ADMIN_ROLE.getID(), "/admin/accounts/page/1");
-	redirects.put(Roles.ADVANCED_TUTOR_ROLE.getID(), "/advanced-tutor/home");
-	redirects.put(Roles.TUTOR_ROLE.getID(), "/tutor/home");
-	redirects.put(Roles.STUDENT_ROLE.getID(), "/home");
+	redirects.put(ApplicationConstants.ADMIN_ROLE, "/admin/accounts/page/1");
+	redirects.put(ApplicationConstants.ADVANCED_TUTOR_ROLE, "/advanced-tutor/home");
+	redirects.put(ApplicationConstants.TUTOR_ROLE, "/tutor/home");
+	redirects.put(ApplicationConstants.STUDENT_ROLE, "/home");
     }
 
     @Autowired
@@ -71,18 +72,13 @@ public class EntranceController extends AbstractController implements Initializi
 	return (entranceService.isLoginExist(login)) ? "false" : "true";
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
-	session.invalidate();
-	return "redirect:login";
-    }
-
     @RequestMapping(value = "/account-confirmation", method = RequestMethod.GET)
-    public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash, HttpSession session) {
+    public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash,
+	HttpSession session) {
 	try {
 	    entranceService.verifyAccount(id, hash);
-	    session.setAttribute("message",
-		    messageSource.getMessage("confirmation.success", new Object[] {}, LocaleContextHolder.getLocale()));
+	    session.setAttribute("message", messageSource.getMessage("confirmation.success",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:login";
 	} catch (InvalidUserInputException e) {
 	    session.setAttribute("errorMessage", e.getMessage());
@@ -90,7 +86,7 @@ public class EntranceController extends AbstractController implements Initializi
 	}
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = { "/login", "/loginFailed" }, method = RequestMethod.GET)
     public String showLogin(HttpSession session, Model model) {
 	if (session.getAttribute("message") != null) {
 	    model.addAttribute("message", session.getAttribute("message"));
@@ -100,24 +96,17 @@ public class EntranceController extends AbstractController implements Initializi
 	    model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
 	    session.removeAttribute("errorMessage");
 	}
-	model.addAttribute("loginForm", new LoginForm());
+	if (SecurityUtils.getCurrentAccount() != null) {
+	    return "redirect:crossing";
+	}
 	initRoles(model);
 	return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute("loginForm") LoginForm loginForm, Model model, HttpSession session) {
-	try {
-	    loginForm.validate(messageSource);
-	    Account account = entranceService.login(loginForm.getEmail(), loginForm.getPassword(),
-		    loginForm.getIdRole());
-	    session.setAttribute("CURRENT_ACCOUNT_ID", account.getIdAccount());
-	    return "redirect:" + redirects.get(loginForm.getIdRole());
-	} catch (InvalidUserInputException e) {
-	    model.addAttribute("errorMessage", e.getMessage());
-	    initRoles(model);
-	    return "login";
-	}
+    @RequestMapping(value = "/crossing", method = RequestMethod.GET)
+    public String crossing() {
+	CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
+	return "redirect:" + redirects.get(currentAccount.getRole());
     }
 
     private void initRoles(Model model) {
@@ -125,23 +114,24 @@ public class EntranceController extends AbstractController implements Initializi
 	model.addAttribute("roles", roles);
     }
 
-    @RequestMapping(value = "/singup", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String showSingUp(Model model) {
-	model.addAttribute("singUpForm", new SingUpForm());
-	return "singup";
+	model.addAttribute("signUpForm", new SignUpForm());
+	return "signup";
     }
 
-    @RequestMapping(value = "/singup", method = RequestMethod.POST)
-    public String singup(@ModelAttribute("singUpForm") SingUpForm singUpForm, Model model, HttpSession session) {
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String singup(@ModelAttribute("signUpForm") SignUpForm signUpForm, Model model,
+	HttpSession session) {
 	try {
-	    singUpForm.validate(messageSource);
-	    entranceService.singUp(singUpForm);
-	    session.setAttribute("message",
-		    messageSource.getMessage("singup.emailsend", new Object[] {}, LocaleContextHolder.getLocale()));
+	    signUpForm.validate(messageSource);
+	    entranceService.signUp(signUpForm);
+	    session.setAttribute("message", messageSource.getMessage("signup.emailsend",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:login";
 	} catch (InvalidUserInputException e) {
 	    model.addAttribute("errorMessage", e.getMessage());
-	    return "singup";
+	    return "signup";
 	}
     }
 
@@ -152,13 +142,14 @@ public class EntranceController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/password-recovery", method = RequestMethod.POST)
-    public String passwordRecovery(@ModelAttribute("passwordRecoveryForm") EmailForm passwordRecoveryForm, Model model,
-	    HttpSession session) {
+    public String passwordRecovery(
+	@ModelAttribute("passwordRecoveryForm") EmailForm passwordRecoveryForm, Model model,
+	HttpSession session) {
 	try {
 	    passwordRecoveryForm.validate(messageSource);
 	    entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
-	    session.setAttribute("message",
-		    messageSource.getMessage("password.send", new Object[] {}, LocaleContextHolder.getLocale()));
+	    session.setAttribute("message", messageSource.getMessage("password.send",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	    return "redirect:login";
 	} catch (InvalidUserInputException e) {
 	    model.addAttribute("errorMessage", e.getMessage());

@@ -12,6 +12,7 @@ public interface CommonService {
 
     Account getAccountById(int id);
 
-    boolean editPersonalData(Account account, AccountInfoForm editDataForm) throws InvalidUserInputException;
+    boolean editPersonalData(Account account, AccountInfoForm editDataForm)
+	throws InvalidUserInputException;
 
 }

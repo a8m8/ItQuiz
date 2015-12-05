@@ -3,15 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <ul id="main-nav" class="login">
 	<li id="firsttab" class="active">
-		<a href="${context}/singup"><strong>SingUp</strong></a>
+		<a href="${context}/signup">SignUp</a>
 	<li id="secondtab">
-		<a href="${context}/login"><strong>Welcome</strong></a>
+		<a href="${context}/login">Welcome</a>
 	<li id="thirdtab">
-		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
+		<a href="${context}/password-recovery">Password recovery</a>
 </ul>
 
 <h3>Creating new user</h3>
@@ -20,7 +21,7 @@
 	<h4 id="error-message">${errorMessage }</h4>
 </c:if>
 
-<form:form id="singup-form" class="form-horizontal" method="POST" action="${context }/singup" commandName="singUpForm" >
+<form:form id="signup-form" class="form-horizontal" method="POST" action="${context }/signup" commandName="signUpForm" >
 	<div class="form-group">
 		<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
 		<div class="col-md-4">

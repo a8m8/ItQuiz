@@ -3,16 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <ul id="main-nav" class="login">
 	<li id="firsttab">
-		<a href="${context}/singup"><strong>SingUp</strong></a>
+		<a href="${context}/signup">SignUp</a>
 	<li id="secondtab" class="active">
-		<a href="${context}/login"><strong>Welcome</strong></a>
+		<a href="${context}/login">Welcome</a>
 	<li id="thirdtab">
-		<a href="${context}/password-recovery"><strong>Password recovery</strong></a>
-</ul>
+		<a href="${context}/password-recovery">Password recovery</a>
+</ul>`
 
 <h3>Please login</h3>
 
@@ -20,35 +21,50 @@
 	<h4 id="message">${message }</h4>
 </c:if>
 
-<c:if test="${not empty errorMessage}">
-	<h4 id="error-message">${errorMessage }</h4>
+<c:if test="${param.logout != null}">
+	<h4 id="message">You have been logged out successfully.</h4>
 </c:if>
 
-<form:form id="login-form" class="form-horizontal" action="${context }/login" method="POST" commandName="loginForm" >
+<c:if test="${param.error != null}">
+	<h4 id="error-message">${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message }</h4>
+</c:if>
+
+<c:url var="loginUrl" value="/login"/>
+<form id="login-form" class="form-horizontal" action="${loginUrl }" method="POST">
 	<div class="form-group">
-		<form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+		<label for="mail" class="col-md-offset-2 col-md-2 control-label">Email:</label>
 		<div class="col-md-4">
-			<form:input id="mail" class="form-control" path="email" />
+			<input type="text" id="mail" class="form-control" name="username" />
 		</div>
 	</div>
 	<div class="form-group">
-		<form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
+		<label for="pass" class="col-md-offset-2 col-md-2 control-label">Password:</label>
 		<div class="col-md-4">
-			<form:input type="password" id="pass" class="form-control" path="password"/>
+			<input type="password" id="pass" class="form-control" name="password"/>
 		</div>
 	</div>
 	<div class="form-group">
-		<form:label for="rol" path="idRole" class="col-md-offset-2 col-md-2 control-label">Role:</form:label>
+		<label for="rol" class="col-md-offset-2 col-md-2 control-label">Role:</label>
 		<div class="col-md-4">
-			<form:select path="idRole" class="form-control" id="rol">
-				<form:option value="0" label="--- Select ---"/>
-				<form:options items="${roles}" itemLabel="title" itemValue="idRole" />
-			</form:select>
+			<select name="idRole" class="form-control" id="rol">
+				<option value="0" label="--- Select ---"/>
+				<c:forEach var="role" items="${roles }">
+					<option value="${role.idRole }">${role.title }</option>
+				</c:forEach>
+			</select>
 		</div>
 	</div>
 	<div class="form-group">
 		<div class="col-md-offset-4 col-md-4">
-			<button type="submit" class="btn btn-warning btn-block">Login</button>
+			<label id="checkbox-label" class="checkbox-inline">
+				<input type="checkbox" id="remember-me" name="remember-me" />Remember me
+			</label>
+		</div>
+	</div>
+	<sec:csrfInput />
+	<div class="form-group">
+		<div class="col-md-offset-4 col-md-4">
+			<button type="submit" value="Login" class="btn btn-warning btn-block">Login</button>
 		</div>
 	</div>
 	<div class="form-group">
@@ -58,5 +74,5 @@
 			</a>
 		</div>
 	</div>
-</form:form>
+</form>
 	

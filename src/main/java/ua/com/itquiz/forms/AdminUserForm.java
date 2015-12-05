@@ -3,16 +3,15 @@ package ua.com.itquiz.forms;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 
 /**
  *
  * @author Artur Meshcheriakov
  */
-public class AdminUserForm extends SingUpForm {
+public class AdminUserForm extends SignUpForm {
 
-    private Boolean active = Boolean.FALSE;
+    private static final long serialVersionUID = -3393569577509014603L;
 
     private Boolean student = Boolean.FALSE;
 
@@ -21,14 +20,6 @@ public class AdminUserForm extends SingUpForm {
     private Boolean tutor = Boolean.FALSE;
 
     private Boolean advancedTutor = Boolean.FALSE;
-
-    public Boolean getActive() {
-	return active;
-    }
-
-    public void setActive(Boolean active) {
-	this.active = active;
-    }
 
     public Boolean getStudent() {
 	return student;
@@ -66,14 +57,9 @@ public class AdminUserForm extends SingUpForm {
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
 	super.validate(messageSource);
 	if (!administrator && !advancedTutor && !tutor && !student) {
-	    throw new InvalidUserInputException(
-		    messageSource.getMessage("roles.withoutroles", new Object[] {}, LocaleContextHolder.getLocale()));
+	    throw new InvalidUserInputException(messageSource.getMessage("roles.withoutroles",
+		new Object[] {}, LocaleContextHolder.getLocale()));
 	}
     }
 
-    @Override
-    public void copyFieldsTo(Account account) {
-	super.copyFieldsTo(account);
-	account.setActive(active);
-    }
 }

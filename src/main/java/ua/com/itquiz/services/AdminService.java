@@ -14,13 +14,11 @@ public interface AdminService {
 
     int accountCount();
 
-    List<Account> getAllAccounts();
-
     List<Account> getAccounts(int offset, int count);
 
     void addUser(AdminUserForm form) throws InvalidUserInputException;
 
-    void editUser(AdminUserForm form) throws InvalidUserInputException;
+    void editUser(Account account, AdminUserForm form) throws InvalidUserInputException;
 
     void removeAccount(int accountId) throws InvalidUserInputException;
 

@@ -14,13 +14,13 @@ public abstract class AbstractBusinessEntity extends AbstractEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(nullable = false, insertable = false)
+    @Column(insertable = false, updatable = false)
     private Timestamp created;
 
     @Column
     private Timestamp updated;
 
-    @Column(nullable = false, insertable = false)
+    @Column
     private Boolean active;
 
     public Timestamp getCreated() {
