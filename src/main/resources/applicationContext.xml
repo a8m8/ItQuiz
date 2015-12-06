@@ -96,6 +96,7 @@
     <security:http use-expressions="true" auto-config="true">
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/logout" access="permitAll"/>
+        <security:intercept-url pattern="/account-confirmation" access="permitAll"/>
         <security:intercept-url pattern="/signup" access="permitAll"/>
         <security:intercept-url pattern="/password-recovery" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>

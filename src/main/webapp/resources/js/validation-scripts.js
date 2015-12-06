@@ -44,7 +44,7 @@ $(document).ready(function () {
                 required: true,
                 email: true,
                 maxlength: 60,
-                remote: "verify-email"
+                remote: "signup"
             },
             password: {
                 required: true,
@@ -57,7 +57,7 @@ $(document).ready(function () {
             login: {
                 required: true,
                 maxlength: 60,
-                remote: "verify-login"
+                remote: "signup"
             },
             fio: {
                 required: true,
@@ -106,7 +106,7 @@ $(document).ready(function () {
             email: {
                 required: true,
                 email: true,
-                remote: "verify-email-recov"
+                remote: "password-recovery"
             }
         },
         messages: {

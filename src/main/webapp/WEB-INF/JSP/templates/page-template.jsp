@@ -57,7 +57,7 @@
 <script type="text/javascript" src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
 <script type="text/javascript" src="${context}/resources/js/jquery.validate.min.js?v=${CSS_JS_VERSION}"></script>
 <script type="text/javascript" src="${context}/resources/js/jquery.form.min.js?v=${CSS_JS_VERSION}"></script>
-<!-- <script type="text/javascript" src="${context}/resources/js/validation-scripts.js?v=${CSS_JS_VERSION}"></script> -->
+<script type="text/javascript" src="${context}/resources/js/validation-scripts.js?v=${CSS_JS_VERSION}"></script>
 
 </body>
 </html>

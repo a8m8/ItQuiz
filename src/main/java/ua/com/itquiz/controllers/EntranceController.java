@@ -44,33 +44,6 @@ public class EntranceController extends AbstractController implements Initializi
     @Autowired
     private EntranceService entranceService;
 
-    @RequestMapping(value = "/verify-email", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String verifyEmail(@RequestParam("email") String email) {
-        return (entranceService.isEmailExist(email)) ? "false" : "true";
-    }
-
-    @RequestMapping(value = "/verify-email-recov", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String verifyEmailRec(@RequestParam("email") String email) {
-        Account account = entranceService.getAccount(email);
-
-        if (account == null || !account.getActive() || !account.getConfirmed()) {
-            return "false";
-        }
-
-        return "true";
-    }
-
-    @RequestMapping(value = "/verify-login", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String verifyLogin(@RequestParam("login") String login) {
-        return (entranceService.isLoginExist(login)) ? "false" : "true";
-    }
-
     @RequestMapping(value = "/account-confirmation", method = RequestMethod.GET)
     public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash,
                                  HttpSession session) {
@@ -113,6 +86,20 @@ public class EntranceController extends AbstractController implements Initializi
         model.addAttribute("roles", roles);
     }
 
+    @RequestMapping(value = "/signup", method = RequestMethod.GET, headers = "Accept=application/json")
+    public
+    @ResponseBody
+    String verify(@RequestParam(value = "email", required = false) String email, @RequestParam
+            (value = "login", required = false) String login) {
+        if (email != null) {
+            return (entranceService.isEmailExist(email)) ? "false" : "true";
+        }
+        if (login != null) {
+            return (entranceService.isLoginExist(login)) ? "false" : "true";
+        }
+        return "Wrong parameter";
+    }
+
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String showSingUp(Model model) {
         model.addAttribute("signUpForm", new SignUpForm());
@@ -132,6 +119,17 @@ public class EntranceController extends AbstractController implements Initializi
             model.addAttribute("errorMessage", e.getMessage());
             return "signup";
         }
+    }
+
+    @RequestMapping(value = "/password-recovery", method = RequestMethod.GET, headers = "Accept=application/json")
+    public
+    @ResponseBody
+    String verifyPasswordRecovery(@RequestParam("email") String email) {
+        Account account = entranceService.getAccount(email);
+        if (account == null || !account.getActive() || !account.getConfirmed()) {
+            return "false";
+        }
+        return "true";
     }
 
     @RequestMapping(value = "/password-recovery", method = RequestMethod.GET)
