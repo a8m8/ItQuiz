@@ -29,14 +29,14 @@
     <div id="logo" class="col-md-offset-1 col-md-3">
         <h1>LOGO HERE</h1>
     </div>
-    <div id="welcome" class="col-md-7">
+    <div id="welcome" class="col-md-6">
         <h1>ItQuiz</h1>
     </div>
 </div>
 
 <div id="wrapper">
 
-    <section id="content">
+    <section id="main">
         <decorator:body/>
     </section>
 

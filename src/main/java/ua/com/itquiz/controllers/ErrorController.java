@@ -12,7 +12,7 @@ public class ErrorController extends AbstractController {
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String showError() {
-        return "redirect:error";
+        return "error";
     }
 
 }

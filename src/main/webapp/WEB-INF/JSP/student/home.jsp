@@ -12,4 +12,6 @@
     <sec:csrfInput/>
 </form>
 
-<h1>Hello I am a student</h1>
+<div id="content">
+    <h1>Hello I am a student</h1>
+</div>
