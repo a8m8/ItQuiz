@@ -12,6 +12,7 @@ import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
+import ua.com.itquiz.forms.PasswordForm;
 import ua.com.itquiz.services.CommonService;
 
 import java.sql.Timestamp;
@@ -31,12 +32,21 @@ public class CommonServiceImpl implements CommonService {
     protected MessageSource messageSource;
 
     @Override
-    public Account getAccountById(int id) {
-        return accountDao.findById(id);
+    public Account getAccountById(int idAccount) {
+        return accountDao.findById(idAccount);
     }
 
     @Override
-    public boolean editPersonalData(Account account, AccountInfoForm editDataForm) throws InvalidUserInputException {
+    public void changePassword(int idAccount, PasswordForm passwordForm) {
+        Account account = accountDao.findById(idAccount);
+        account.setPassword(passwordForm.getPassword());
+        account.setUpdated(new Timestamp(System.currentTimeMillis()));
+        accountDao.save(account);
+    }
+
+    @Override
+    public void editPersonalData(int idAccount, AccountInfoForm editDataForm) throws InvalidUserInputException {
+        Account account = accountDao.findById(idAccount);
         boolean isNewValue = false;
         if (!StringUtils.equals(account.getLogin(), editDataForm.getLogin())) {
             if (accountDao.findByLogin(editDataForm.getLogin()) == null) {
@@ -51,14 +61,12 @@ public class CommonServiceImpl implements CommonService {
             account.setFio(editDataForm.getFio());
             isNewValue = true;
         }
-        if (!StringUtils.equals(account.getPassword(), editDataForm.getPassword())) {
-            account.setPassword(editDataForm.getPassword());
-            isNewValue = true;
-        }
         if (isNewValue) {
             account.setUpdated(new Timestamp(System.currentTimeMillis()));
             accountDao.save(account);
+        } else {
+            throw new InvalidUserInputException(messageSource.getMessage("nothing.save",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
         }
-        return isNewValue;
     }
 }

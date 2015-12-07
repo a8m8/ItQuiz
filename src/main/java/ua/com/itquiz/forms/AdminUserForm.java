@@ -11,13 +11,13 @@ public class AdminUserForm extends SignUpForm {
 
     private static final long serialVersionUID = -3393569577509014603L;
 
-    private Boolean student = Boolean.FALSE;
+    protected Boolean student = Boolean.FALSE;
 
-    private Boolean administrator = Boolean.FALSE;
+    protected Boolean administrator = Boolean.FALSE;
 
-    private Boolean tutor = Boolean.FALSE;
+    protected Boolean tutor = Boolean.FALSE;
 
-    private Boolean advancedTutor = Boolean.FALSE;
+    protected Boolean advancedTutor = Boolean.FALSE;
 
     public Boolean getStudent() {
         return student;

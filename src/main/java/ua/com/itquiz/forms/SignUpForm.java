@@ -1,6 +1,10 @@
 package ua.com.itquiz.forms;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import ua.com.itquiz.entities.Account;
+import ua.com.itquiz.exceptions.InvalidUserInputException;
 
 /**
  * @author Artur Meshcheriakov
@@ -10,8 +14,26 @@ public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
 
     private static final long serialVersionUID = 2155252411443776689L;
 
-    private Boolean active = Boolean.TRUE;
-    private Boolean confirmed = Boolean.FALSE;
+    protected String password;
+    protected String passwordConfirmed;
+    protected Boolean active = Boolean.TRUE;
+    protected Boolean confirmed = Boolean.FALSE;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirmed() {
+        return passwordConfirmed;
+    }
+
+    public void setPasswordConfirmed(String passwordConfirmed) {
+        this.passwordConfirmed = passwordConfirmed;
+    }
 
     public Boolean getActive() {
         return active;
@@ -27,6 +49,23 @@ public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
 
     public void setConfirmed(Boolean confirmed) {
         this.confirmed = confirmed;
+    }
+
+    @Override
+    public void validate(MessageSource messageSource) throws InvalidUserInputException {
+        super.validate(messageSource);
+        if (StringUtils.isBlank(password)) {
+            throw new InvalidUserInputException(
+                    messageSource.getMessage("passwords.required", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (password.length() > 60) {
+            throw new InvalidUserInputException(
+                    messageSource.getMessage("volume.exceed", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (!StringUtils.equals(password, passwordConfirmed)) {
+            throw new InvalidUserInputException(
+                    messageSource.getMessage("passwords.notmatch", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
     }
 
     @Override

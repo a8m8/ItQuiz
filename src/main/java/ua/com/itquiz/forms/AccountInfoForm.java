@@ -12,8 +12,6 @@ public class AccountInfoForm extends EmailForm {
 
     private static final long serialVersionUID = -1080403923686666060L;
 
-    protected String password;
-    protected String password2;
     protected String login;
     protected String fio;
 
@@ -23,22 +21,6 @@ public class AccountInfoForm extends EmailForm {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
     }
 
     public String getFio() {
@@ -67,18 +49,6 @@ public class AccountInfoForm extends EmailForm {
         if (fio.length() > 200) {
             throw new InvalidUserInputException(
                     messageSource.getMessage("volume.exceed", new Object[]{}, LocaleContextHolder.getLocale()));
-        }
-        if (StringUtils.isBlank(password)) {
-            throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.required", new Object[]{}, LocaleContextHolder.getLocale()));
-        }
-        if (password.length() > 60) {
-            throw new InvalidUserInputException(
-                    messageSource.getMessage("volume.exceed", new Object[]{}, LocaleContextHolder.getLocale()));
-        }
-        if (!StringUtils.equals(password, password2)) {
-            throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.notmatch", new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }
 

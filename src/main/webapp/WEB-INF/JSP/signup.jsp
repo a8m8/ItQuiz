@@ -25,34 +25,34 @@
     <form:form id="signup-form" class="form-horizontal" method="POST" action="${context }/signup"
                commandName="signUpForm">
         <div class="form-group">
-            <form:label for="mail" path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+            <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
             <div class="col-md-4">
-                <form:input id="mail" class="form-control" path="email"/>
+                <form:input class="form-control" path="email"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label for="pass" path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
+            <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password:</form:label>
             <div class="col-md-4">
-                <form:input id="pass" class="form-control" path="password"/>
+                <form:input class="form-control" path="password"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label for="pass2" path="password2"
-                        class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
+            <form:label path="passwordConfirmed" class="col-md-offset-2 col-md-2 control-label">Confirm
+                password:</form:label>
             <div class="col-md-4">
-                <form:input id="pass2" class="form-control" path="password2"/>
+                <form:input class="form-control" path="passwordConfirmed"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+            <form:label path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
             <div class="col-md-4">
-                <form:input id="log" class="form-control" path="login"/>
+                <form:input class="form-control" path="login"/>
             </div>
         </div>
         <div class="form-group">
-            <form:label for="name" path="fio" class="col-md-offset-2 col-md-2 control-label">Your name:</form:label>
+            <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">Your name:</form:label>
             <div class="col-md-4">
-                <form:input id="name" class="form-control" path="fio"/>
+                <form:input class="form-control" path="fio"/>
             </div>
         </div>
         <div class="form-group">

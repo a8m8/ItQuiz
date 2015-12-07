@@ -86,7 +86,7 @@ public class EntranceServiceImpl implements EntranceService {
             }
             UUID password = UUID.randomUUID();
             form.setPassword(password.toString());
-            form.setPassword2(password.toString());
+            form.setPasswordConfirmed(password.toString());
             form.setConfirmed(Boolean.TRUE);
 
             return singUp(form, false, true);
@@ -107,13 +107,11 @@ public class EntranceServiceImpl implements EntranceService {
 
     private Account singUp(SignUpForm signUpForm, boolean sendVerificationEmail,
                            boolean sendPasswordToEmail) throws InvalidUserInputException {
-        Account exsistingAccount = accountDao.findByEmail(signUpForm.getEmail());
-        if (exsistingAccount != null) {
+        if (isEmailExist(signUpForm.getEmail())) {
             throw new InvalidUserInputException(messageSource.getMessage("email.exist",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
-        exsistingAccount = accountDao.findByLogin(signUpForm.getLogin());
-        if (exsistingAccount != null) {
+        if (isLoginExist(signUpForm.getLogin())) {
             throw new InvalidUserInputException(messageSource.getMessage("login.busy",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }

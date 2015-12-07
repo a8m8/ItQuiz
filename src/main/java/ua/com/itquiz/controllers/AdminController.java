@@ -1,6 +1,7 @@
 package ua.com.itquiz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,10 @@ import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
 import ua.com.itquiz.forms.AdminUserForm;
+import ua.com.itquiz.forms.PasswordForm;
+import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.AdminService;
+import ua.com.itquiz.services.CommonService;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
@@ -22,15 +26,30 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-public class AdminController extends CommonController {
+public class AdminController {
 
     @Autowired
     protected AdminService adminService;
 
+    @Autowired
+    protected CommonService commonService;
+
+    @Autowired
+    protected MessageSource messageSource;
+
     @RequestMapping(value = "/myaccount", method = RequestMethod.GET)
-    @Override
     protected String showMyAccount(HttpSession session, Model model) {
-        return "admin/" + super.showMyAccount(session, model);
+        if (session.getAttribute("message") != null) {
+            model.addAttribute("message", session.getAttribute("message"));
+            session.removeAttribute("message");
+        }
+        if (session.getAttribute("errorMessage") != null) {
+            model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
+            session.removeAttribute("errorMessage");
+        }
+        model.addAttribute("personalInfoForm", new AccountInfoForm());
+        model.addAttribute("account", commonService.getAccountById(SecurityUtils.getCurrentIdAccount()));
+        return "admin/myaccount";
     }
 
     @RequestMapping(value = "/myaccount", method = RequestMethod.POST)
@@ -38,11 +57,33 @@ public class AdminController extends CommonController {
             @ModelAttribute("personalInfoForm") AccountInfoForm accountInfoForm, Model model,
             HttpSession session) {
         try {
-            session.setAttribute("message", super.editPersonalData(session, accountInfoForm));
+            accountInfoForm.validate(messageSource);
+            commonService.editPersonalData(SecurityUtils.getCurrentIdAccount(), accountInfoForm);
+            session.setAttribute("message", messageSource.getMessage("changes.saved", new Object[]{},
+                    LocaleContextHolder.getLocale()));
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "admin/myaccount";
+        }
+    }
+
+    @RequestMapping(value = "/myaccount/change-password", method = RequestMethod.GET)
+    public String showChangePassword(Model model) {
+        model.addAttribute("passwordForm", new PasswordForm());
+        return "admin/change-password";
+    }
+
+    @RequestMapping(value = "/myaccount/change-password", method = RequestMethod.POST)
+    public String editPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, HttpSession session) {
+        try {
+            passwordForm.validate(messageSource);
+            commonService.changePassword(SecurityUtils.getCurrentIdAccount(), passwordForm);
+            session.setAttribute("message", messageSource.getMessage("password.changed", new Object[]{}, LocaleContextHolder.getLocale()));
+            return "redirect:/admin/myaccount";
+        } catch (InvalidUserInputException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/myaccount";
         }
     }
 

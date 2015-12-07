@@ -33,10 +33,10 @@
     <c:url var="loginUrl" value="/login"/>
     <form id="login-form" class="form-horizontal" action="${loginUrl }" method="POST">
         <div class="form-group">
-            <label for="mail" class="col-md-offset-2 col-md-2 control-label">Email:</label>
+            <label for="name" class="col-md-offset-2 col-md-2 control-label">Email:</label>
 
             <div class="col-md-4">
-                <input type="text" id="mail" class="form-control" name="username"/>
+                <input id="name" type="text" class="form-control" name="username"/>
             </div>
         </div>
         <div class="form-group">
