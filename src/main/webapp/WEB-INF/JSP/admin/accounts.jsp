@@ -23,7 +23,6 @@
     </ul>
 
     <h3>Accounts management</h3>
-
     <c:if test="${not empty message}">
         <h4 id="message">${message }</h4>
     </c:if>

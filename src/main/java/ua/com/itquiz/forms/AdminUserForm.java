@@ -2,22 +2,38 @@ package ua.com.itquiz.forms;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 
 /**
  * @author Artur Meshcheriakov
  */
-public class AdminUserForm extends SignUpForm {
+public class AdminUserForm extends AccountInfoForm implements Copyable<Account> {
 
     private static final long serialVersionUID = -3393569577509014603L;
 
+    protected Boolean active = Boolean.FALSE;
+    protected Boolean confirmed = Boolean.FALSE;
     protected Boolean student = Boolean.FALSE;
-
     protected Boolean administrator = Boolean.FALSE;
-
     protected Boolean tutor = Boolean.FALSE;
-
     protected Boolean advancedTutor = Boolean.FALSE;
+
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public Boolean getStudent() {
         return student;
@@ -60,4 +76,12 @@ public class AdminUserForm extends SignUpForm {
         }
     }
 
+    @Override
+    public void copyFieldsTo(Account account) {
+        account.setEmail(email);
+        account.setLogin(login);
+        account.setFio(fio);
+        account.setConfirmed(confirmed);
+        account.setActive(active);
+    }
 }

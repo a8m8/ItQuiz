@@ -17,7 +17,7 @@ public interface AdminService {
 
     void addUser(AdminUserForm form) throws InvalidUserInputException;
 
-    void editUser(Account account, AdminUserForm form) throws InvalidUserInputException;
+    void editUser(int idAccount, AdminUserForm form) throws InvalidUserInputException;
 
     void removeAccount(int accountId) throws InvalidUserInputException;
 

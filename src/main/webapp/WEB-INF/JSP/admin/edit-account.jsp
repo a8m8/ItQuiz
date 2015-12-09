@@ -24,11 +24,14 @@
 
     <h3>Edit User</h3>
 
+    <c:if test="${not empty message}">
+        <h4 id="message">${message }</h4>
+    </c:if>
     <c:if test="${not empty errorMessage}">
         <h4 id="error-message">${errorMessage }</h4>
     </c:if>
 
-    <form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-user"
+    <form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-account"
                commandName="adminUserForm">
         <input type="hidden" name="id" value="${user.idAccount }"/>
         <div class="form-group">
@@ -47,6 +50,11 @@
             <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">Name:</form:label>
             <div class="col-md-4">
                 <form:input class="form-control" path="fio" value="${user.fio }"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-4">
+                <a href="${context}/admin/edit-account/change-password?id=${user.idAccount }">Change password</a>
             </div>
         </div>
         <div class="form-group">

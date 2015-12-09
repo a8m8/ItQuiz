@@ -24,7 +24,7 @@
     </ul>
     <h3>New password</h3>
     <form:form id="password-change-form" class="form-horizontal" method="POST"
-               action="${context}/admin/myaccount/change-password" commandName="passwordForm">
+               action="${context}/admin/${object}/change-password" commandName="passwordForm">
         <input type="hidden" name="id" value="${idAccount}">
 
         <div class="form-group">

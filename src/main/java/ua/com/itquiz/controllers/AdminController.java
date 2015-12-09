@@ -71,6 +71,7 @@ public class AdminController {
     @RequestMapping(value = "/myaccount/change-password", method = RequestMethod.GET)
     public String showChangePassword(Model model) {
         model.addAttribute("passwordForm", new PasswordForm());
+        model.addAttribute("object", "myaccount");
         return "admin/change-password";
     }
 
@@ -183,11 +184,36 @@ public class AdminController {
                               @RequestParam("id") int id, Model model, HttpSession session) {
         try {
             adminUserForm.validate(messageSource);
+            adminService.editUser(id, adminUserForm);
+            session.setAttribute("message", messageSource.getMessage("changes.saved", new Object[]{}, LocaleContextHolder
+                    .getLocale()));
+            return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
-
+            session.setAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/accounts/page/1";
         }
-        // TODO EDIT USER CONTROLLER
-        return null;
+    }
+
+    @RequestMapping(value = "/edit-account/change-password", method = RequestMethod.GET)
+    public String showUserChangePassword(@RequestParam("id") int id, Model model) {
+        model.addAttribute("passwordForm", new PasswordForm());
+        model.addAttribute("idAccount", id);
+        model.addAttribute("object", "edit-account");
+        return "admin/change-password";
+    }
+
+    @RequestMapping(value = "/edit-account/change-password", method = RequestMethod.POST)
+    public String editUserPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, @RequestParam("id")
+    int id, HttpSession session) {
+        try {
+            passwordForm.validate(messageSource);
+            commonService.changePassword(id, passwordForm);
+            session.setAttribute("message", messageSource.getMessage("password.changed", new Object[]{}, LocaleContextHolder.getLocale()));
+            return "redirect:/admin/edit-account?id=" + id;
+        } catch (InvalidUserInputException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/edit-account?id=" + id;
+        }
     }
 
 }

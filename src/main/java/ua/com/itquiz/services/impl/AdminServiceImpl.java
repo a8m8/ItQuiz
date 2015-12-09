@@ -8,6 +8,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.itquiz.components.EntityBuilder;
+import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.dao.AccountRegistrationDao;
 import ua.com.itquiz.dao.AccountRoleDao;
@@ -20,6 +21,8 @@ import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.services.AdminService;
 
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -91,23 +94,122 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     @Override
     @Transactional(readOnly = false,
             rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
-    public void editUser(Account account, AdminUserForm adminUserForm)
+    public void editUser(int idAccount, AdminUserForm adminUserForm)
             throws InvalidUserInputException {
-        boolean isNewValue = false;
+        Account account = accountDao.findById(idAccount);
+        boolean isNewAccountInfo = false;
+        boolean isNewRole = false;
         if (!StringUtils.equals(account.getLogin(), adminUserForm.getLogin())) {
             isLoginExist(adminUserForm.getLogin());
             account.setLogin(adminUserForm.getLogin());
-            isNewValue = true;
+            isNewAccountInfo = true;
         }
         if (!StringUtils.equals(account.getFio(), adminUserForm.getFio())) {
             account.setFio(adminUserForm.getFio());
-            isNewValue = true;
+            isNewAccountInfo = true;
         }
-        if (!StringUtils.equals(account.getPassword(), adminUserForm.getPassword())) {
-            account.setPassword(adminUserForm.getPassword());
-            isNewValue = true;
+        if (!adminUserForm.getActive().equals(account.getActive())) {
+            account.setActive(adminUserForm.getActive());
+            isNewAccountInfo = true;
         }
-        // TODO EDIT USER SERVICE
+        if (!adminUserForm.getConfirmed().equals(account.getConfirmed())) {
+            account.setConfirmed(adminUserForm.getConfirmed());
+            isNewAccountInfo = true;
+        }
+
+        HashSet<Integer> roles = new HashSet<>();
+        for (AccountRole role : account.getAccountRoles()) {
+            roles.add(role.getRole().getIdRole().intValue());
+        }
+
+        if (adminUserForm.getAdministrator() && !roles.contains(ApplicationConstants.ADMIN_ROLE)) {
+            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getAdministratorRole());
+            accountRoleDao.save(accountRole);
+            isNewRole = true;
+        }
+        if (!adminUserForm.getAdministrator() && roles.contains(ApplicationConstants.ADMIN_ROLE)) {
+            isNewRole = true;
+            accountRoleDao.delete(getAdministratorRoleOf(account));
+        }
+
+        if (adminUserForm.getAdvancedTutor() && !roles.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
+            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getAdvancedTutorRole());
+            accountRoleDao.save(accountRole);
+            isNewRole = true;
+        }
+        if (!adminUserForm.getAdvancedTutor() && roles.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
+            isNewRole = true;
+            accountRoleDao.delete(getAdvancedTutorRoleOf(account));
+        }
+
+        if (adminUserForm.getTutor() && !roles.contains(ApplicationConstants.TUTOR_ROLE)) {
+            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getTutorRole());
+            accountRoleDao.save(accountRole);
+            isNewRole = true;
+        }
+        if (!adminUserForm.getTutor() && roles.contains(ApplicationConstants.TUTOR_ROLE)) {
+            isNewRole = true;
+            accountRoleDao.delete(getTutorRoleOf(account));
+        }
+
+        if (adminUserForm.getStudent() && !roles.contains(ApplicationConstants.STUDENT_ROLE)) {
+            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getStudentRole());
+            accountRoleDao.save(accountRole);
+            isNewRole = true;
+        }
+        if (!adminUserForm.getStudent() && roles.contains(ApplicationConstants.STUDENT_ROLE)) {
+            isNewRole = true;
+            accountRoleDao.delete(getStudentRoleOf(account));
+        }
+
+        if (isNewAccountInfo || isNewRole) {
+            account.setUpdated(new Timestamp(System.currentTimeMillis()));
+            accountDao.save(account);
+        } else {
+            throw new InvalidUserInputException(messageSource.getMessage("nothing.save",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+
+    }
+
+    private AccountRole getAdministratorRoleOf(Account account) {
+        AccountRole result = null;
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.ADMIN_ROLE) {
+                result = accountRole;
+            }
+        }
+        return result;
+    }
+
+    private AccountRole getAdvancedTutorRoleOf(Account account) {
+        AccountRole result = null;
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.ADVANCED_TUTOR_ROLE) {
+                result = accountRole;
+            }
+        }
+        return result;
+    }
+
+    private AccountRole getTutorRoleOf(Account account) {
+        AccountRole result = null;
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.TUTOR_ROLE) {
+                result = accountRole;
+            }
+        }
+        return result;
+    }
+
+    private AccountRole getStudentRoleOf(Account account) {
+        AccountRole result = null;
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.STUDENT_ROLE) {
+                result = accountRole;
+            }
+        }
+        return result;
     }
 
     private void isEmailExist(String email) throws InvalidUserInputException {
