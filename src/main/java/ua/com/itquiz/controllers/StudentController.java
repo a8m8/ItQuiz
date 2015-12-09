@@ -10,13 +10,24 @@ import ua.com.itquiz.services.StudentService;
  * @author Artur Meshcheriakov
  */
 @Controller
+@RequestMapping("/student")
 public class StudentController extends AbstractController {
 
     @Autowired
     protected StudentService studentService;
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home() {
-        return "student/home";
+    @RequestMapping(value = "/tests", method = RequestMethod.GET)
+    public String showTests() {
+        return "student/tests";
+    }
+
+    @RequestMapping(value = "/myaccount", method = RequestMethod.GET)
+    public String showMyAccount() {
+        return "student/myaccount";
+    }
+
+    @RequestMapping(value = "/tests-result", method = RequestMethod.GET)
+    public String showTestsResult() {
+        return "student/tests-result";
     }
 }

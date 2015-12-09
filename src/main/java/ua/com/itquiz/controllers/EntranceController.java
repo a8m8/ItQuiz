@@ -35,7 +35,7 @@ public class EntranceController extends AbstractController implements Initializi
         redirects.put(ApplicationConstants.ADMIN_ROLE, "/admin/accounts/page/1");
         redirects.put(ApplicationConstants.ADVANCED_TUTOR_ROLE, "/advanced-tutor/home");
         redirects.put(ApplicationConstants.TUTOR_ROLE, "/tutor/home");
-        redirects.put(ApplicationConstants.STUDENT_ROLE, "/home");
+        redirects.put(ApplicationConstants.STUDENT_ROLE, "/student/tests");
     }
 
     @Autowired

@@ -153,6 +153,10 @@ h3, h4 {
     width: 33.33%;
 }
 
+.student li {
+    width: 33.33%;
+}
+
 #fblink {
     text-align: center;
 }

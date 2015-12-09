@@ -13,5 +13,14 @@
 </form>
 
 <div id="content">
-    <h1>Hello I am a student</h1>
+    <ul id="main-nav" class="student">
+        <li id="firsttab">
+            <a href="${context }/student/myaccount">My account</a>
+        <li id="secondtab" class="active">
+            <a href="${context }/student/tests">Tests</a>
+        <li id="thirdtab">
+            <a href="${context }/student/tests-result">Tests result</a>
+    </ul>
+
+    <h3>Available tests</h3>
 </div>
