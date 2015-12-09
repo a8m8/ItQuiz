@@ -11,6 +11,7 @@ import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
+import ua.com.itquiz.forms.AdminAddUserForm;
 import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.forms.PasswordForm;
 import ua.com.itquiz.security.SecurityUtils;
@@ -118,16 +119,16 @@ public class AdminController {
 
     @RequestMapping(value = "/add-user", method = RequestMethod.GET)
     public String showAddUser(Model model) {
-        model.addAttribute("adminUserForm", new AdminUserForm());
+        model.addAttribute("adminAddUserForm", new AdminAddUserForm());
         return "admin/add-user";
     }
 
     @RequestMapping(value = "/add-user", method = RequestMethod.POST)
-    public String addNewUser(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
+    public String addNewUser(@ModelAttribute("adminAddUserForm") AdminAddUserForm adminAddUserForm,
                              Model model, HttpSession session) {
         try {
-            adminUserForm.validate(messageSource);
-            adminService.addUser(adminUserForm);
+            adminAddUserForm.validate(messageSource);
+            adminService.addUser(adminAddUserForm);
             session.setAttribute("message", messageSource.getMessage("admin.usercreated",
                     new Object[]{}, LocaleContextHolder.getLocale()));
             return "redirect:/admin/accounts/page/1";

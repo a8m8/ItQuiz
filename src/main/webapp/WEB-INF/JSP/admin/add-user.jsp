@@ -29,7 +29,7 @@
     </c:if>
 
     <form:form id="admin-add-user-form" class="form-horizontal" method="POST" action="${context }/admin/add-user"
-               commandName="adminUserForm">
+               commandName="adminAddUserForm">
         <div class="form-group">
             <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
             <div class="col-md-4">

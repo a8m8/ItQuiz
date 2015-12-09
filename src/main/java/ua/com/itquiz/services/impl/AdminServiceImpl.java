@@ -18,6 +18,7 @@ import ua.com.itquiz.entities.AccountRegistration;
 import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.forms.AdminAddUserForm;
 import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.services.AdminService;
 
@@ -56,34 +57,34 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     @Override
     @Transactional(readOnly = false,
             rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
-    public void addUser(AdminUserForm adminUserForm) throws InvalidUserInputException {
-        isEmailExist(adminUserForm.getEmail());
-        isLoginExist(adminUserForm.getLogin());
+    public void addUser(AdminAddUserForm adminAddUserForm) throws InvalidUserInputException {
+        isEmailExist(adminAddUserForm.getEmail());
+        isLoginExist(adminAddUserForm.getLogin());
 
         Account account = entityBuilder.buildAccount();
-        adminUserForm.copyFieldsTo(account);
+        adminAddUserForm.copyFieldsTo(account);
         accountDao.save(account);
 
         AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);
         accountRegistrationDao.save(accountRegistration);
         Role role;
         AccountRole accountRole;
-        if (adminUserForm.getAdministrator()) {
+        if (adminAddUserForm.getAdministrator()) {
             role = roleDao.getAdministratorRole();
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
-        if (adminUserForm.getAdvancedTutor()) {
+        if (adminAddUserForm.getAdvancedTutor()) {
             role = roleDao.getAdvancedTutorRole();
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
-        if (adminUserForm.getTutor()) {
+        if (adminAddUserForm.getTutor()) {
             role = roleDao.getTutorRole();
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
-        if (adminUserForm.getStudent()) {
+        if (adminAddUserForm.getStudent()) {
             role = roleDao.getStudentRole();
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);

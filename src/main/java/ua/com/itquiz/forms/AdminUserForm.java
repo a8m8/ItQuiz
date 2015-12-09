@@ -2,13 +2,12 @@ package ua.com.itquiz.forms;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 
 /**
  * @author Artur Meshcheriakov
  */
-public class AdminUserForm extends AccountInfoForm implements Copyable<Account> {
+public class AdminUserForm extends AccountInfoForm {
 
     private static final long serialVersionUID = -3393569577509014603L;
 
@@ -74,14 +73,5 @@ public class AdminUserForm extends AccountInfoForm implements Copyable<Account> 
             throw new InvalidUserInputException(messageSource.getMessage("roles.withoutroles",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
-    }
-
-    @Override
-    public void copyFieldsTo(Account account) {
-        account.setEmail(email);
-        account.setLogin(login);
-        account.setFio(fio);
-        account.setConfirmed(confirmed);
-        account.setActive(active);
     }
 }
