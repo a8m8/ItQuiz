@@ -181,7 +181,7 @@ table thead {
     color: #92d13d;
 }
 
-#error-message, .error {
+#error-message, .error, #globalerror {
     color: #d9534f;
 }
 

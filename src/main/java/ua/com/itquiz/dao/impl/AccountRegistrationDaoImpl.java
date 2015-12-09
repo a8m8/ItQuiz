@@ -11,8 +11,6 @@ import ua.com.itquiz.entities.AccountRegistration;
 public class AccountRegistrationDaoImpl extends AbstractEntityDao<AccountRegistration>
         implements AccountRegistrationDao {
 
-    // TODO AccountRegistrationDao implementation
-
     @Override
     protected Class<AccountRegistration> getEntityClass() {
         return AccountRegistration.class;

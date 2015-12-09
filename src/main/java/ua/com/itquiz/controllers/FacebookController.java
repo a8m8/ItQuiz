@@ -21,7 +21,6 @@ import ua.com.itquiz.services.EntranceService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * @author Artur Meshcheriakov
@@ -70,7 +69,7 @@ public class FacebookController extends AbstractController implements Initializi
         return "redirect:/crossing";
     }
 
-    protected User getFacebookUser(String code) throws IOException {
+    protected User getFacebookUser(String code) {
         FacebookClient client = new DefaultFacebookClient(Version.VERSION_2_5);
         AccessToken accessToken = client.obtainUserAccessToken(facebookClientId, facebookSecretKey,
                 applicationHost + "/fromfb", code);

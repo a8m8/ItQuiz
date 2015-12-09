@@ -20,8 +20,8 @@ import javax.mail.internet.MimeMessage;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class EmailServiceImpl implements EmailService {
 
-    private String verificationText = "registration-confirmation.vm";
-    private String recoveryText = "password-recovery.vm";
+    private static final String VERIFICATION_TEXT_FILE_NAME = "registration-confirmation.vm";
+    private static final String RECOVERY_TEXT_FILE_NAME = "password-recovery.vm";
 
     @Autowired
     private JavaMailSender defaultMailSender;
@@ -31,13 +31,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendVerificationEmail(Account account) {
-        String content = emailTemplateService.getEmailText(account, verificationText);
+        String content = emailTemplateService.getEmailText(account, VERIFICATION_TEXT_FILE_NAME);
         sendMail(account, content, "Account verification");
     }
 
     @Override
     public void sendPasswordToEmail(Account account) {
-        String content = emailTemplateService.getEmailText(account, recoveryText);
+        String content = emailTemplateService.getEmailText(account, RECOVERY_TEXT_FILE_NAME);
         sendMail(account, content, "Your password");
     }
 
