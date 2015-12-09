@@ -142,6 +142,9 @@ public class AdminController {
     public String removeAccount(@RequestParam("id") int id, HttpSession session) {
         try {
             adminService.removeAccount(id);
+            session.setAttribute("message", messageSource.getMessage("delete.successful", new Object[]{},
+                    LocaleContextHolder
+                            .getLocale()));
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
