@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/advanced-tutor")
 public class AdvancedTutorController extends AbstractController {
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/mytests", method = RequestMethod.GET)
     public String home() {
-        return "advanced-tutor/home";
+        return "advanced-tutor/mytests";
     }
 
 }

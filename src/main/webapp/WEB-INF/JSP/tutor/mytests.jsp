@@ -6,4 +6,12 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<h1>Hello I am an advanced tutor</h1>
+<ul id="main-nav" class="tutor">
+    <li id="firsttab">
+        <a href="${context }/tutor/myaccount">My account</a>
+    <li id="secondtab" class="active">
+        <a href="${context }/tutor/mytests">My tests</a>
+    <li id="fourthtab">
+        <a href="${context }/tutor/create-test">Create test</a>
+</ul>
+<h3>My tests</h3>
