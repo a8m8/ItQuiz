@@ -1,20 +1,17 @@
 package ua.com.itquiz.utils;
 
-import org.springframework.stereotype.Component;
-
 import java.util.regex.Pattern;
 
 /**
  * @author Artur Meshcheriakov
  */
-@Component("emailValidator")
 public class EmailValidator {
 
-    private Pattern emailPattern = Pattern.compile(
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
-    public boolean isValid(String email) {
-        return emailPattern.matcher(email).matches();
+    public static boolean isValid(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
     }
 
 }

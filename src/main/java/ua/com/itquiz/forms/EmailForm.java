@@ -13,8 +13,6 @@ public class EmailForm implements IForm {
 
     private static final long serialVersionUID = -4089527274880027630L;
 
-    protected EmailValidator emailValidator = new EmailValidator();
-
     protected String email;
 
     public String getEmail() {
@@ -31,7 +29,7 @@ public class EmailForm implements IForm {
             throw new InvalidUserInputException(
                     messageSource.getMessage("email.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
-        if (!emailValidator.isValid(email)) {
+        if (!EmailValidator.isValid(email)) {
             throw new InvalidUserInputException(
                     messageSource.getMessage("email.invalid", new Object[]{}, LocaleContextHolder.getLocale()));
         }
