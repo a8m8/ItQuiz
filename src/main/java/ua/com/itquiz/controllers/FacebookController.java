@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.EntranceService;
@@ -65,7 +66,7 @@ public class FacebookController extends AbstractController implements Initializi
         }
         User user = getFacebookUser(code);
         Account account = entranceService.login(user);
-        SecurityUtils.authentificate(account, 4);
+        SecurityUtils.authentificate(account, ApplicationConstants.STUDENT_ROLE);
         return "redirect:/crossing";
     }
 
