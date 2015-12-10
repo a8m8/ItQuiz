@@ -49,10 +49,10 @@ public class EntranceController extends AbstractController implements Initializi
         try {
             entranceService.verifyAccount(id, hash);
             setMessage(session, "confirmation.success");
-            return "redirect:login";
+            return "redirect:/login";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:login";
+            return "redirect:/login";
         }
     }
 
@@ -111,7 +111,7 @@ public class EntranceController extends AbstractController implements Initializi
             signUpForm.validate(messageSource);
             entranceService.signUp(signUpForm);
             setMessage(session, "signup.emailsend");
-            return "redirect:login";
+            return "redirect:/login";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "signup";
@@ -143,7 +143,7 @@ public class EntranceController extends AbstractController implements Initializi
             passwordRecoveryForm.validate(messageSource);
             entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
             setMessage(session, "password.send");
-            return "redirect:login";
+            return "redirect:/login";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "password-recovery";

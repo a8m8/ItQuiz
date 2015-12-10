@@ -30,7 +30,7 @@ public class ExceptionHandlerFilter implements Filter {
             } else {
                 LOGGER.warn("Unsupported exception: " + ex.getClass(), ex);
             }
-            ((HttpServletResponse) response).sendRedirect("error");
+            ((HttpServletResponse) response).sendRedirect("/error");
         }
     }
 
