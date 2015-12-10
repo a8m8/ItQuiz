@@ -29,7 +29,7 @@ public class SecurityUtils {
         return null;
     }
 
-    public static void authentificate(Account account, int role) {
+    public static void authentificate(Account account, short role) {
         CurrentAccount currentAccount = new CurrentAccount(account);
         currentAccount.setRole(role);
         Authentication authentication = new UsernamePasswordAuthenticationToken(currentAccount,

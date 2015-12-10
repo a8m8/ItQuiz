@@ -70,22 +70,22 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         Role role;
         AccountRole accountRole;
         if (adminAddUserForm.getAdministrator()) {
-            role = roleDao.getAdministratorRole();
+            role = roleDao.findById(ApplicationConstants.ADMIN_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getAdvancedTutor()) {
-            role = roleDao.getAdvancedTutorRole();
+            role = roleDao.findById(ApplicationConstants.ADVANCED_TUTOR_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getTutor()) {
-            role = roleDao.getTutorRole();
+            role = roleDao.findById(ApplicationConstants.TUTOR_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getStudent()) {
-            role = roleDao.getStudentRole();
+            role = roleDao.findById(ApplicationConstants.STUDENT_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
@@ -118,13 +118,14 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
             isNewAccountInfo = true;
         }
 
-        HashSet<Integer> roles = new HashSet<>();
+        HashSet<Short> roles = new HashSet<>();
         for (AccountRole role : account.getAccountRoles()) {
-            roles.add(role.getRole().getIdRole().intValue());
+            roles.add(role.getRole().getIdRole());
         }
 
         if (adminUserForm.getAdministrator() && !roles.contains(ApplicationConstants.ADMIN_ROLE)) {
-            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getAdministratorRole());
+            AccountRole accountRole = entityBuilder.buildAccountRole(account,
+                    roleDao.findById(ApplicationConstants.ADMIN_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -134,7 +135,8 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         }
 
         if (adminUserForm.getAdvancedTutor() && !roles.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
-            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getAdvancedTutorRole());
+            AccountRole accountRole = entityBuilder.buildAccountRole(account,
+                    roleDao.findById(ApplicationConstants.ADVANCED_TUTOR_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -144,7 +146,8 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         }
 
         if (adminUserForm.getTutor() && !roles.contains(ApplicationConstants.TUTOR_ROLE)) {
-            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getTutorRole());
+            AccountRole accountRole = entityBuilder.buildAccountRole(account,
+                    roleDao.findById(ApplicationConstants.TUTOR_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -154,7 +157,8 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         }
 
         if (adminUserForm.getStudent() && !roles.contains(ApplicationConstants.STUDENT_ROLE)) {
-            AccountRole accountRole = entityBuilder.buildAccountRole(account, roleDao.getStudentRole());
+            AccountRole accountRole = entityBuilder.buildAccountRole(account,
+                    roleDao.findById(ApplicationConstants.STUDENT_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -176,7 +180,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     private AccountRole getAdministratorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
-            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.ADMIN_ROLE) {
+            if (accountRole.getRole().getIdRole() == ApplicationConstants.ADMIN_ROLE) {
                 result = accountRole;
             }
         }
@@ -186,7 +190,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     private AccountRole getAdvancedTutorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
-            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.ADVANCED_TUTOR_ROLE) {
+            if (accountRole.getRole().getIdRole() == ApplicationConstants.ADVANCED_TUTOR_ROLE) {
                 result = accountRole;
             }
         }
@@ -196,7 +200,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     private AccountRole getTutorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
-            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.TUTOR_ROLE) {
+            if (accountRole.getRole().getIdRole() == ApplicationConstants.TUTOR_ROLE) {
                 result = accountRole;
             }
         }
@@ -206,7 +210,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     private AccountRole getStudentRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
-            if (accountRole.getRole().getIdRole().intValue() == ApplicationConstants.STUDENT_ROLE) {
+            if (accountRole.getRole().getIdRole() == ApplicationConstants.STUDENT_ROLE) {
                 result = accountRole;
             }
         }

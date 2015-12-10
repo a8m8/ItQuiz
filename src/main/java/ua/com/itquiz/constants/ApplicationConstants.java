@@ -8,11 +8,11 @@ import java.util.HashSet;
  */
 public interface ApplicationConstants {
 
-    int ADMIN_ROLE = 1;
-    int ADVANCED_TUTOR_ROLE = 2;
-    int TUTOR_ROLE = 3;
-    int STUDENT_ROLE = 4;
-    HashSet<Integer> ROLES = new HashSet<>(
-            Arrays.asList(new Integer[]{ADMIN_ROLE, ADVANCED_TUTOR_ROLE, TUTOR_ROLE, STUDENT_ROLE}));
+    short ADMIN_ROLE = 1;
+    short ADVANCED_TUTOR_ROLE = 2;
+    short TUTOR_ROLE = 3;
+    short STUDENT_ROLE = 4;
+    HashSet<Short> ROLES = new HashSet<>(
+            Arrays.asList(new Short[]{ADMIN_ROLE, ADVANCED_TUTOR_ROLE, TUTOR_ROLE, STUDENT_ROLE}));
 
 }

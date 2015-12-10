@@ -42,7 +42,7 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes()).getRequest();
-        int role = Integer.parseInt(request.getParameter("idRole"));
+        short role = Short.parseShort(request.getParameter("idRole"));
         if (!ApplicationConstants.ROLES.contains(role)) {
             throw new AuthenticationException("Invalid role") {
 

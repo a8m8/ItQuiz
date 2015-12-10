@@ -157,9 +157,9 @@ public class AdminController extends AbstractController {
         if (account.getConfirmed()) {
             adminUserForm.setConfirmed(Boolean.TRUE);
         }
-        HashSet<Integer> accountRolesSet = new HashSet<>();
+        HashSet<Short> accountRolesSet = new HashSet<>();
         for (AccountRole accountRole : account.getAccountRoles()) {
-            accountRolesSet.add(accountRole.getRole().getIdRole().intValue());
+            accountRolesSet.add(accountRole.getRole().getIdRole());
         }
         if (accountRolesSet.contains(ApplicationConstants.ADMIN_ROLE)) {
             adminUserForm.setAdministrator(Boolean.TRUE);

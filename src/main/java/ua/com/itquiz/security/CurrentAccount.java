@@ -11,7 +11,7 @@ public class CurrentAccount extends User {
     private static final long serialVersionUID = 4142367500691984809L;
 
     private final int idAccount;
-    private int role;
+    private short role;
 
     public CurrentAccount(Account account) {
         super(account.getEmail(), account.getPassword(), account.getConfirmed(), true, true,
@@ -19,11 +19,11 @@ public class CurrentAccount extends User {
         this.idAccount = account.getIdAccount();
     }
 
-    public int getRole() {
+    public short getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(short role) {
         this.role = role;
     }
 

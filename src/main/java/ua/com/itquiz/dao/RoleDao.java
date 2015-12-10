@@ -7,12 +7,4 @@ import ua.com.itquiz.entities.Role;
  */
 public interface RoleDao extends IEntityDao<Role> {
 
-    Role getAdministratorRole();
-
-    Role getAdvancedTutorRole();
-
-    Role getTutorRole();
-
-    Role getStudentRole();
-
 }

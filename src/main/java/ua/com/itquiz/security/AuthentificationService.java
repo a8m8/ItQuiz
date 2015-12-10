@@ -21,7 +21,7 @@ import java.util.*;
 @Service("accountAuthentificationService")
 public class AuthentificationService implements UserDetailsService {
 
-    private static final Map<Integer, String> ROLES = new HashMap<>();
+    private static final Map<Short, String> ROLES = new HashMap<>();
 
     static {
         ROLES.put(ApplicationConstants.ADMIN_ROLE, "ROLE_ADMIN");
@@ -34,7 +34,7 @@ public class AuthentificationService implements UserDetailsService {
         Collection<SimpleGrantedAuthority> result = new ArrayList<>();
         for (AccountRole accountRole : roles) {
             result.add(new SimpleGrantedAuthority(
-                    ROLES.get(accountRole.getRole().getIdRole().intValue())));
+                    ROLES.get(accountRole.getRole().getIdRole())));
         }
         return result;
     }

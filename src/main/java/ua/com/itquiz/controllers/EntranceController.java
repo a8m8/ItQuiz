@@ -27,7 +27,7 @@ import java.util.Map;
 @Controller
 public class EntranceController extends AbstractController implements InitializingBean {
 
-    private final Map<Integer, String> redirects = new HashMap<>();
+    private final Map<Short, String> redirects = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {

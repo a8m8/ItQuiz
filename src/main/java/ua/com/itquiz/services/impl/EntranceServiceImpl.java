@@ -10,6 +10,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.com.itquiz.components.EntityBuilder;
+import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.dao.AccountDao;
 import ua.com.itquiz.dao.AccountRegistrationDao;
 import ua.com.itquiz.dao.AccountRoleDao;
@@ -124,7 +125,7 @@ public class EntranceServiceImpl implements EntranceService {
         AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);
         accountRegistrationDao.save(accountRegistration);
 
-        Role role = roleDao.getStudentRole();
+        Role role = roleDao.findById(ApplicationConstants.STUDENT_ROLE);
         AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
         accountRoleDao.save(accountRole);
         accountRoleDao.flush();
