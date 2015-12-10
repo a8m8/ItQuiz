@@ -64,7 +64,7 @@ public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
         }
         if (!StringUtils.equals(password, passwordConfirmed)) {
             throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.notmatch", new Object[]{}, LocaleContextHolder.getLocale()));
+                    messageSource.getMessage("passwords.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }
 

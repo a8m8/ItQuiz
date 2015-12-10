@@ -110,7 +110,7 @@ public class EntranceController extends AbstractController implements Initializi
         try {
             signUpForm.validate(messageSource);
             entranceService.signUp(signUpForm);
-            setMessage(session, "signup.emailsend");
+            setMessage(session, "signup.email.send");
             return "redirect:/login";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());

@@ -70,7 +70,7 @@ public class AdminUserForm extends AccountInfoForm {
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
         super.validate(messageSource);
         if (!administrator && !advancedTutor && !tutor && !student) {
-            throw new InvalidUserInputException(messageSource.getMessage("roles.withoutroles",
+            throw new InvalidUserInputException(messageSource.getMessage("roles.without.roles",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }

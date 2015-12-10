@@ -1,8 +1,11 @@
 package ua.com.itquiz.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -20,8 +23,11 @@ import javax.mail.internet.MimeMessage;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class EmailServiceImpl implements EmailService {
 
-    private static final String VERIFICATION_TEXT_FILE_NAME = "registration-confirmation.vm";
-    private static final String RECOVERY_TEXT_FILE_NAME = "password-recovery.vm";
+    @Value("${verification.email.filepath}")
+    private String verificationEmailText;
+
+    @Value("${recovery.email.filepath}")
+    private String recoveryTextFileName;
 
     @Autowired
     private JavaMailSender defaultMailSender;
@@ -29,16 +35,21 @@ public class EmailServiceImpl implements EmailService {
     @Autowired
     private EmailTemplateService emailTemplateService;
 
+    @Autowired
+    MessageSource messageSource;
+
     @Override
     public void sendVerificationEmail(Account account) {
-        String content = emailTemplateService.getEmailText(account, VERIFICATION_TEXT_FILE_NAME);
-        sendMail(account, content, "Account verification");
+        String content = emailTemplateService.getEmailText(account, verificationEmailText);
+        sendMail(account, content, messageSource.getMessage("verification.email.title",
+                new Object[]{}, LocaleContextHolder.getLocale()));
     }
 
     @Override
     public void sendPasswordToEmail(Account account) {
-        String content = emailTemplateService.getEmailText(account, RECOVERY_TEXT_FILE_NAME);
-        sendMail(account, content, "Your password");
+        String content = emailTemplateService.getEmailText(account, recoveryTextFileName);
+        sendMail(account, content, messageSource.getMessage("recovery.email.title",
+                new Object[]{}, LocaleContextHolder.getLocale()));
     }
 
     private void sendMail(final Account account, final String content, final String subject) {

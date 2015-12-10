@@ -76,7 +76,7 @@ public class EntranceServiceImpl implements EntranceService {
             SignUpForm form = new SignUpForm();
             if (user.getEmail() == null) {
                 throw new InvalidUserInputException(messageSource.getMessage(
-                        "facebook.cannotcreate", new Object[]{}, LocaleContextHolder.getLocale()));
+                        "facebook.cannot.create", new Object[]{}, LocaleContextHolder.getLocale()));
             }
             form.setEmail(user.getEmail());
             form.setLogin(String.valueOf(user.getEmail().hashCode()));
@@ -150,15 +150,15 @@ public class EntranceServiceImpl implements EntranceService {
     public void sendPasswordForRecovery(String email) throws InvalidUserInputException {
         Account account = accountDao.findByEmail(email);
         if (account == null) {
-            throw new InvalidUserInputException(messageSource.getMessage("email.notexist",
+            throw new InvalidUserInputException(messageSource.getMessage("email.not.exist",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
         if (!account.getActive()) {
-            throw new InvalidUserInputException(messageSource.getMessage("account.notactive",
+            throw new InvalidUserInputException(messageSource.getMessage("account.not.active",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
         if (!account.getConfirmed()) {
-            throw new InvalidUserInputException(messageSource.getMessage("account.notconfirmed",
+            throw new InvalidUserInputException(messageSource.getMessage("account.not.confirmed",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
 

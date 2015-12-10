@@ -41,7 +41,7 @@ public class PasswordForm implements IForm {
         }
         if (!StringUtils.equals(password, passwordConfirmed)) {
             throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.notmatch", new Object[]{}, LocaleContextHolder.getLocale()));
+                    messageSource.getMessage("passwords.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }
 }

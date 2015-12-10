@@ -72,7 +72,7 @@ public class AdminController extends AbstractController {
         try {
             adminAddUserForm.validate(messageSource);
             adminService.addUser(adminAddUserForm);
-            setMessage(session, "admin.usercreated");
+            setMessage(session, "admin.user.created");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
