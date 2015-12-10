@@ -5,9 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.entities.Account;
-import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
 import ua.com.itquiz.forms.AdminAddUserForm;
@@ -18,7 +16,6 @@ import ua.com.itquiz.services.AdminService;
 import ua.com.itquiz.services.CommonService;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -149,32 +146,9 @@ public class AdminController extends AbstractController {
 
     @RequestMapping(value = "/edit-account", method = RequestMethod.GET)
     public String showEditUser(@RequestParam("id") int id, Model model) {
-        Account account = commonService.getAccountById(id);
-        AdminUserForm adminUserForm = new AdminUserForm();
-        if (account.getActive()) {
-            adminUserForm.setActive(Boolean.TRUE);
-        }
-        if (account.getConfirmed()) {
-            adminUserForm.setConfirmed(Boolean.TRUE);
-        }
-        HashSet<Short> accountRolesSet = new HashSet<>();
-        for (AccountRole accountRole : account.getAccountRoles()) {
-            accountRolesSet.add(accountRole.getRole().getIdRole());
-        }
-        if (accountRolesSet.contains(ApplicationConstants.ADMIN_ROLE)) {
-            adminUserForm.setAdministrator(Boolean.TRUE);
-        }
-        if (accountRolesSet.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
-            adminUserForm.setAdvancedTutor(Boolean.TRUE);
-        }
-        if (accountRolesSet.contains(ApplicationConstants.TUTOR_ROLE)) {
-            adminUserForm.setTutor(Boolean.TRUE);
-        }
-        if (accountRolesSet.contains(ApplicationConstants.STUDENT_ROLE)) {
-            adminUserForm.setStudent(Boolean.TRUE);
-        }
+        AdminUserForm adminUserForm = adminService.generateFormBasedOnAccount(commonService.getAccountById(id));
         model.addAttribute("adminUserForm", adminUserForm);
-        model.addAttribute("user", account);
+        model.addAttribute("idAccount", id);
         return "admin/edit-account";
     }
 

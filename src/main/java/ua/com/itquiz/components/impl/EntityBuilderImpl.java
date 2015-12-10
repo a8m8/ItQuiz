@@ -7,6 +7,8 @@ import ua.com.itquiz.entities.AccountRegistration;
 import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.entities.Role;
 
+import java.util.UUID;
+
 /**
  * @author Artur Meshcheriakov
  */
@@ -23,7 +25,7 @@ public class EntityBuilderImpl implements EntityBuilder {
 
         AccountRegistration accountRegistration = new AccountRegistration();
         accountRegistration.setAccount(account);
-        accountRegistration.setHash(String.valueOf(account.getLogin().hashCode()));
+        accountRegistration.setHash(UUID.randomUUID().toString());
 
         return accountRegistration;
 

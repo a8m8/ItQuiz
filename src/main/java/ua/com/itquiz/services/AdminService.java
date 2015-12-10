@@ -14,6 +14,8 @@ public interface AdminService {
 
     long accountsCount();
 
+    AdminUserForm generateFormBasedOnAccount(Account account);
+
     List<Account> getAccounts(int offset, int count);
 
     void addUser(AdminAddUserForm form) throws InvalidUserInputException;

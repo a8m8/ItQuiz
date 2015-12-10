@@ -93,6 +93,37 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
+    public AdminUserForm generateFormBasedOnAccount(Account account) {
+        AdminUserForm adminUserForm = new AdminUserForm();
+        adminUserForm.setEmail(account.getEmail());
+        adminUserForm.setLogin(account.getLogin());
+        adminUserForm.setFio(account.getFio());
+        if (account.getActive()) {
+            adminUserForm.setActive(Boolean.TRUE);
+        }
+        if (account.getConfirmed()) {
+            adminUserForm.setConfirmed(Boolean.TRUE);
+        }
+        HashSet<Short> accountRolesSet = new HashSet<>();
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            accountRolesSet.add(accountRole.getRole().getIdRole());
+        }
+        if (accountRolesSet.contains(ApplicationConstants.ADMIN_ROLE)) {
+            adminUserForm.setAdministrator(Boolean.TRUE);
+        }
+        if (accountRolesSet.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
+            adminUserForm.setAdvancedTutor(Boolean.TRUE);
+        }
+        if (accountRolesSet.contains(ApplicationConstants.TUTOR_ROLE)) {
+            adminUserForm.setTutor(Boolean.TRUE);
+        }
+        if (accountRolesSet.contains(ApplicationConstants.STUDENT_ROLE)) {
+            adminUserForm.setStudent(Boolean.TRUE);
+        }
+        return adminUserForm;
+    }
+
+    @Override
     @Transactional(readOnly = false,
             rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void editUser(int idAccount, AdminUserForm adminUserForm)

@@ -27,29 +27,29 @@
 
 <form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-account"
            commandName="adminUserForm">
-    <input type="hidden" name="id" value="${user.idAccount }"/>
+    <input type="hidden" name="id" value="${idAccount }"/>
 
     <div class="form-group">
         <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
         <div class="col-md-4">
-            <form:input type="text" class="form-control" path="email" value="${user.email}" readonly="true"/>
+            <form:input type="text" class="form-control" path="email" readonly="true"/>
         </div>
     </div>
     <div class="form-group">
         <form:label path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
         <div class="col-md-4">
-            <form:input class="form-control" path="login" value="${user.login }"/>
+            <form:input class="form-control" path="login"/>
         </div>
     </div>
     <div class="form-group">
         <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">Name:</form:label>
         <div class="col-md-4">
-            <form:input class="form-control" path="fio" value="${user.fio }"/>
+            <form:input class="form-control" path="fio"/>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <a href="${context}/admin/edit-account/change-password?id=${user.idAccount }">Change password</a>
+            <a href="${context}/admin/edit-account/change-password?id=${idAccount }">Change password</a>
         </div>
     </div>
     <div class="form-group">
