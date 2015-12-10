@@ -3,6 +3,7 @@ package ua.com.itquiz.dao.impl;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,7 +75,7 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public List<T> list(final int offset, final int count) {
-        return getSession().createCriteria(getEntityClass()).setFirstResult(offset)
+        return getSession().createCriteria(getEntityClass()).addOrder(Order.asc("created")).setFirstResult(offset)
                 .setMaxResults(count).list();
     }
 }
