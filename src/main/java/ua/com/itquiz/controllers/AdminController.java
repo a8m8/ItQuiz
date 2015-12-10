@@ -2,7 +2,6 @@ package ua.com.itquiz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminController extends AbstractController {
 
     @Autowired
     protected AdminService adminService;
@@ -60,8 +59,7 @@ public class AdminController {
         try {
             accountInfoForm.validate(messageSource);
             commonService.editPersonalData(SecurityUtils.getCurrentIdAccount(), accountInfoForm);
-            session.setAttribute("message", messageSource.getMessage("changes.saved", new Object[]{},
-                    LocaleContextHolder.getLocale()));
+            setMessage(session, "changes.saved");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
@@ -81,7 +79,7 @@ public class AdminController {
         try {
             passwordForm.validate(messageSource);
             commonService.changePassword(SecurityUtils.getCurrentIdAccount(), passwordForm);
-            session.setAttribute("message", messageSource.getMessage("password.changed", new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "password.changed");
             return "redirect:/admin/myaccount";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
@@ -101,11 +99,11 @@ public class AdminController {
         }
 
         int count = 1; // Count of accounts which are displayed at the page
-        int temp = adminService.accountCount() / count;
-        int maximum = (adminService.accountCount() % count == 0) ? temp : temp + 1;
+        long temp = adminService.accountsCount() / count;
+        long maximum = (adminService.accountsCount() % count == 0) ? temp : temp + 1;
         int current = pageNumber;
         int begin = Math.max(1, current - 5);
-        int end = Math.min(begin + 10, maximum);
+        long end = Math.min(begin + 10, maximum);
 
         List<Account> accounts = adminService.getAccounts(((pageNumber - 1) * count), count);
         model.addAttribute("accounts", accounts);
@@ -129,8 +127,7 @@ public class AdminController {
         try {
             adminAddUserForm.validate(messageSource);
             adminService.addUser(adminAddUserForm);
-            session.setAttribute("message", messageSource.getMessage("admin.usercreated",
-                    new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "admin.usercreated");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -142,9 +139,7 @@ public class AdminController {
     public String removeAccount(@RequestParam("id") int id, HttpSession session) {
         try {
             adminService.removeAccount(id);
-            session.setAttribute("message", messageSource.getMessage("delete.successful", new Object[]{},
-                    LocaleContextHolder
-                            .getLocale()));
+            setMessage(session, "delete.successful");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
@@ -189,8 +184,7 @@ public class AdminController {
         try {
             adminUserForm.validate(messageSource);
             adminService.editUser(id, adminUserForm);
-            session.setAttribute("message", messageSource.getMessage("changes.saved", new Object[]{}, LocaleContextHolder
-                    .getLocale()));
+            setMessage(session, "changes.saved");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
@@ -212,7 +206,7 @@ public class AdminController {
         try {
             passwordForm.validate(messageSource);
             commonService.changePassword(id, passwordForm);
-            session.setAttribute("message", messageSource.getMessage("password.changed", new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "password.changed");
             return "redirect:/admin/edit-account?id=" + id;
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());

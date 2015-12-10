@@ -50,8 +50,8 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     EntityBuilder entityBuilder;
 
     @Override
-    public int accountCount() {
-        return accountDao.findAll().size();
+    public long accountsCount() {
+        return accountDao.accountsCount();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ua.com.itquiz.dao.impl;
 
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,4 +33,9 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
                 .uniqueResult();
     }
 
+    @Override
+    public long accountsCount() {
+        return (long) getSession().createCriteria(getEntityClass()).setProjection(Projections.rowCount())
+                .uniqueResult();
+    }
 }

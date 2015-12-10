@@ -11,4 +11,6 @@ public interface AccountDao extends IEntityDao<Account> {
 
     Account findByLogin(String login);
 
+    long accountsCount();
+
 }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface AdminService {
 
-    int accountCount();
+    long accountsCount();
 
     List<Account> getAccounts(int offset, int count);
 

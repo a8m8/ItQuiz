@@ -3,7 +3,6 @@ package ua.com.itquiz.controllers;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +48,7 @@ public class EntranceController extends AbstractController implements Initializi
                                  HttpSession session) {
         try {
             entranceService.verifyAccount(id, hash);
-            session.setAttribute("message", messageSource.getMessage("confirmation.success",
-                    new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "confirmation.success");
             return "redirect:login";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
@@ -89,8 +87,8 @@ public class EntranceController extends AbstractController implements Initializi
     @RequestMapping(value = "/signup", method = RequestMethod.GET, headers = "Accept=application/json")
     public
     @ResponseBody
-    String verify(@RequestParam(value = "email", required = false) String email, @RequestParam
-            (value = "login", required = false) String login) {
+    String verify(@RequestParam(value = "email", required = false) String email,
+                  @RequestParam(value = "login", required = false) String login) {
         if (email != null) {
             return (entranceService.isEmailExist(email)) ? "false" : "true";
         }
@@ -112,8 +110,7 @@ public class EntranceController extends AbstractController implements Initializi
         try {
             signUpForm.validate(messageSource);
             entranceService.signUp(signUpForm);
-            session.setAttribute("message", messageSource.getMessage("signup.emailsend",
-                    new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "signup.emailsend");
             return "redirect:login";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -145,8 +142,7 @@ public class EntranceController extends AbstractController implements Initializi
         try {
             passwordRecoveryForm.validate(messageSource);
             entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
-            session.setAttribute("message", messageSource.getMessage("password.send",
-                    new Object[]{}, LocaleContextHolder.getLocale()));
+            setMessage(session, "password.send");
             return "redirect:login";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
