@@ -25,33 +25,39 @@
 </head>
 
 <body>
-<div class="container" id="header">
-    <div id="logo" class="col-md-offset-1 col-md-3">
+<header>
+    <div id="logo" class="col-xs-offset-1 col-xs-3">
         <h1>LOGO HERE</h1>
     </div>
-    <div id="welcome" class="col-md-6">
+    <div id="welcome" class="col-xs-5">
         <h1>ItQuiz</h1>
     </div>
-</div>
+    <sec:authorize access="isAuthenticated()">
+        <div class="col-xs-offset-1 col-xs-1">
+            <c:url var="logoutUrl" value="/logout"/>
+            <form action="${logoutUrl }" method="POST">
+                <button type="submit" id="logout" class="btn btn-success">Log Out</button>
+                <sec:csrfInput/>
+            </form>
+        </div>
+    </sec:authorize>
+</header>
 
 <div id="wrapper">
 
-    <section id="main">
+    <section id="content">
         <decorator:body/>
     </section>
 
 </div>
-
-<div class="container" id="footer">
-    <div class="col-md-offset-2 col-md-3">
-        <p>Support email: <a href="mailto: itquiz@gmail.com">itquiz@gmail.com</a>
-
-        <p>
+<footer>
+    <div class="col-xs-offset-2 col-xs-3">
+        <p>Support email: <a href="mailto: itquiz@gmail.com">itquiz@gmail.com</a></p>
     </div>
-    <div class="col-md-offset-2 col-md-3">
+    <div class="col-xs-offset-2 col-xs-3">
         <p>&copy; 2015 Artur Meshcheriakov</p>
     </div>
-</div>
+</footer>
 
 <script type="text/javascript" src="${context}/resources/js/jquery-1.11.3.min.js?v=${CSS_JS_VERSION}"></script>
 <script type="text/javascript" src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>

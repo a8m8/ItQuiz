@@ -91,7 +91,7 @@ $(document).ready(function () {
         }
 //		submitHandler: function(form) {
 //		    $(form).ajaxSubmit();
-//		    windows.location.href = "login";
+//		    windows.location.href = "/login";
 //		}
         //FIXME AJAX SUBMIT
     });

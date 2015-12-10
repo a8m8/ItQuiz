@@ -27,7 +27,7 @@ body {
     border-right: 3px solid #454545;
 }
 
-#header {
+header {
     position: absolute;
     border-top: 25px solid #F38630;
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
@@ -37,23 +37,19 @@ body {
     width: 100%;
 }
 
-#header #welcome {
+header #welcome {
     color: #000;
     text-shadow: 1px 1px 2px #F38630;
     text-align: center;
     font-size: 18px;
 }
 
-#main {
-    padding-bottom: 100px;
-}
-
 #content {
-    padding-top: 125px;
+    padding: 125px 0 100px 0;
     background-color: #FFF;
 }
 
-#footer {
+footer {
     height: 50px;
     overflow: hidden;
     margin: -50px auto 0;
@@ -64,12 +60,12 @@ body {
     position: relative;
 }
 
-#footer p {
+footer p {
     color: #FFF;
     font-size: 16px;
 }
 
-#footer .col-md-3 {
+footer .col-md-3 {
     display: inline-block;
     vertical-align: middle;
     text-align: center;
@@ -90,10 +86,8 @@ h3, h4 {
 }
 
 #logout {
-    position: absolute;
-    right: 5%;
     padding: 0;
-    margin-top: 45px;
+    margin-top: 20px;
     text-align: center;
     height: 60px;
     width: 60px;
@@ -170,7 +164,7 @@ table {
     text-align: center;
 }
 
-table .overflowable {
+table td {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;

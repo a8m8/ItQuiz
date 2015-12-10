@@ -5,34 +5,32 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<div id="content">
-    <ul id="main-nav" class="login">
-        <li id="firsttab">
-            <a href="${context}/signup">SignUp</a>
-        <li id="secondtab">
-            <a href="${context}/login">Welcome</a>
-        <li id="thirdtab" class="active">
-            <a href="${context}/password-recovery">Password recovery</a>
-    </ul>
+<ul id="main-nav" class="login">
+    <li id="firsttab">
+        <a href="${context}/signup">SignUp</a>
+    <li id="secondtab">
+        <a href="${context}/login">Welcome</a>
+    <li id="thirdtab" class="active">
+        <a href="${context}/password-recovery">Password recovery</a>
+</ul>
 
-    <h3>Please, enter your email</h3>
+<h3>Please, enter your email</h3>
 
-    <c:if test="${not empty errorMessage}">
-        <h4 id="error-message">${errorMessage }</h4>
-    </c:if>
+<c:if test="${not empty errorMessage}">
+    <h4 id="error-message">${errorMessage }</h4>
+</c:if>
 
-    <form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery"
-               commandName="passwordRecoveryForm">
-        <div class="form-group">
-            <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
-            <div class="col-md-4">
-                <form:input class="form-control" path="email"/>
-            </div>
+<form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery"
+           commandName="passwordRecoveryForm">
+    <div class="form-group">
+        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+        <div class="col-md-4">
+            <form:input class="form-control" path="email"/>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-4">
-                <button type="submit" class="btn btn-warning btn-block">Confirm</button>
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-4">
+            <button type="submit" class="btn btn-warning btn-block">Confirm</button>
         </div>
-    </form:form>
-</div>
+    </div>
+</form:form>

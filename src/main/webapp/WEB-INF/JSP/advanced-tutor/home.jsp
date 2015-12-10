@@ -6,12 +6,4 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="logoutUrl" value="/logout"/>
-<form action="${logoutUrl }" method="POST">
-    <button type="submit" id="logout" class="btn btn-success">Log Out</button>
-    <sec:csrfInput/>
-</form>
-
-<div id="content">
-    <h1>Hello I am an advanced tutor</h1>
-</div>
+<h1>Hello I am an advanced tutor</h1>

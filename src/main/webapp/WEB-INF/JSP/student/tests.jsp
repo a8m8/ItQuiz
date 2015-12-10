@@ -6,21 +6,13 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="logoutUrl" value="/logout"/>
-<form action="${logoutUrl }" method="POST">
-    <button type="submit" id="logout" class="btn btn-success">Log Out</button>
-    <sec:csrfInput/>
-</form>
+<ul id="main-nav" class="student">
+    <li id="firsttab">
+        <a href="${context }/student/myaccount">My account</a>
+    <li id="secondtab" class="active">
+        <a href="${context }/student/tests">Tests</a>
+    <li id="thirdtab">
+        <a href="${context }/student/tests-result">Tests result</a>
+</ul>
 
-<div id="content">
-    <ul id="main-nav" class="student">
-        <li id="firsttab">
-            <a href="${context }/student/myaccount">My account</a>
-        <li id="secondtab" class="active">
-            <a href="${context }/student/tests">Tests</a>
-        <li id="thirdtab">
-            <a href="${context }/student/tests-result">Tests result</a>
-    </ul>
-
-    <h3>Available tests</h3>
-</div>
+<h3>Available tests</h3>
