@@ -47,7 +47,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     private AccountRegistrationDao accountRegistrationDao;
 
     @Autowired
-    EntityBuilder entityBuilder;
+    private EntityBuilder entityBuilder;
 
     @Override
     public long accountsCount() {
