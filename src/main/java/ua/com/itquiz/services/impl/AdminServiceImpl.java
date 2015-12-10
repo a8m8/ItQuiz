@@ -93,7 +93,8 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    public AdminUserForm generateFormBasedOnAccount(Account account) {
+    public AdminUserForm generateFormBasedOnAccount(int idAccount) {
+        Account account = accountDao.findById(idAccount);
         AdminUserForm adminUserForm = new AdminUserForm();
         adminUserForm.setEmail(account.getEmail());
         adminUserForm.setLogin(account.getLogin());

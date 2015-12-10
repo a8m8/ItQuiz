@@ -21,11 +21,6 @@ public class StudentController extends AbstractController {
         return "student/tests";
     }
 
-    @RequestMapping(value = "/myaccount", method = RequestMethod.GET)
-    public String showMyAccount() {
-        return "student/myaccount";
-    }
-
     @RequestMapping(value = "/tests-result", method = RequestMethod.GET)
     public String showTestsResult() {
         return "student/tests-result";

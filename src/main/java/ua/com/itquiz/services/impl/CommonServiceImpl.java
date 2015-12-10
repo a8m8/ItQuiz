@@ -41,6 +41,16 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public AccountInfoForm generateAccountForm(int idAccount) {
+        Account account = accountDao.findById(idAccount);
+        AccountInfoForm accountInfoForm = new AccountInfoForm();
+        accountInfoForm.setEmail(account.getEmail());
+        accountInfoForm.setLogin(account.getLogin());
+        accountInfoForm.setFio(account.getFio());
+        return accountInfoForm;
+    }
+
+    @Override
     public void changePassword(int idAccount, PasswordForm passwordForm) {
         Account account = accountDao.findById(idAccount);
         String encodedPassword = defaultPasswordEncoder.encode(passwordForm.getPassword());

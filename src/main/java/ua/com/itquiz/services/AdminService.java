@@ -14,7 +14,7 @@ public interface AdminService {
 
     long accountsCount();
 
-    AdminUserForm generateFormBasedOnAccount(Account account);
+    AdminUserForm generateFormBasedOnAccount(int idAccount);
 
     List<Account> getAccounts(int offset, int count);
 

@@ -15,4 +15,6 @@ public interface CommonService {
     void editPersonalData(int idAccount, AccountInfoForm editDataForm) throws InvalidUserInputException;
 
     void changePassword(int idAccount, PasswordForm passwordForm);
+
+    AccountInfoForm generateAccountForm(int idAccount);
 }

@@ -7,11 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.AccountInfoForm;
 import ua.com.itquiz.forms.AdminAddUserForm;
 import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.forms.PasswordForm;
-import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.AdminService;
 import ua.com.itquiz.services.CommonService;
 
@@ -26,63 +24,13 @@ import java.util.List;
 public class AdminController extends AbstractController {
 
     @Autowired
-    protected AdminService adminService;
+    private AdminService adminService;
 
     @Autowired
-    protected CommonService commonService;
+    private MessageSource messageSource;
 
     @Autowired
-    protected MessageSource messageSource;
-
-    @RequestMapping(value = "/myaccount", method = RequestMethod.GET)
-    protected String showMyAccount(HttpSession session, Model model) {
-        if (session.getAttribute("message") != null) {
-            model.addAttribute("message", session.getAttribute("message"));
-            session.removeAttribute("message");
-        }
-        if (session.getAttribute("errorMessage") != null) {
-            model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
-            session.removeAttribute("errorMessage");
-        }
-        model.addAttribute("personalInfoForm", new AccountInfoForm());
-        model.addAttribute("account", commonService.getAccountById(SecurityUtils.getCurrentIdAccount()));
-        return "admin/myaccount";
-    }
-
-    @RequestMapping(value = "/myaccount", method = RequestMethod.POST)
-    public String editPersonalInformation(
-            @ModelAttribute("personalInfoForm") AccountInfoForm accountInfoForm, Model model,
-            HttpSession session) {
-        try {
-            accountInfoForm.validate(messageSource);
-            commonService.editPersonalData(SecurityUtils.getCurrentIdAccount(), accountInfoForm);
-            setMessage(session, "changes.saved");
-            return "redirect:/admin/accounts/page/1";
-        } catch (InvalidUserInputException ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "admin/myaccount";
-        }
-    }
-
-    @RequestMapping(value = "/myaccount/change-password", method = RequestMethod.GET)
-    public String showChangePassword(Model model) {
-        model.addAttribute("passwordForm", new PasswordForm());
-        model.addAttribute("object", "myaccount");
-        return "admin/change-password";
-    }
-
-    @RequestMapping(value = "/myaccount/change-password", method = RequestMethod.POST)
-    public String editPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, HttpSession session) {
-        try {
-            passwordForm.validate(messageSource);
-            commonService.changePassword(SecurityUtils.getCurrentIdAccount(), passwordForm);
-            setMessage(session, "password.changed");
-            return "redirect:/admin/myaccount";
-        } catch (InvalidUserInputException e) {
-            session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/myaccount";
-        }
-    }
+    private CommonService commonService;
 
     @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
     public String showAllAccounts(@PathVariable int pageNumber, HttpSession session, Model model) {
@@ -146,7 +94,7 @@ public class AdminController extends AbstractController {
 
     @RequestMapping(value = "/edit-account", method = RequestMethod.GET)
     public String showEditUser(@RequestParam("id") int id, Model model) {
-        AdminUserForm adminUserForm = adminService.generateFormBasedOnAccount(commonService.getAccountById(id));
+        AdminUserForm adminUserForm = adminService.generateFormBasedOnAccount(id);
         model.addAttribute("adminUserForm", adminUserForm);
         model.addAttribute("idAccount", id);
         return "admin/edit-account";
@@ -171,6 +119,7 @@ public class AdminController extends AbstractController {
         model.addAttribute("passwordForm", new PasswordForm());
         model.addAttribute("idAccount", id);
         model.addAttribute("object", "edit-account");
+        model.addAttribute("role", "admin");
         return "admin/change-password";
     }
 
