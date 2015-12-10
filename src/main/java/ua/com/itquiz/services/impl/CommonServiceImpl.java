@@ -13,6 +13,7 @@ import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 import ua.com.itquiz.forms.AccountInfoForm;
 import ua.com.itquiz.forms.PasswordForm;
+import ua.com.itquiz.security.DefaultPasswordEncoder;
 import ua.com.itquiz.services.CommonService;
 
 import java.sql.Timestamp;
@@ -31,6 +32,9 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     protected MessageSource messageSource;
 
+    @Autowired
+    private DefaultPasswordEncoder defaultPasswordEncoder;
+
     @Override
     public Account getAccountById(int idAccount) {
         return accountDao.findById(idAccount);
@@ -39,7 +43,8 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void changePassword(int idAccount, PasswordForm passwordForm) {
         Account account = accountDao.findById(idAccount);
-        account.setPassword(passwordForm.getPassword());
+        String encodedPassword = defaultPasswordEncoder.encode(passwordForm.getPassword());
+        account.setPassword(encodedPassword);
         account.setUpdated(new Timestamp(System.currentTimeMillis()));
         accountDao.save(account);
     }
