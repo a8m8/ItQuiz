@@ -15,6 +15,7 @@ import ua.com.itquiz.services.CommonService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Artur Meshcheriakov
@@ -43,19 +44,14 @@ public class AdminController extends AbstractController {
             session.removeAttribute("errorMessage");
         }
 
-        int count = 1; // Count of accounts which are displayed at the page
-        long temp = adminService.accountsCount() / count;
-        long maximum = (adminService.accountsCount() % count == 0) ? temp : temp + 1;
-        int current = pageNumber;
-        int begin = Math.max(1, current - 5);
-        long end = Math.min(begin + 10, maximum);
+        Map<String, Integer> paginationMap = getPaginationMap(1, adminService.accountsCount(), pageNumber);
 
-        List<Account> accounts = adminService.getAccounts(((pageNumber - 1) * count), count);
+        List<Account> accounts = adminService.getAccounts(paginationMap.get("offset"), paginationMap.get("count"));
         model.addAttribute("accounts", accounts);
-        model.addAttribute("beginIndex", begin);
-        model.addAttribute("endIndex", end);
-        model.addAttribute("currentIndex", current);
-        model.addAttribute("maximum", maximum);
+        model.addAttribute("beginIndex", paginationMap.get("beginIndex"));
+        model.addAttribute("endIndex", paginationMap.get("endIndex"));
+        model.addAttribute("currentIndex", paginationMap.get("currentIndex"));
+        model.addAttribute("maximum", paginationMap.get("maximum"));
 
         return "admin/accounts";
     }
