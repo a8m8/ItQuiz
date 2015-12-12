@@ -7,23 +7,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-<ul id="main-nav" class="admin">
-    <li id="firsttab">
-        <a href="${context }/admin/myaccount">My account</a>
-    <li id="secondtab">
-        <a href="${context }/admin/accounts/page/1">All accounts</a>
-    <li id="thirdtab">
-        <a href="${context }/admin/add-user">Add user</a>
-</ul>
+<jsp:include page="../templates/admin-nav.jsp"/>
 
 <h3>Edit User</h3>
 
-<c:if test="${not empty message}">
-    <h4 id="message">${message }</h4>
-</c:if>
-<c:if test="${not empty errorMessage}">
-    <h4 id="error-message">${errorMessage }</h4>
-</c:if>
+<jsp:include page="../templates/message.jsp"/>
+<jsp:include page="../templates/error-message.jsp"/>
 
 <form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-account"
            commandName="adminUserForm">

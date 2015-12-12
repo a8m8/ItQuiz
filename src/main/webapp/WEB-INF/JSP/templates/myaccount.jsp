@@ -8,14 +8,8 @@
 
 <h3>My Account</h3>
 
-<c:if test="${not empty message}">
-    <h4 id="message">${message }</h4>
-</c:if>
-
-<c:if test="${not empty errorMessage}">
-    <h4 id="error-message">${errorMessage }</h4>
-</c:if>
-
+<jsp:include page="../templates/message.jsp"/>
+<jsp:include page="../templates/error-message.jsp"/>
 
 <form:form id="myaccount-form" class="form-horizontal" method="POST" action="${context}/${role}/myaccount"
            commandName="personalInfoForm">

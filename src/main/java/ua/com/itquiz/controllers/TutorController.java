@@ -16,4 +16,9 @@ public class TutorController extends AbstractController {
         return "tutor/mytests";
     }
 
+    @RequestMapping(value = "/create-test", method = RequestMethod.GET)
+    public String showCreateTest() {
+        return "tutor/create-test";
+    }
+
 }

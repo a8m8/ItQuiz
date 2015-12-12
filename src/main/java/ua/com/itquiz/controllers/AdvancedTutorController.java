@@ -16,4 +16,14 @@ public class AdvancedTutorController extends AbstractController {
         return "advanced-tutor/mytests";
     }
 
+    @RequestMapping(value = "/create-test", method = RequestMethod.GET)
+    public String showCreateTest() {
+        return "advanced-tutor/create-test";
+    }
+
+    @RequestMapping(value = "/alltests", method = RequestMethod.GET)
+    public String showAllTests() {
+        return "advanced-tutor/alltests";
+    }
+
 }

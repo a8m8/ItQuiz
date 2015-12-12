@@ -6,20 +6,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<ul id="main-nav" class="admin">
-    <li id="firsttab">
-        <a href="${context }/admin/myaccount">My account</a>
-    <li id="secondtab">
-        <a href="${context }/admin/accounts/page/1">All accounts</a>
-    <li id="thirdtab" class="active">
-        <a href="${context }/admin/add-user">Add user</a>
-</ul>
+<jsp:include page="../templates/admin-nav.jsp"/>
 
 <h3>Add new user</h3>
 
-<c:if test="${not empty errorMessage}">
-    <h4 id="error-message">${errorMessage }</h4>
-</c:if>
+<jsp:include page="../templates/error-message.jsp"/>
 
 <form:form id="admin-add-user-form" class="form-horizontal" method="POST" action="${context }/admin/add-user"
            commandName="adminAddUserForm">

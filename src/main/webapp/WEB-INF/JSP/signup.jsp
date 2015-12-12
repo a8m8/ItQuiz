@@ -6,20 +6,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<ul id="main-nav" class="login">
-    <li id="firsttab" class="active">
-        <a href="${context}/signup">SignUp</a>
-    <li id="secondtab">
-        <a href="${context}/login">Welcome</a>
-    <li id="thirdtab">
-        <a href="${context}/password-recovery">Password recovery</a>
-</ul>
+<jsp:include page="templates/login-nav.jsp"/>
 
 <h3>Creating new user</h3>
 
-<c:if test="${not empty errorMessage}">
-    <h4 id="error-message">${errorMessage }</h4>
-</c:if>
+<jsp:include page="templates/error-message.jsp"/>
 
 <form:form id="signup-form" class="form-horizontal" method="POST" action="${context }/signup"
            commandName="signUpForm">
