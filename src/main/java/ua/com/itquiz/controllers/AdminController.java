@@ -48,6 +48,7 @@ public class AdminController extends AbstractController {
 
         List<Account> accounts = adminService.getAccounts(paginationMap.get("offset"), paginationMap.get("count"));
         model.addAttribute("accounts", accounts);
+        model.addAttribute("location", "/admin/accounts");
         model.addAttribute("beginIndex", paginationMap.get("beginIndex"));
         model.addAttribute("endIndex", paginationMap.get("endIndex"));
         model.addAttribute("currentIndex", paginationMap.get("currentIndex"));
