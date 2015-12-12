@@ -16,7 +16,6 @@ public class AccountRegistration extends AbstractEntity {
     @Column(name = "id_account_registration", unique = true, nullable = false)
     private Integer idAccountRegistration;
 
-    @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_account", nullable = false, updatable = false)
     private Account account;
