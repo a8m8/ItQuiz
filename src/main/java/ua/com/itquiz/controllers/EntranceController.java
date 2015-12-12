@@ -58,14 +58,6 @@ public class EntranceController extends AbstractController implements Initializi
 
     @RequestMapping(value = {"/login", "/loginFailed"}, method = RequestMethod.GET)
     public String showLogin(HttpSession session, Model model) {
-        if (session.getAttribute("message") != null) {
-            model.addAttribute("message", session.getAttribute("message"));
-            session.removeAttribute("message");
-        }
-        if (session.getAttribute("errorMessage") != null) {
-            model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
-            session.removeAttribute("errorMessage");
-        }
         if (SecurityUtils.getCurrentAccount() != null) {
             return "redirect:crossing";
         }

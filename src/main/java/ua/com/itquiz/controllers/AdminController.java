@@ -35,15 +35,6 @@ public class AdminController extends AbstractController {
 
     @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
     public String showAllAccounts(@PathVariable int pageNumber, HttpSession session, Model model) {
-        if (session.getAttribute("message") != null) {
-            model.addAttribute("message", session.getAttribute("message"));
-            session.removeAttribute("message");
-        }
-        if (session.getAttribute("errorMessage") != null) {
-            model.addAttribute("errorMessage", session.getAttribute("errorMessage"));
-            session.removeAttribute("errorMessage");
-        }
-
         Map<String, Integer> paginationMap = getPaginationMap(1, adminService.accountsCount(), pageNumber);
 
         List<Account> accounts = adminService.getAccounts(paginationMap.get("offset"), paginationMap.get("count"));
