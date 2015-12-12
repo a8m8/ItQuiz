@@ -30,7 +30,7 @@ import java.util.List;
  * @author Artur Meshcheriakov
  */
 @Service("adminService")
-@Transactional(readOnly = true)
+@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AdminServiceImpl extends CommonServiceImpl implements AdminService {
 
@@ -55,8 +55,6 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void addUser(AdminAddUserForm adminAddUserForm) throws InvalidUserInputException {
         isEmailExist(adminAddUserForm.getEmail());
         isLoginExist(adminAddUserForm.getLogin());
@@ -125,8 +123,6 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void editUser(int idAccount, AdminUserForm adminUserForm)
             throws InvalidUserInputException {
         Account account = accountDao.findById(idAccount);
@@ -266,8 +262,6 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void removeAccount(int accountId) throws InvalidUserInputException {
         Account account = accountDao.findById(accountId);
         if (account == null) {

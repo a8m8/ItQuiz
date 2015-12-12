@@ -33,7 +33,7 @@ import java.util.UUID;
  * @author Artur Meshcheriakov
  */
 @Service("entranceService")
-@Transactional(readOnly = true)
+@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class EntranceServiceImpl implements EntranceService {
 
@@ -66,8 +66,6 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public Account login(User user) throws InvalidUserInputException {
         Account account = accountDao.findByEmail(user.getEmail());
         if (account != null) {
@@ -100,8 +98,6 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public Account signUp(SignUpForm signUpForm) throws InvalidUserInputException {
         return singUp(signUpForm, true, false);
     }
@@ -166,8 +162,6 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     @Override
-    @Transactional(readOnly = false,
-            rollbackFor = {InvalidUserInputException.class, RuntimeException.class})
     public void verifyAccount(int id, String hash) throws InvalidUserInputException {
         Account account = accountDao.findById(id);
         if (account == null) {
