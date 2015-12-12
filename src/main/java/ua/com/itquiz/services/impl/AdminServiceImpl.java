@@ -271,7 +271,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     public void removeAccount(int accountId) throws InvalidUserInputException {
         Account account = accountDao.findById(accountId);
         if (account == null) {
-            throw new InvalidUserInputException(messageSource.getMessage("login.bad.credentials",
+            throw new InvalidUserInputException(messageSource.getMessage("account.not.found",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
         accountDao.delete(account);
