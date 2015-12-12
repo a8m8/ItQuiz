@@ -12,10 +12,10 @@ import ua.com.itquiz.forms.AdminUserForm;
 import ua.com.itquiz.forms.PasswordForm;
 import ua.com.itquiz.services.AdminService;
 import ua.com.itquiz.services.CommonService;
+import ua.com.itquiz.utils.Pagination;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Artur Meshcheriakov
@@ -34,16 +34,13 @@ public class AdminController extends AbstractController {
     private CommonService commonService;
 
     @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
-    public String showAllAccounts(@PathVariable int pageNumber, HttpSession session, Model model) {
-        Map<String, Integer> paginationMap = getPaginationMap(1, adminService.accountsCount(), pageNumber);
+    public String showAllAccounts(@PathVariable int pageNumber, Model model) {
 
-        List<Account> accounts = adminService.getAccounts(paginationMap.get("offset"), paginationMap.get("count"));
+        Pagination pagination = new Pagination(1, adminService.accountsCount(), pageNumber);
+        List<Account> accounts = adminService.getAccounts(pagination.getOffset(), pagination.getCount());
         model.addAttribute("accounts", accounts);
         model.addAttribute("location", "/admin/accounts");
-        model.addAttribute("beginIndex", paginationMap.get("beginIndex"));
-        model.addAttribute("endIndex", paginationMap.get("endIndex"));
-        model.addAttribute("currentIndex", paginationMap.get("currentIndex"));
-        model.addAttribute("maximum", paginationMap.get("maximum"));
+        model.addAttribute("pagination", pagination);
 
         return "admin/accounts";
     }

@@ -7,14 +7,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="firstUrl" value="${location}/page/1"/>
-<c:url var="lastUrl" value="${location}/page/${maximum}"/>
-<c:url var="prevUrl" value="${location}/page/${currentIndex - 1}"/>
-<c:url var="nextUrl" value="${location}/page/${currentIndex + 1}"/>
+<c:url var="lastUrl" value="${location}/page/${pagination.maximum}"/>
+<c:url var="prevUrl" value="${location}/page/${pagination.currentIndex - 1}"/>
+<c:url var="nextUrl" value="${location}/page/${pagination.currentIndex + 1}"/>
 
 <nav id="pagination">
     <ul class="pagination">
         <c:choose>
-            <c:when test="${currentIndex == 1}">
+            <c:when test="${pagination.currentIndex == 1}">
                 <li class="disabled"><a href="#">&lt;&lt;</a></li>
                 <li class="disabled"><a href="#">&lt;</a></li>
             </c:when>
@@ -23,10 +23,10 @@
                 <li><a href="${prevUrl}">&lt;</a></li>
             </c:otherwise>
         </c:choose>
-        <c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+        <c:forEach var="i" begin="${pagination.beginIndex}" end="${pagination.endIndex}">
             <c:url var="pageUrl" value="${location}/page/${i}"/>
             <c:choose>
-                <c:when test="${i == currentIndex}">
+                <c:when test="${i == pagination.currentIndex}">
                     <li class="active"><a href="${pageUrl}"><c:out value="${i}"/></a></li>
                 </c:when>
                 <c:otherwise>
@@ -35,7 +35,7 @@
             </c:choose>
         </c:forEach>
         <c:choose>
-            <c:when test="${currentIndex == maximum}">
+            <c:when test="${pagination.currentIndex == pagination.maximum}">
                 <li class="disabled"><a href="#">&gt;</a></li>
                 <li class="disabled"><a href="#">&gt;&gt;</a></li>
             </c:when>
