@@ -13,11 +13,10 @@ public class AccountRegistration extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "ACCOUNT_REGISTID_GENERATOR", sequenceName = "ACCOUNT_REGISTRATION_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCOUNT_REGISTID_GENERATOR")
     @Column(name = "id_account_registration", unique = true, nullable = false)
     private Integer idAccountRegistration;
 
+    @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_account", nullable = false, updatable = false)
     private Account account;

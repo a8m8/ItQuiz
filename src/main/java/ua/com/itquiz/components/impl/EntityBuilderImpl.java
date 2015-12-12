@@ -24,6 +24,7 @@ public class EntityBuilderImpl implements EntityBuilder {
     public AccountRegistration buildAccountRegistration(Account account) {
 
         AccountRegistration accountRegistration = new AccountRegistration();
+        accountRegistration.setIdAccountRegistration(account.getIdAccount());
         accountRegistration.setAccount(account);
         accountRegistration.setHash(UUID.randomUUID().toString());
 
