@@ -2,7 +2,6 @@ package ua.com.itquiz.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Artur Meshcheriakov
@@ -31,10 +30,6 @@ public class Test extends AbstractBusinessEntity {
 
     @Column(name = "time_per_question", nullable = false, insertable = false)
     private Integer timePerQuestion;
-
-    @OneToMany(mappedBy = "test")
-    @OrderBy("created")
-    private List<Question> questions;
 
     public Test() {
     }
@@ -77,14 +72,6 @@ public class Test extends AbstractBusinessEntity {
 
     public void setTimePerQuestion(Integer timePerQuestion) {
         this.timePerQuestion = timePerQuestion;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
     }
 
     @Override

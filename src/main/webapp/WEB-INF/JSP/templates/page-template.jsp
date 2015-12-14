@@ -18,6 +18,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <sec:csrfMetaTags/>
     <title>ItQuiz</title>
+    <noscript>
+        <meta http-equiv="refresh" content="0; URL=/bad-browser.jsp">
+    </noscript>
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css?v=${CSS_JS_VERSION}">
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap-theme.min.css?v=${CSS_JS_VERSION}">
     <link rel="stylesheet" type="text/css" href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}"/>
