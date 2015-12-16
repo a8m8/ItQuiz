@@ -1,6 +1,7 @@
 package ua.com.itquiz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,10 +34,13 @@ public class AdminController extends AbstractController {
     @Autowired
     private CommonService commonService;
 
+    @Value("${admin.pagination.count}")
+    private int paginationCount;
+
     @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
     public String showAllAccounts(@PathVariable int pageNumber, Model model) {
 
-        Pagination pagination = new Pagination(1, adminService.accountsCount(), pageNumber);
+        Pagination pagination = new Pagination(paginationCount, adminService.accountsCount(), pageNumber);
         List<Account> accounts = adminService.getAccounts(pagination.getOffset(), pagination.getCount());
         model.addAttribute("accounts", accounts);
         model.addAttribute("location", "/admin/accounts");

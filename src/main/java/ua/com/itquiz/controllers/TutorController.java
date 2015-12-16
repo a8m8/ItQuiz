@@ -1,6 +1,7 @@
 package ua.com.itquiz.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +24,12 @@ public class TutorController extends AbstractController {
     @Autowired
     protected TutorService tutorService;
 
+    @Value("${tutor.pagination.count}")
+    private int paginationCount;
+
     @RequestMapping(value = "/mytests/page/{pageNumber}", method = RequestMethod.GET)
     public String showMyTests(@PathVariable int pageNumber, Model model) {
-        Pagination pagination = new Pagination(1, tutorService.getAccountTestsCount(SecurityUtils.getCurrentIdAccount
+        Pagination pagination = new Pagination(paginationCount, tutorService.getAccountTestsCount(SecurityUtils.getCurrentIdAccount
                 ()), pageNumber);
         List<Test> accountTests = tutorService.getAccountTests(SecurityUtils.getCurrentIdAccount(), pagination.getOffset()
                 , pagination.getCount());
