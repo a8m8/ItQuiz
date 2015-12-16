@@ -39,8 +39,8 @@
                 <td><fmt:formatDate value="${account.updated }" pattern="dd-MM-yyyy"/></td>
                 <td>${account.active ? "Activated" : "Deactivated" }</td>
                 <td>${account.confirmed ? "Yes" : "No" }</td>
-                <td><a href="<c:url value="/admin/edit-account?id=${account.idAccount }"/>">Edit</a></td>
-                <td><a href="<c:url value="/admin/delete?id=${account.idAccount }"/>">Delete</a></td>
+                <td><a href="<c:url value="/admin/accounts/edit-account?id=${account.idAccount }"/>">Edit</a></td>
+                <td><a href="<c:url value="/admin/accounts/delete?id=${account.idAccount }"/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

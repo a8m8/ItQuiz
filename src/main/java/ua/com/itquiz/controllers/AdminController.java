@@ -69,7 +69,7 @@ public class AdminController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/accounts/delete", method = RequestMethod.GET)
     public String removeAccount(@RequestParam("id") int id, HttpSession session) {
         try {
             adminService.removeAccount(id);
@@ -81,7 +81,7 @@ public class AdminController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/edit-account", method = RequestMethod.GET)
+    @RequestMapping(value = "/accounts/edit-account", method = RequestMethod.GET)
     public String showEditUser(@RequestParam("id") int id, Model model) {
         AdminUserForm adminUserForm = adminService.generateFormBasedOnAccount(id);
         model.addAttribute("adminUserForm", adminUserForm);
@@ -89,7 +89,7 @@ public class AdminController extends AbstractController {
         return "admin/edit-account";
     }
 
-    @RequestMapping(value = "/edit-account", method = RequestMethod.POST)
+    @RequestMapping(value = "/accounts/edit-account", method = RequestMethod.POST)
     public String editAccount(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
                               @RequestParam("id") int id, Model model, HttpSession session) {
         try {
@@ -103,26 +103,26 @@ public class AdminController extends AbstractController {
         }
     }
 
-    @RequestMapping(value = "/edit-account/change-password", method = RequestMethod.GET)
+    @RequestMapping(value = "/accounts/edit-account/change-password", method = RequestMethod.GET)
     public String showUserChangePassword(@RequestParam("id") int id, Model model) {
         model.addAttribute("passwordForm", new PasswordForm());
         model.addAttribute("idAccount", id);
-        model.addAttribute("object", "edit-account");
+        model.addAttribute("object", "accounts/edit-account");
         model.addAttribute("role", "admin");
         return "admin/change-password";
     }
 
-    @RequestMapping(value = "/edit-account/change-password", method = RequestMethod.POST)
+    @RequestMapping(value = "/accounts/edit-account/change-password", method = RequestMethod.POST)
     public String editUserPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, @RequestParam("id")
     int id, HttpSession session) {
         try {
             passwordForm.validate(messageSource);
             commonService.changePassword(id, passwordForm);
             setMessage(session, "password.changed");
-            return "redirect:/admin/edit-account?id=" + id;
+            return "redirect:/admin/accounts/edit-account?id=" + id;
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/edit-account?id=" + id;
+            return "redirect:/admin/accounts/edit-account?id=" + id;
         }
     }
 

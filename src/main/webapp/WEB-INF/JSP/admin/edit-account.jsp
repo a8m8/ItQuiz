@@ -14,7 +14,8 @@
 <jsp:include page="../templates/message.jsp"/>
 <jsp:include page="../templates/error-message.jsp"/>
 
-<form:form id="admin-edit-user-form" class="form-horizontal" method="POST" action="${context }/admin/edit-account"
+<form:form id="admin-edit-user-form" class="form-horizontal" method="POST"
+           action="${context }/admin/accounts/edit-account"
            commandName="adminUserForm">
     <input type="hidden" name="id" value="${idAccount }"/>
 
@@ -38,7 +39,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <a href="${context}/admin/edit-account/change-password?id=${idAccount }">Change password</a>
+            <a href="${context}/admin/accounts/edit-account/change-password?id=${idAccount }">Change password</a>
         </div>
     </div>
     <div class="form-group">
