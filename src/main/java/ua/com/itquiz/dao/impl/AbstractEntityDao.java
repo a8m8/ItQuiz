@@ -1,9 +1,11 @@
 package ua.com.itquiz.dao.impl;
 
-import org.apache.log4j.Logger;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
 
-    protected final Logger LOGGER = Logger.getLogger(getClass());
+    protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     protected SessionFactory sessionFactory;

@@ -1,6 +1,7 @@
 package ua.com.itquiz.components.impl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class DefaultExceptionResolver extends AbstractHandlerExceptionResolver {
 
-    private static final Logger LOGGER = Logger.getLogger(DefaultExceptionResolver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExceptionResolver.class);
 
     public DefaultExceptionResolver() {
         setOrder(0);
@@ -28,7 +29,7 @@ public class DefaultExceptionResolver extends AbstractHandlerExceptionResolver {
         try {
             Throwable causeException = ex.getCause() == null ? ex : ex.getCause();
             if (handler != null && !(causeException instanceof InvalidUserInputException)) {
-                Logger.getLogger(handler.getClass()).error("", ex);
+                LoggerFactory.getLogger(handler.getClass()).error("", ex);
             }
             LOGGER.warn("Unsupported exception: " + ex.getClass(), ex);
             return new ModelAndView("redirect:/error?url=" + request.getRequestURI());

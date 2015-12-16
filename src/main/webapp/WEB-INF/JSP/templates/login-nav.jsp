@@ -17,5 +17,3 @@
         class="active"</c:if>>
         <a href="${context}/password-recovery">Password recovery</a>
 </ul>
-
-<h3>${pageContext.request.contextPath}</h3>

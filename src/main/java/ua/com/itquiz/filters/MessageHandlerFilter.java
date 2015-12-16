@@ -9,6 +9,7 @@ import java.io.IOException;
  * @author Artur Meshcheriakov
  */
 public class MessageHandlerFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

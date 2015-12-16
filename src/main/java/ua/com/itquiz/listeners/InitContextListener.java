@@ -1,6 +1,8 @@
 package ua.com.itquiz.listeners;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.itquiz.services.ConfigApplicationService;
 
@@ -12,7 +14,8 @@ import javax.servlet.ServletContextListener;
  * @author Artur Meshcheriakov
  */
 public class InitContextListener implements ServletContextListener {
-    private static final Logger LOGGER = Logger.getLogger(InitContextListener.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InitContextListener.class);
 
     protected WebApplicationContext getWebApplicationContext(ServletContextEvent event) {
         ServletContext servletContext = event.getServletContext();

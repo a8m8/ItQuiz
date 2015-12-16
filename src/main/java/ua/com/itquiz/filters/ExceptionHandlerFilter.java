@@ -1,6 +1,8 @@
 package ua.com.itquiz.filters;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
 
 import javax.servlet.*;
@@ -12,7 +14,7 @@ import java.io.IOException;
  */
 public class ExceptionHandlerFilter implements Filter {
 
-    private final static Logger LOGGER = Logger.getLogger(ExceptionHandlerFilter.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,7 +28,7 @@ public class ExceptionHandlerFilter implements Filter {
         } catch (Exception ex) {
             Throwable causeException = ex.getCause() == null ? ex : ex.getCause();
             if (!(causeException instanceof InvalidUserInputException)) {
-                LOGGER.error(ex.getClass(), ex);
+                LOGGER.error(ex.getClass().toString(), ex);
             } else {
                 LOGGER.warn("Unsupported exception: " + ex.getClass(), ex);
             }
