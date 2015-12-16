@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.AccountInfoForm;
-import ua.com.itquiz.forms.PasswordForm;
+import ua.com.itquiz.forms.admin.AccountInfoForm;
+import ua.com.itquiz.forms.admin.PasswordForm;
 import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.CommonService;
 

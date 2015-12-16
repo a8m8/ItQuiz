@@ -1,6 +1,5 @@
 package ua.com.itquiz.dao;
 
-import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Test;
 
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.List;
  */
 public interface TestDao extends IEntityDao<Test> {
 
-    List<Test> findAllTestCreatedBy(Account account);
+    List<Test> listTestsCreatedBy(int idAccount, int offset, int count);
+
+    long countTestsCreatedBy(int idAccount);
 
 }

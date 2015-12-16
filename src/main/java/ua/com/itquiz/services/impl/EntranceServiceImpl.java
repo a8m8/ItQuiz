@@ -20,7 +20,7 @@ import ua.com.itquiz.entities.AccountRegistration;
 import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.SignUpForm;
+import ua.com.itquiz.forms.admin.SignUpForm;
 import ua.com.itquiz.security.DefaultPasswordEncoder;
 import ua.com.itquiz.services.EmailService;
 import ua.com.itquiz.services.EntranceService;

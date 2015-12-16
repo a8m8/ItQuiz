@@ -1,23 +1,19 @@
-package ua.com.itquiz.forms;
+package ua.com.itquiz.forms.admin;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.forms.Copyable;
 
 /**
  * @author Artur Meshcheriakov
  */
-
-public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
-
-    private static final long serialVersionUID = 2155252411443776689L;
+public class AdminAddUserForm extends AdminUserForm implements Copyable<Account> {
 
     protected String password;
     protected String passwordConfirmed;
-    protected Boolean active = Boolean.TRUE;
-    protected Boolean confirmed = Boolean.FALSE;
 
     public String getPassword() {
         return password;
@@ -33,22 +29,6 @@ public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
 
     public void setPasswordConfirmed(String passwordConfirmed) {
         this.passwordConfirmed = passwordConfirmed;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        this.confirmed = confirmed;
     }
 
     @Override
@@ -71,8 +51,8 @@ public class SignUpForm extends AccountInfoForm implements Copyable<Account> {
     @Override
     public void copyFieldsTo(Account account) {
         account.setEmail(email);
-        account.setLogin(login);
         account.setPassword(password);
+        account.setLogin(login);
         account.setFio(fio);
         account.setConfirmed(confirmed);
         account.setActive(active);

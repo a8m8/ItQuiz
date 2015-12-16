@@ -10,8 +10,8 @@ import ua.com.itquiz.constants.ApplicationConstants;
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.EmailForm;
-import ua.com.itquiz.forms.SignUpForm;
+import ua.com.itquiz.forms.admin.EmailForm;
+import ua.com.itquiz.forms.admin.SignUpForm;
 import ua.com.itquiz.security.CurrentAccount;
 import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.EntranceService;
@@ -33,7 +33,7 @@ public class EntranceController extends AbstractController implements Initializi
     public void afterPropertiesSet() throws Exception {
         redirects.put(ApplicationConstants.ADMIN_ROLE, "/admin/accounts/page/1");
         redirects.put(ApplicationConstants.ADVANCED_TUTOR_ROLE, "/advanced-tutor/mytests");
-        redirects.put(ApplicationConstants.TUTOR_ROLE, "/tutor/mytests");
+        redirects.put(ApplicationConstants.TUTOR_ROLE, "/tutor/mytests/page/1");
         redirects.put(ApplicationConstants.STUDENT_ROLE, "/student/tests");
     }
 

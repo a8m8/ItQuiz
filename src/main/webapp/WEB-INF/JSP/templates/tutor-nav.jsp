@@ -12,7 +12,7 @@
         <a href="${context }/tutor/myaccount">My account</a>
     <li id="secondtab" <c:if test="${requestScope['javax.servlet.forward.request_uri'].contains('/mytests')}">
         class="active"</c:if>>
-        <a href="${context }/tutor/mytests">My tests</a>
+    <a href="${context }/tutor/mytests/page/1">My tests</a>
     <li id="thirdtab" <c:if test="${requestScope['javax.servlet.forward.request_uri'].contains('/create-test')}">
         class="active"</c:if>>
         <a href="${context }/tutor/create-test">Create test</a>

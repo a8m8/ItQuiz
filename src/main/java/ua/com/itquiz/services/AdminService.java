@@ -2,8 +2,8 @@ package ua.com.itquiz.services;
 
 import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.AdminAddUserForm;
-import ua.com.itquiz.forms.AdminUserForm;
+import ua.com.itquiz.forms.admin.AdminAddUserForm;
+import ua.com.itquiz.forms.admin.AdminUserForm;
 
 import java.util.List;
 

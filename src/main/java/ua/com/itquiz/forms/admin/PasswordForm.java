@@ -1,15 +1,15 @@
-package ua.com.itquiz.forms;
+package ua.com.itquiz.forms.admin;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.forms.IForm;
 
 /**
  * @author Artur Meshcheriakov
  */
-public class AdminAddUserForm extends AdminUserForm implements Copyable<Account> {
+public class PasswordForm implements IForm {
 
     protected String password;
     protected String passwordConfirmed;
@@ -32,7 +32,6 @@ public class AdminAddUserForm extends AdminUserForm implements Copyable<Account>
 
     @Override
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
-        super.validate(messageSource);
         if (StringUtils.isBlank(password)) {
             throw new InvalidUserInputException(
                     messageSource.getMessage("passwords.required", new Object[]{}, LocaleContextHolder.getLocale()));
@@ -46,15 +45,4 @@ public class AdminAddUserForm extends AdminUserForm implements Copyable<Account>
                     messageSource.getMessage("passwords.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
         }
     }
-
-    @Override
-    public void copyFieldsTo(Account account) {
-        account.setEmail(email);
-        account.setPassword(password);
-        account.setLogin(login);
-        account.setFio(fio);
-        account.setConfirmed(confirmed);
-        account.setActive(active);
-    }
-
 }

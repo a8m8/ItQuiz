@@ -18,8 +18,8 @@ import ua.com.itquiz.entities.AccountRegistration;
 import ua.com.itquiz.entities.AccountRole;
 import ua.com.itquiz.entities.Role;
 import ua.com.itquiz.exceptions.InvalidUserInputException;
-import ua.com.itquiz.forms.AdminAddUserForm;
-import ua.com.itquiz.forms.AdminUserForm;
+import ua.com.itquiz.forms.admin.AdminAddUserForm;
+import ua.com.itquiz.forms.admin.AdminUserForm;
 import ua.com.itquiz.services.AdminService;
 
 import java.sql.Timestamp;
