@@ -29,6 +29,9 @@ public class EmailServiceImpl implements EmailService {
     @Value("${recovery.email.filepath}")
     private String recoveryTextFileName;
 
+    @Value("${email.username}")
+    private String emailFrom;
+
     @Autowired
     private JavaMailSender defaultMailSender;
 
@@ -58,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 message.setTo(account.getEmail());
-                message.setFrom("artua@mail.ru");
+                message.setFrom(emailFrom);
                 message.setSubject(subject);
                 message.setText(content, true);
             }
