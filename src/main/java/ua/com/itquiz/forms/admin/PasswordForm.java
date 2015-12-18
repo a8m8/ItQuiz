@@ -34,7 +34,7 @@ public class PasswordForm implements IForm {
     public void validate(MessageSource messageSource) throws InvalidUserInputException {
         if (StringUtils.isBlank(password)) {
             throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.required", new Object[]{}, LocaleContextHolder.getLocale()));
+                    messageSource.getMessage("password.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
         if (password.length() > 60) {
             throw new InvalidUserInputException(

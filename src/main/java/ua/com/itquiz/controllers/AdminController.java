@@ -73,12 +73,11 @@ public class AdminController extends AbstractController {
     public String removeAccount(@RequestParam("id") int id, HttpSession session) {
         try {
             adminService.removeAccount(id);
-            setMessage(session, "delete.successful");
-            return "redirect:/admin/accounts/page/1";
+            setMessage(session, "user.delete.successful");
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/accounts/page/1";
         }
+        return "redirect:/admin/accounts/page/1";
     }
 
     @RequestMapping(value = "/accounts/edit-account", method = RequestMethod.GET)
@@ -91,16 +90,15 @@ public class AdminController extends AbstractController {
 
     @RequestMapping(value = "/accounts/edit-account", method = RequestMethod.POST)
     public String editAccount(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
-                              @RequestParam("id") int id, Model model, HttpSession session) {
+                              @RequestParam("id") int id, HttpSession session) {
         try {
             adminUserForm.validate(messageSource);
             adminService.editUser(id, adminUserForm);
             setMessage(session, "changes.saved");
-            return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/accounts/page/1";
         }
+        return "redirect:/admin/accounts/page/1";
     }
 
     @RequestMapping(value = "/accounts/edit-account/change-password", method = RequestMethod.GET)
@@ -119,11 +117,10 @@ public class AdminController extends AbstractController {
             passwordForm.validate(messageSource);
             commonService.changePassword(id, passwordForm);
             setMessage(session, "password.changed");
-            return "redirect:/admin/accounts/edit-account?id=" + id;
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/admin/accounts/edit-account?id=" + id;
         }
+        return "redirect:/admin/accounts/edit-account?id=" + id;
     }
 
 }

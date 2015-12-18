@@ -124,7 +124,6 @@ public class EntranceServiceImpl implements EntranceService {
         Role role = roleDao.findById(ApplicationConstants.STUDENT_ROLE);
         AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
         accountRoleDao.save(accountRole);
-        accountRoleDao.flush();
 
         List<AccountRole> accountRoles = new ArrayList<>();
         accountRoles.add(accountRole);

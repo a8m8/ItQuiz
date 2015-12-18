@@ -28,7 +28,7 @@ public class Test extends AbstractBusinessEntity {
     @Column
     private String description;
 
-    @Column(name = "time_per_question", nullable = false, insertable = false)
+    @Column(name = "time_per_question", nullable = false)
     private Integer timePerQuestion;
 
     public Test() {

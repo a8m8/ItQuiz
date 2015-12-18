@@ -25,7 +25,7 @@ public class CommonController extends AbstractController {
     CommonService commonService;
 
     @RequestMapping(value = "{role}/myaccount", method = RequestMethod.GET)
-    protected String showMyAccount(@PathVariable String role, HttpSession session, Model model) {
+    protected String showMyAccount(@PathVariable String role, Model model) {
         AccountInfoForm accountInfoForm = commonService.generateAccountForm(SecurityUtils.getCurrentIdAccount());
         model.addAttribute("personalInfoForm", accountInfoForm);
         model.addAttribute("role", role);

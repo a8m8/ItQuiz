@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ua.com.itquiz.entities.Test;
+import ua.com.itquiz.exceptions.InvalidUserInputException;
+import ua.com.itquiz.forms.tutors.NewTestForm;
 import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.TutorService;
 import ua.com.itquiz.utils.Pagination;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -39,9 +40,39 @@ public class TutorController extends AbstractController {
         return "tutor/mytests";
     }
 
+    @RequestMapping(value = "/mytests/delete", method = RequestMethod.GET)
+    public String removeTest(@RequestParam("id") long idTest, HttpSession session) {
+        try {
+            tutorService.removeTest(idTest, SecurityUtils.getCurrentIdAccount());
+            setMessage(session, "test.delete.successful");
+        } catch (InvalidUserInputException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/tutor/mytests/page/1";
+    }
+
+
+
     @RequestMapping(value = "/create-test", method = RequestMethod.GET)
-    public String showCreateTest() {
+    public String showCreateTest(Model model) {
+        model.addAttribute("newTestForm", new NewTestForm());
+        model.addAttribute("role", "tutor");
         return "tutor/create-test";
+    }
+
+    @RequestMapping(value = "/create-test", method = RequestMethod.POST)
+    public String createNewTest(@ModelAttribute("newTestForm") NewTestForm newTestForm, HttpSession session,
+                                Model model) {
+        try {
+            newTestForm.validate(messageSource);
+            tutorService.addNewTest(SecurityUtils.getCurrentIdAccount(), newTestForm);
+            setMessage(session, "test.create.successful");
+            return "redirect:/tutor/mytests/page/1";
+        } catch (InvalidUserInputException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "tutor/create-test";
+        }
+
     }
 
 }

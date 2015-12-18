@@ -2,10 +2,7 @@ package ua.com.itquiz.components.impl;
 
 import org.springframework.stereotype.Component;
 import ua.com.itquiz.components.EntityBuilder;
-import ua.com.itquiz.entities.Account;
-import ua.com.itquiz.entities.AccountRegistration;
-import ua.com.itquiz.entities.AccountRole;
-import ua.com.itquiz.entities.Role;
+import ua.com.itquiz.entities.*;
 
 import java.util.UUID;
 
@@ -40,4 +37,10 @@ public class EntityBuilderImpl implements EntityBuilder {
         return accountRole;
     }
 
+    @Override
+    public Test buildTest(Account account) {
+        Test test = new Test();
+        test.setAccount(account);
+        return test;
+    }
 }

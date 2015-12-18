@@ -1,9 +1,6 @@
 package ua.com.itquiz.components;
 
-import ua.com.itquiz.entities.Account;
-import ua.com.itquiz.entities.AccountRegistration;
-import ua.com.itquiz.entities.AccountRole;
-import ua.com.itquiz.entities.Role;
+import ua.com.itquiz.entities.*;
 
 /**
  * @author Artur Meshcheriakov
@@ -15,5 +12,7 @@ public interface EntityBuilder {
     AccountRole buildAccountRole(Account account, Role role);
 
     AccountRegistration buildAccountRegistration(Account account);
+
+    Test buildTest(Account account);
 
 }

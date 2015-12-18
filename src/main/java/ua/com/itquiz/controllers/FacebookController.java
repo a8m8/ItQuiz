@@ -20,9 +20,6 @@ import ua.com.itquiz.entities.Account;
 import ua.com.itquiz.security.SecurityUtils;
 import ua.com.itquiz.services.EntranceService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 /**
  * @author Artur Meshcheriakov
  */
@@ -59,8 +56,7 @@ public class FacebookController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/fromfb", method = RequestMethod.GET)
-    public String fromfb(HttpServletRequest request, HttpSession session,
-                         @RequestParam(value = "code", required = false) String code) throws Exception {
+    public String fromfb(@RequestParam(value = "code", required = false) String code) throws Exception {
         if (code == null) {
             return "redirect:/login";
         }

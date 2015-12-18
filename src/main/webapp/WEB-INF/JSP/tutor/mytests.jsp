@@ -33,8 +33,8 @@
                 <td><fmt:formatDate value="${test.created }" pattern="dd-MM-yyyy"/></td>
                 <td><fmt:formatDate value="${test.updated }" pattern="dd-MM-yyyy"/></td>
                 <td>${test.active ? "Activated" : "Deactivated" }</td>
-                <td><a href="<c:url value="/tutor/edit-test?id=${test.idTest }"/>">Edit</a></td>
-                <td><a href="<c:url value="/admin/delete?id=${test.idTest }"/>">Delete</a></td>
+                <td><a href="<c:url value="/tutor/mytests/edit-test?id=${test.idTest }"/>">Edit</a></td>
+                <td><a href="<c:url value="/tutor/mytests/delete?id=${test.idTest }"/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

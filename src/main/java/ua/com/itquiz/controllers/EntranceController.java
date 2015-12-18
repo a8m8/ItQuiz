@@ -49,15 +49,14 @@ public class EntranceController extends AbstractController implements Initializi
         try {
             entranceService.verifyAccount(id, hash);
             setMessage(session, "confirmation.success");
-            return "redirect:/login";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/login";
         }
+        return "redirect:/login";
     }
 
     @RequestMapping(value = {"/login", "/loginFailed"}, method = RequestMethod.GET)
-    public String showLogin(HttpSession session, Model model) {
+    public String showLogin(Model model) {
         if (SecurityUtils.getCurrentAccount() != null) {
             return "redirect:crossing";
         }
