@@ -70,6 +70,7 @@ public class TutorController extends AbstractController {
             return "redirect:/tutor/mytests/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("role", "tutor");
             return "tutor/create-test";
         }
 
