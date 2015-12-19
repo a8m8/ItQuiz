@@ -58,7 +58,7 @@
     <sec:csrfInput/>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <button type="submit" value="Login" class="btn btn-warning btn-block">Login</button>
+            <button type="submit" value="Login" class="btn-func">Login</button>
         </div>
     </div>
     <div class="form-group">

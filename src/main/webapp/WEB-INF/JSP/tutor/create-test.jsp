@@ -42,7 +42,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <button type="submit" class="btn btn-warning btn-block">Create</button>
+            <button type="submit" class="btn-func">Create</button>
         </div>
     </div>
 </form:form>

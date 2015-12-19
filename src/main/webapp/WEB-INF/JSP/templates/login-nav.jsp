@@ -9,7 +9,7 @@
 <ul id="main-nav" class="login">
     <li id="firsttab"
         <c:if test="${requestScope['javax.servlet.forward.request_uri'].contains('/signup')}">class="active"</c:if>>
-        <a href="${context}/signup">SignUp</a>
+        <a href="${context}/signup">Sign Up</a>
     <li id="secondtab"
         <c:if test="${requestScope['javax.servlet.forward.request_uri'].contains('/login')}">class="active"</c:if>>
         <a href="${context}/login">Welcome</a>

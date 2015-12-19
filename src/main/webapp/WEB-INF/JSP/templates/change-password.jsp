@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <button type="submit" class="btn btn-warning btn-block">Save</button>
+            <button type="submit" class="btn-func">Save</button>
         </div>
     </div>
 </form:form>

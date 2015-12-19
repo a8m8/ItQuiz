@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
-            <button type="submit" class="btn btn-warning btn-block">Confirm</button>
+            <button type="submit" class="btn-func">Confirm</button>
         </div>
     </div>
 </form:form>

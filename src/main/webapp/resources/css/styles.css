@@ -12,7 +12,7 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #F38630;
+    background-color: #92D13D;
 }
 
 #wrapper {
@@ -29,7 +29,7 @@ body {
 
 header {
     position: absolute;
-    border-top: 25px solid #F38630;
+    border-top: 25px solid #92D13D;
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
     border-bottom: 3px solid #454545;
     background-color: #FFF;
@@ -39,7 +39,6 @@ header {
 
 header #welcome {
     color: #000;
-    text-shadow: 1px 1px 2px #F38630;
     text-align: center;
     font-size: 18px;
 }
@@ -85,13 +84,44 @@ h3, h4 {
     padding-right: 0px;
 }
 
-#logout {
-    padding: 0;
-    margin-top: 20px;
+.btn-func {
+    width: 100%;
+    height: 34px;
+    color: #FFF;
+    font-weight: bold;
+    background: #92D13D;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-func:hover {
+    background: #98dd3c;
+}
+
+.btn-func:active {
+    background: #74a92d;
+}
+
+.btn-logout {
+    width: 100%;
+    height: 34px;
+    color: #FFF;
+    font-weight: bold;
+    margin-top: 33px;
     text-align: center;
-    height: 60px;
-    width: 60px;
-    border-radius: 100px;
+    background: #d44b38;
+    box-shadow: none;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-logout:hover {
+    background: #e85f4c;
+}
+
+.btn-logout:active {
+    background: #980f00;
 }
 
 #main-nav {
@@ -115,28 +145,30 @@ h3, h4 {
     background: #FFF;
 }
 
+#main-nav li.active {
+    background-color: #FFF;
+}
+
+#main-nav li.active a {
+    color: #454545;
+}
+
+
 #main-nav li a {
     text-decoration: none;
     font-weight: bold;
+    font-size: 14px;
     text-transform: uppercase;
     display: inline-block;
+    user-select: none;
+    outline: none;
     height: 100%;
     width: 100%;
-    color: #44749D;
+    color: #FFF;
 }
 
 #main-nav li a:hover {
-    text-decoration: none;
-    color: #44749D;
-}
-
-#main-nav li a:visited {
-    text-decoration: none;
-    color: #44749D;
-}
-
-#main-nav li.active {
-    background-color: #FFF;
+    color: #454545;
 }
 
 .login li {

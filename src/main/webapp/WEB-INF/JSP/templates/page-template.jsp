@@ -17,7 +17,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <sec:csrfMetaTags/>
-    <title>ItQuiz</title>
+    <title>IT Quiz</title>
     <noscript>
         <meta http-equiv="refresh" content="0; URL=/bad-browser.jsp">
     </noscript>
@@ -39,7 +39,7 @@
         <div class="col-xs-offset-1 col-xs-1">
             <c:url var="logoutUrl" value="/logout"/>
             <form action="${logoutUrl }" method="POST">
-                <button type="submit" id="logout" class="btn btn-success">Log Out</button>
+                <button type="submit" class="btn-logout">Log Out</button>
                 <sec:csrfInput/>
             </form>
         </div>
