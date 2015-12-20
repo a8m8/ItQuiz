@@ -90,37 +90,46 @@ public class AdminController extends AbstractController {
 
     @RequestMapping(value = "/accounts/edit-account", method = RequestMethod.POST)
     public String editAccount(@ModelAttribute("adminUserForm") AdminUserForm adminUserForm,
-                              @RequestParam("id") int id, HttpSession session) {
+                              @RequestParam("id") int id, HttpSession session, Model model) {
         try {
             adminUserForm.validate(messageSource);
             adminService.editUser(id, adminUserForm);
             setMessage(session, "changes.saved");
+            return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
-            session.setAttribute("errorMessage", e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("idAccount", id);
+            return "admin/edit-account";
         }
-        return "redirect:/admin/accounts/page/1";
+
     }
 
     @RequestMapping(value = "/accounts/edit-account/change-password", method = RequestMethod.GET)
     public String showUserChangePassword(@RequestParam("id") int id, Model model) {
         model.addAttribute("passwordForm", new PasswordForm());
-        model.addAttribute("idAccount", id);
-        model.addAttribute("object", "accounts/edit-account");
-        model.addAttribute("role", "admin");
+        setChangePasswordModel(model, id, "accounts/edit-account", "admin");
         return "admin/change-password";
     }
 
     @RequestMapping(value = "/accounts/edit-account/change-password", method = RequestMethod.POST)
-    public String editUserPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, @RequestParam("id")
-    int id, HttpSession session) {
+    public String editUserPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm, @RequestParam("id") int
+            id, Model model, HttpSession session) {
         try {
             passwordForm.validate(messageSource);
             commonService.changePassword(id, passwordForm);
             setMessage(session, "password.changed");
+            return "redirect:/admin/accounts/edit-account?id=" + id;
         } catch (InvalidUserInputException e) {
-            session.setAttribute("errorMessage", e.getMessage());
+            setChangePasswordModel(model, id, "accounts/edit-account", "admin");
+            model.addAttribute("errorMessage", e.getMessage());
+            return "admin/change-password";
         }
-        return "redirect:/admin/accounts/edit-account?id=" + id;
+    }
+
+    private void setChangePasswordModel(Model model, int id, String pageName, String role) {
+        model.addAttribute("idAccount", id);
+        model.addAttribute("pageName", pageName);
+        model.addAttribute("role", role);
     }
 
 }

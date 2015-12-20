@@ -50,13 +50,13 @@ public class CommonController extends AbstractController {
     @RequestMapping(value = "{role}/myaccount/change-password", method = RequestMethod.GET)
     public String showChangePassword(@PathVariable String role, Model model) {
         model.addAttribute("passwordForm", new PasswordForm());
-        model.addAttribute("object", "myaccount");
+        model.addAttribute("pageName", "myaccount");
         return role + "/change-password";
     }
 
     @RequestMapping(value = "{role}/myaccount/change-password", method = RequestMethod.POST)
     public String editPassword(@ModelAttribute("passwordForm") PasswordForm passwordForm,
-                               @PathVariable String role,
+                               @PathVariable String role, Model model,
                                HttpSession session) {
         try {
             passwordForm.validate(messageSource);
@@ -64,8 +64,9 @@ public class CommonController extends AbstractController {
             setMessage(session, "password.changed");
             return "redirect:/" + role + "/myaccount";
         } catch (InvalidUserInputException e) {
-            session.setAttribute("errorMessage", e.getMessage());
-            return "redirect:/" + role + "/myaccount";
+            model.addAttribute("pageName", "myaccount");
+            model.addAttribute("errorMessage", e.getMessage());
+            return role + "/change-password";
         }
     }
 

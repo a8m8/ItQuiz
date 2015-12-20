@@ -97,12 +97,9 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         adminUserForm.setEmail(account.getEmail());
         adminUserForm.setLogin(account.getLogin());
         adminUserForm.setFio(account.getFio());
-        if (account.getActive()) {
-            adminUserForm.setActive(Boolean.TRUE);
-        }
-        if (account.getConfirmed()) {
-            adminUserForm.setConfirmed(Boolean.TRUE);
-        }
+        adminUserForm.setActive(account.getActive());
+        adminUserForm.setConfirmed(account.getConfirmed());
+
         HashSet<Short> accountRolesSet = new HashSet<>();
         for (AccountRole accountRole : account.getAccountRoles()) {
             accountRolesSet.add(accountRole.getRole().getIdRole());

@@ -7,8 +7,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <h3>New password</h3>
+
+<jsp:include page="../templates/error-message.jsp"/>
+
 <form:form id="password-change-form" class="form-horizontal" method="POST"
-           action="${context}/${role}/${object}/change-password" commandName="passwordForm">
+           action="${context}/${role}/${pageName}/change-password" commandName="passwordForm">
     <input type="hidden" name="id" value="${idAccount}">
     <div class="form-group">
         <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password
