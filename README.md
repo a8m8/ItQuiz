@@ -1,4 +1,4 @@
 # ItQuiz
-The web-application for passing quiz on it theme.
+The web-application for passing quiz on IT theme.
 
 
