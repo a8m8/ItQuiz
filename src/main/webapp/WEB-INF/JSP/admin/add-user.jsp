@@ -6,7 +6,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<jsp:include page="../templates/admin-nav.jsp"/>
+<jsp:include page="../templates/admin/admin-nav.jsp"/>
 
 <h3>Add new user</h3>
 

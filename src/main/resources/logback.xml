@@ -22,7 +22,7 @@
         </encoder>
     </appender>
 
-    <logger name="ua.com.itquiz" level="info">
+    <logger name="net.itquiz" level="info">
         <appender-ref ref="FILE"/>
     </logger>
 

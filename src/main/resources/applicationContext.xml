@@ -27,10 +27,10 @@
         </property>
     </bean>
 
-    <context:component-scan base-package="ua.com.itquiz.dao.impl"/>
-    <context:component-scan base-package="ua.com.itquiz.services.impl"/>
-    <context:component-scan base-package="ua.com.itquiz.components.impl"/>
-    <context:component-scan base-package="ua.com.itquiz.controllers"/>
+    <context:component-scan base-package="net.itquiz.dao.impl"/>
+    <context:component-scan base-package="net.itquiz.services.impl"/>
+    <context:component-scan base-package="net.itquiz.components.impl"/>
+    <context:component-scan base-package="net.itquiz.controllers"/>
 
     <mvc:resources location="/resources/" mapping="/resources/**"/>
     <mvc:resources location="/favicon.ico" mapping="/favicon.ico"/>
@@ -91,7 +91,7 @@
     <!-- =================   				Security settings    			==================== -->
     <!-- ======================================================================================= -->
 
-    <context:component-scan base-package="ua.com.itquiz.security"/>
+    <context:component-scan base-package="net.itquiz.security"/>
 
     <security:http use-expressions="true" auto-config="true">
         <security:intercept-url pattern="/login" access="permitAll"/>

@@ -6,7 +6,7 @@
 <div style="padding-right:10%; padding-left:10%">
     <h3 align=center>Hello, <b>${user.fio}</b></h3>
 
-    <p><i>You have registrated on the <a href="${home}">itquiz.com.ua</a> with</i></p>
+    <p><i>You have registrated on the <a href="${home}">it-quiz.net</a> with</i></p>
 
     <p><i>Login: <b>${user.login}</b></i></p>
 
@@ -14,7 +14,7 @@
 
     <p><i>For confirmation this account, please, follow this link
         <a href="${home}/account-confirmation?id=${user.idAccount}&hash=${user.accountRegistration.hash}">
-            itquiz.com.ua/account-confirmation</a></i></p>
+            itquiz.net/account-confirmation</a></i></p>
 
     <p><i>If you have not registered on ItQuiz, just ignore this message</i></p>
     <h4 align=center><b>Best regards,</b></h4>

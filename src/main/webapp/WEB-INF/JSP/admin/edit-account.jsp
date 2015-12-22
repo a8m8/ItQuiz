@@ -7,7 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-<jsp:include page="../templates/admin-nav.jsp"/>
+<jsp:include page="../templates/admin/admin-nav.jsp"/>
 
 <h3>Edit User</h3>
 

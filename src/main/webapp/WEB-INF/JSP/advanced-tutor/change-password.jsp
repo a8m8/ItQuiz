@@ -6,6 +6,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<jsp:include page="../templates/advanced-tutor-nav.jsp"/>
+<jsp:include page="../templates/tutors/advanced-tutor-nav.jsp"/>
 
 <jsp:include page="../templates/change-password.jsp"/>

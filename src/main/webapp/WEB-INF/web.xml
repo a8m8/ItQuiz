@@ -9,7 +9,7 @@
     </listener>
 
     <listener>
-        <listener-class>ua.com.itquiz.listeners.InitContextListener</listener-class>
+        <listener-class>net.itquiz.listeners.InitContextListener</listener-class>
     </listener>
 
     <context-param>
@@ -29,12 +29,12 @@
 
     <filter>
         <filter-name>ExceptionHandlerFilter</filter-name>
-        <filter-class>ua.com.itquiz.filters.ExceptionHandlerFilter</filter-class>
+        <filter-class>net.itquiz.filters.ExceptionHandlerFilter</filter-class>
     </filter>
 
     <filter>
         <filter-name>MessageHandlerFilter</filter-name>
-        <filter-class>ua.com.itquiz.filters.MessageHandlerFilter</filter-class>
+        <filter-class>net.itquiz.filters.MessageHandlerFilter</filter-class>
     </filter>
 
     <filter>
