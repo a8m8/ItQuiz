@@ -38,4 +38,15 @@ public class TestDaoImpl extends AbstractEntityDao<Test> implements TestDao {
         return (long) getSession().createCriteria(getEntityClass()).setProjection(Projections.rowCount()).uniqueResult();
     }
 
+    @Override
+    public List<Test> getAvailableTest(int offset, int count) {
+        return getSession().createCriteria(getEntityClass()).add(Restrictions.eq("active", true)).
+                addOrder(Order.asc("created")).setFirstResult(offset).setMaxResults(count).list();
+    }
+
+    @Override
+    public long countAvailableTest() {
+        return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("active", true)).setProjection
+                (Projections.rowCount()).uniqueResult();
+    }
 }

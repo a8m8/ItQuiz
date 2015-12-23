@@ -10,3 +10,26 @@
 
 <h3>Test results</h3>
 
+<div id="table-box">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td width="30%">Test</td>
+            <td width="20%">Passed</td>
+            <td width="25%">Right Answers</td>
+            <td width="25%">All Questions</td>
+        </tr>
+        </thead>
+        <c:forEach items="${testResults}" var="testResult">
+            <tr>
+                <td>${testResult.testTitle}</td>
+                <td><fmt:formatDate value="${testResult.created }" pattern="dd-MM-yyyy HH:mm"/></td>
+                <td>${testResult.correctCount}</td>
+                <td>${testResult.allQuestionsCount}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
+
+<jsp:include page="../templates/pagination.jsp"/>
+

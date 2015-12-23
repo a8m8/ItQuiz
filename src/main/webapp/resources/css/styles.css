@@ -213,3 +213,26 @@ table thead {
 #pagination {
     text-align: center;
 }
+
+.panel-default {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#tests-heading {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: center;
+}
+
+.important {
+    font-weight: bold;
+    text-transform: uppercase;
+    float: right;
+}
+
+#result p {
+    text-align: center;
+}

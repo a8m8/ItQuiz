@@ -1,6 +1,5 @@
 package net.itquiz.dao;
 
-import net.itquiz.entities.Account;
 import net.itquiz.entities.TestResult;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.List;
  */
 public interface TestResultDao extends IEntityDao<TestResult> {
 
-    List<TestResult> getUserTestResult(Account account);
+    List<TestResult> getUserTestResults(int idAccount, int offset, int count);
 
+    long getUserTestResultsCount(int idAccount);
 }

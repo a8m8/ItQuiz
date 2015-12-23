@@ -13,4 +13,7 @@ public interface QuestionDao extends IEntityDao<Question> {
 
     List<Question> getQuestionListOfTest(long idTest, int offset, int count);
 
+    long getActiveQuestionCount(long idTest);
+
+    List<Question> getActiveQuestionListOfTest(long idTest, int question, int count);
 }

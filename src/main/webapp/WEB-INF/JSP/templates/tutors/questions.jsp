@@ -25,9 +25,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <td width="55%">Question</td>
-                    <td width="10%">Created</td>
-                    <td width="10%">Updated</td>
+                    <td width="45%">Question</td>
+                    <td width="15%">Created</td>
+                    <td width="15%">Updated</td>
                     <td width="10%">Status</td>
                     <td width="7.5%"></td>
                     <td width="7.5%"></td>
@@ -36,8 +36,8 @@
                 <c:forEach items="${questions}" var="question">
                     <tr>
                         <td>${question.content}</td>
-                        <td><fmt:formatDate value="${question.created }" pattern="dd-MM-yyyy"/></td>
-                        <td><fmt:formatDate value="${question.updated }" pattern="dd-MM-yyyy"/></td>
+                        <td><fmt:formatDate value="${question.created }" pattern="dd-MM-yyyy HH:mm"/></td>
+                        <td><fmt:formatDate value="${question.updated }" pattern="dd-MM-yyyy HH:mm"/></td>
                         <td>${question.active ? "Activated" : "Deactivated" }</td>
                         <td><a href="<c:url value=
                         "/${role}/${pageName}/test/questions/edit-question?id=${question.idQuestion}"/>">

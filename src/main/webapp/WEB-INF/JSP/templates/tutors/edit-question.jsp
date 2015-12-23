@@ -42,10 +42,10 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <td width="45%">Answer</td>
+                    <td width="35%">Answer</td>
                     <td width="10%">Correct</td>
-                    <td width="10%">Created</td>
-                    <td width="10%">Updated</td>
+                    <td width="15%">Created</td>
+                    <td width="15%">Updated</td>
                     <td width="10%">Status</td>
                     <td width="7.5%"></td>
                     <td width="7.5%"></td>
@@ -56,8 +56,8 @@
                     <tr>
                         <td>${answer.content}</td>
                         <td>${answer.correct ? "Yes" : "No"}</td>
-                        <td><fmt:formatDate value="${answer.created }" pattern="dd-MM-yyyy"/></td>
-                        <td><fmt:formatDate value="${answer.updated }" pattern="dd-MM-yyyy"/></td>
+                        <td><fmt:formatDate value="${answer.created }" pattern="dd-MM-yyyy HH:mm"/></td>
+                        <td><fmt:formatDate value="${answer.updated }" pattern="dd-MM-yyyy HH:mm"/></td>
                         <td>${answer.active ? "Activated" : "Deactivated" }</td>
                         <td><a href="<c:url value=
                         "/${role}/${pageName}/test/questions/question/edit-answer?id=${answer.idAnswer }"/>">Edit

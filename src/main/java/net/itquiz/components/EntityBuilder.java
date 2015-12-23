@@ -18,4 +18,6 @@ public interface EntityBuilder {
     Question buildQuestion(Test test);
 
     Answer buildAnswer(Question question);
+
+    TestResult buildTestResult(Account account, Test test, int allQuestions);
 }

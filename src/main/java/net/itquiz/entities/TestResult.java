@@ -14,7 +14,8 @@ public class TestResult extends AbstractEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "TESTRESULT_ID_GENERATOR", sequenceName = "TEST_RESULT_SEQ")
+    @SequenceGenerator(name = "TESTRESULT_ID_GENERATOR", sequenceName = "TEST_RESULT_SEQ",
+            allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TESTRESULT_ID_GENERATOR")
     @Column(name = "id_test_result", unique = true, nullable = false)
     private Long idTestResult;
@@ -30,8 +31,8 @@ public class TestResult extends AbstractEntity {
     @Column(name = "correct_count", nullable = false)
     private Integer correctCount;
 
-    @Column(name = "all_correct_count", nullable = false)
-    private Integer allCorrectCount;
+    @Column(name = "all_questions_count", nullable = false)
+    private Integer allQuestionsCount;
 
     @Column(nullable = false, insertable = false)
     private Timestamp created;
@@ -82,12 +83,12 @@ public class TestResult extends AbstractEntity {
         this.correctCount = correctCount;
     }
 
-    public Integer getAllCorrectCount() {
-        return allCorrectCount;
+    public Integer getAllQuestionsCount() {
+        return allQuestionsCount;
     }
 
-    public void setAllCorrectCount(Integer allCorrectCount) {
-        this.allCorrectCount = allCorrectCount;
+    public void setAllQuestionsCount(Integer allQuestionsCount) {
+        this.allQuestionsCount = allQuestionsCount;
     }
 
     public Timestamp getCreated() {

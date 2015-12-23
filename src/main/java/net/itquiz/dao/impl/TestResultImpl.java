@@ -1,8 +1,9 @@
 package net.itquiz.dao.impl;
 
 import net.itquiz.dao.TestResultDao;
-import net.itquiz.entities.Account;
 import net.itquiz.entities.TestResult;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +22,14 @@ public class TestResultImpl extends AbstractEntityDao<TestResult> implements Tes
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<TestResult> getUserTestResult(Account account) {
-        return getSession().createCriteria(getEntityClass())
-                .add(Restrictions.eq("account", account)).list();
+    public List<TestResult> getUserTestResults(int idAccount, int offset, int count) {
+        return getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount", idAccount))
+                .addOrder(Order.asc("created")).setFirstResult(offset).setMaxResults(count).list();
     }
 
+    @Override
+    public long getUserTestResultsCount(int idAccount) {
+        return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount",
+                idAccount)).setProjection(Projections.rowCount()).uniqueResult();
+    }
 }

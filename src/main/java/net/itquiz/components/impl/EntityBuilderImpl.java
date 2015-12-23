@@ -57,4 +57,15 @@ public class EntityBuilderImpl implements EntityBuilder {
         answer.setQuestion(question);
         return answer;
     }
+
+    @Override
+    public TestResult buildTestResult(Account account, Test test, int allQuestions) {
+        TestResult testResult = new TestResult();
+        testResult.setAccount(account);
+        testResult.setTest(test);
+        testResult.setTestTitle(test.getTitle());
+        testResult.setCorrectCount(0);
+        testResult.setAllQuestionsCount(allQuestions);
+        return testResult;
+    }
 }

@@ -15,4 +15,7 @@ public interface TestDao extends IEntityDao<Test> {
 
     long countAllTests();
 
+    List<Test> getAvailableTest(int offset, int count);
+
+    long countAvailableTest();
 }
