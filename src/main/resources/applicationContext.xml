@@ -52,18 +52,23 @@
         <property name="preferFileSystemAccess" value="false"/>
     </bean>
 
-    <bean id="defaultMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.mail.ru"/>
-        <property name="username" value="${email.username}"/>
-        <property name="password" value="${email.password}"/>
-        <property name="port" value="587"/>
-        <property name="defaultEncoding" value="utf8"/>
-        <property name="javaMailProperties">
+    <bean id="smptAuthenticator" class="net.itquiz.smtp.SMTPAuthenticator">
+        <constructor-arg value="${email.address}"/>
+        <constructor-arg value="${email.password}"/>
+    </bean>
+
+    <bean id="mailSession" class="javax.mail.Session" factory-method="getInstance">
+        <constructor-arg>
             <props>
                 <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.smtp.starttls.enable">true</prop>
             </props>
-        </property>
+        </constructor-arg>
+        <constructor-arg ref="smptAuthenticator"/>
+    </bean>
+
+    <bean id="defaultMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="localhost"/>
+        <property name="session" ref="mailSession"/>
     </bean>
 
     <bean id="dataSource" class="org.postgresql.jdbc2.optional.PoolingDataSource">

@@ -17,7 +17,7 @@ import java.io.StringWriter;
 @Service("emailTemplateService")
 public class EmailTemplateServiceImpl implements EmailTemplateService {
 
-    @Value("${application.home}")
+    @Value("${application.host}")
     private String applicationHome;
 
     @Autowired

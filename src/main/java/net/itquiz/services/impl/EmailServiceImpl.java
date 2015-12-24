@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
     @Value("${recovery.email.filepath}")
     private String recoveryTextFileName;
 
-    @Value("${email.username}")
+    @Value("${email.address}")
     private String emailFrom;
 
     @Autowired
