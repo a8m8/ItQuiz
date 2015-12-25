@@ -46,6 +46,47 @@
                     <path>/it-quiz</path>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>maven-minify-plugin</artifactId>
+                <version>1.3.5</version>
+                <executions>
+                    <execution>
+                        <id>min-js</id>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <!-- CSS -->
+                            <cssSourceDir>/resources/css</cssSourceDir>
+                            <cssSourceFiles>
+                                <cssSourceFile>bootstrap.min.css</cssSourceFile>
+                                <cssSourceFile>bootstrap-theme.min.css</cssSourceFile>
+                                <cssSourceFile>normalize.css</cssSourceFile>
+                                <cssSourceFile>styles.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <cssTargetDir>/resources/css</cssTargetDir>
+                            <cssFinalFile>final.css</cssFinalFile>
+                            <!-- JS -->
+                            <jsSourceDir>/resources/js</jsSourceDir>
+                            <jsSourceFiles>
+                                <jsSourceFile>jquery-1.11.3.min.js</jsSourceFile>
+                                <jsSourceFile>bootstrap.min.js</jsSourceFile>
+                                <jsSourceFile>jquery.validate.min.js</jsSourceFile>
+                                <jsSourceFile>jquery.form.min.js</jsSourceFile>
+                                <jsSourceFile>validation-scripts.js</jsSourceFile>
+                            </jsSourceFiles>
+                            <jsTargetDir>/resources/js</jsTargetDir>
+                            <jsFinalFile>final.js</jsFinalFile>
+                            <verbose>true</verbose>
+                            <linebreak>8000</linebreak>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

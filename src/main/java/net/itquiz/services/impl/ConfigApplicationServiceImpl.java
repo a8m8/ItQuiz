@@ -10,20 +10,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfigApplicationServiceImpl implements ConfigApplicationService {
 
-    @Value("${ua.com.itquiz.supportEmailAddress}")
-    private String supportEmailAddress;
-
-    @Value("${ua.com.itquiz.cssJsVersion}")
+    @Value("${net.itquiz.cssJsVersion}")
     private String cssJsVersion;
 
-    @Override
-    public String getSupportEmailAddress() {
-        return supportEmailAddress;
-    }
+    @Value("${production.mode}")
+    private Boolean productionMode;
+
+    @Value("${test.server.mode}")
+    private Boolean testServerMode;
+
+    @Value("${support.email}")
+    private String supportEmail;
 
     @Override
     public String getCssJsVersion() {
         return cssJsVersion;
     }
 
+    @Override
+    public Boolean getProductionMode() {
+        return productionMode;
+    }
+
+    @Override
+    public Boolean getTestServerMode() {
+        return testServerMode;
+    }
+
+    @Override
+    public String getSupportEmail() {
+        return supportEmail;
+    }
 }

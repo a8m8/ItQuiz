@@ -5,8 +5,12 @@ package net.itquiz.services;
  */
 public interface ConfigApplicationService {
 
-    String getSupportEmailAddress();
-
     String getCssJsVersion();
+
+    Boolean getProductionMode();
+
+    Boolean getTestServerMode();
+
+    String getSupportEmail();
 
 }

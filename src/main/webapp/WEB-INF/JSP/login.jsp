@@ -8,6 +8,17 @@
 
 <jsp:include page="templates/login-nav.jsp"/>
 
+<c:if test="${testServerMode}">
+    <div style="text-align: center;">
+        <p><b>This is the test server of <a href="http://www.it-quiz.net">www.it-quiz.net</a></b></p>
+
+        <p> To access the account with all roles and privileges use <b>login:</b> <i>admin@it-quiz.tk</i> <b>password:
+        </b> <i>admin</i></p>
+
+        <p> If you find any problems, please, send an e-mail with the problem description to our support address</p>
+    </div>
+</c:if>
+
 <h3>Please login</h3>
 
 <jsp:include page="templates/message.jsp"/>
@@ -61,11 +72,13 @@
             <button type="submit" value="Login" class="btn-func">Login</button>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-4" id="fblink">
-            <a href="${context }/fbLogin">
-                <img alt="fbLogin" src="${context }/resources/images/login-facebook.png"/>
-            </a>
+    <c:if test="${!testServerMode}">
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-4" id="fblink">
+                <a href="${context }/fbLogin">
+                    <img alt="fbLogin" src="${context }/resources/images/login-facebook.png"/>
+                </a>
+            </div>
         </div>
-    </div>
+    </c:if>
 </form>

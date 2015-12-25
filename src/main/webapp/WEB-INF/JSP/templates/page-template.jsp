@@ -21,10 +21,14 @@
     <noscript>
         <meta http-equiv="refresh" content="0; URL=/bad-browser.jsp">
     </noscript>
-    <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap.min.css?v=${CSS_JS_VERSION}">
-    <link rel="stylesheet" type="text/css" href="${context}/resources/css/bootstrap-theme.min.css?v=${CSS_JS_VERSION}">
-    <link rel="stylesheet" type="text/css" href="${context}/resources/css/normalize.css?v=${CSS_JS_VERSION}"/>
-    <link rel="stylesheet" type="text/css" href="${context}/resources/css/styles.css?v=${CSS_JS_VERSION}"/>
+    <c:choose>
+        <c:when test="${productionMode}">
+            <link rel="stylesheet" type="text/css" href="${context}/resources/css/final.min.css?v=${CSS_JS_VERSION}">
+        </c:when>
+        <c:otherwise>
+            <link rel="stylesheet" type="text/css" href="${context}/resources/css/final.css?v=${CSS_JS_VERSION}">
+        </c:otherwise>
+    </c:choose>
 </head>
 
 <body>
@@ -55,18 +59,21 @@
 </div>
 <footer>
     <div class="col-xs-offset-2 col-xs-3">
-        <p>Support email: <a href="mailto: itquiz@gmail.com">itquiz@gmail.com</a></p>
+        <p>Support email: <a href="mailto: ${supportEmail}">${supportEmail}</a></p>
     </div>
     <div class="col-xs-offset-2 col-xs-3">
         <p>&copy; 2015 Artur Meshcheriakov</p>
     </div>
 </footer>
 
-<script type="text/javascript" src="${context}/resources/js/jquery-1.11.3.min.js?v=${CSS_JS_VERSION}"></script>
-<script type="text/javascript" src="${context}/resources/js/bootstrap.min.js?v=${CSS_JS_VERSION}"></script>
-<script type="text/javascript" src="${context}/resources/js/jquery.validate.min.js?v=${CSS_JS_VERSION}"></script>
-<script type="text/javascript" src="${context}/resources/js/jquery.form.min.js?v=${CSS_JS_VERSION}"></script>
-<script type="text/javascript" src="${context}/resources/js/validation-scripts.js?v=${CSS_JS_VERSION}"></script>
+<c:choose>
+    <c:when test="${productionMode}">
+        <script type="text/javascript" src="${context}/resources/js/final.min.js?v=${CSS_JS_VERSION}"></script>
+    </c:when>
+    <c:otherwise>
+        <script type="text/javascript" src="${context}/resources/js/final.js?v=${CSS_JS_VERSION}"></script>
+    </c:otherwise>
+</c:choose>
 
 </body>
 </html>

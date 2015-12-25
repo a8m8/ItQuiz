@@ -41,7 +41,7 @@
                             <input type="hidden" value="${test.idTest}" name="id"/>
 
                             <div class="form-group">
-                                <button type="submit" class="btn-func">Pass</button>
+                                <button type="submit" class="btn-func">Start</button>
                             </div>
                         </form:form>
                     </div>

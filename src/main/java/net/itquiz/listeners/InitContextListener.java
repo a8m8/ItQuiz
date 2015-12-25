@@ -32,6 +32,9 @@ public class InitContextListener implements ServletContextListener {
         ConfigApplicationService configAppService = getWebApplicationContext(event)
                 .getBean(ConfigApplicationService.class);
         context.setAttribute("CSS_JS_VERSION", configAppService.getCssJsVersion());
+        context.setAttribute("supportEmail", configAppService.getSupportEmail());
+        context.setAttribute("productionMode", configAppService.getProductionMode());
+        context.setAttribute("testServerMode", configAppService.getTestServerMode());
         LOGGER.info("ItQuiz has been started");
     }
 
