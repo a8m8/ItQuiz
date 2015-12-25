@@ -1,5 +1,5 @@
-# ItQuiz
-The web-application for passing quiz on IT theme.
+# IT Quiz
+An IT quiz web-application
 
 Project page: http://www.it-quiz.net
 
