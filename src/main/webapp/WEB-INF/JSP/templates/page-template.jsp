@@ -19,7 +19,7 @@
     <sec:csrfMetaTags/>
     <title>IT Quiz</title>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/bad-browser.jsp">
+        <meta http-equiv="refresh" content="0; URL=/bad-browser                                             ">
     </noscript>
     <c:choose>
         <c:when test="${productionMode}">
@@ -37,7 +37,7 @@
         <h1>LOGO HERE</h1>
     </div>
     <div id="welcome" class="col-xs-5">
-        <h1>ItQuiz</h1>
+        <h1>IT Quiz</h1>
     </div>
     <sec:authorize access="isAuthenticated()">
         <div class="col-xs-offset-1 col-xs-1">

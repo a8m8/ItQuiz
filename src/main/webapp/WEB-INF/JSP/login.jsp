@@ -22,6 +22,7 @@
 <h3>Please login</h3>
 
 <jsp:include page="templates/message.jsp"/>
+<jsp:include page="templates/error-message.jsp"/>
 
 <c:if test="${param.logout != null}">
     <h4 id="message">You have been logged out successfully.</h4>

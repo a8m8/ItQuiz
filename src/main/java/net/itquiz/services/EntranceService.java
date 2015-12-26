@@ -29,4 +29,5 @@ public interface EntranceService {
 
     Account getAccount(String email);
 
+    void checkAccess(short role, int currentIdAccount) throws InvalidUserInputException;
 }

@@ -25,9 +25,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Artur Meshcheriakov
@@ -193,6 +191,19 @@ public class EntranceServiceImpl implements EntranceService {
     @Override
     public Account getAccount(String email) {
         return accountDao.findByEmail(email);
+    }
+
+    @Override
+    public void checkAccess(short role, int currentIdAccount) throws InvalidUserInputException {
+        Account account = accountDao.findById(currentIdAccount);
+        Set<Short> roles = new HashSet<>();
+        for (AccountRole accountRole : account.getAccountRoles()) {
+            roles.add(accountRole.getRole().getIdRole());
+        }
+        if (!roles.contains(role)) {
+            throw new InvalidUserInputException(messageSource.getMessage("user.role.denied",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
     }
 
 }

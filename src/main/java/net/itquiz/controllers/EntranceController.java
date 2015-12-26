@@ -12,6 +12,7 @@ import net.itquiz.services.EntranceService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,9 +66,16 @@ public class EntranceController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/crossing", method = RequestMethod.GET)
-    public String crossing() {
-        CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
-        return "redirect:" + redirects.get(currentAccount.getRole());
+    public String crossing(HttpSession session) {
+        try {
+            CurrentAccount currentAccount = SecurityUtils.getCurrentAccount();
+            entranceService.checkAccess(currentAccount.getRole(), SecurityUtils.getCurrentIdAccount());
+            return "redirect:" + redirects.get(currentAccount.getRole());
+        } catch (InvalidUserInputException e) {
+            SecurityContextHolder.clearContext();
+            session.setAttribute("errorMessage", e.getMessage());
+            return "redirect:/loginFailed";
+        }
     }
 
     private void initRoles(Model model) {
