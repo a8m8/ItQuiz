@@ -33,11 +33,13 @@
 
 <body>
 <header>
-    <div id="logo" class="col-xs-offset-1 col-xs-3">
+    <div id="logo" class="col-xs-3">
         <h1>LOGO HERE</h1>
     </div>
-    <div id="welcome" class="col-xs-5">
-        <h1>IT Quiz</h1>
+    <div id="welcome" class="col-xs-6">
+        <a href="${context }/login">
+            <img alt="IT Quiz" src="${context }/resources/images/SL0uC9OYIu4.jpg"/>
+        </a>
     </div>
     <sec:authorize access="isAuthenticated()">
         <div class="col-xs-offset-1 col-xs-1">

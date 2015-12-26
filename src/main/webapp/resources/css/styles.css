@@ -33,18 +33,22 @@ header {
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
     border-bottom: 3px solid #454545;
     background-color: #FFF;
-    height: 125px;
+    height: 225px;
     width: 100%;
 }
 
 header #welcome {
-    color: #000;
     text-align: center;
-    font-size: 18px;
+    padding-top: 5px;
+}
+
+header #welcome img {
+    height: 185px;
+    width: 409px;
 }
 
 #content {
-    padding: 125px 0 100px 0;
+    padding: 225px 0 100px 0;
     background-color: #FFF;
 }
 
@@ -105,10 +109,10 @@ h3, h4 {
 
 .btn-logout {
     width: 100%;
-    height: 34px;
+    height: 40px;
     color: #FFF;
     font-weight: bold;
-    margin-top: 33px;
+    margin-top: 80px;
     text-align: center;
     background: #d44b38;
     box-shadow: none;
