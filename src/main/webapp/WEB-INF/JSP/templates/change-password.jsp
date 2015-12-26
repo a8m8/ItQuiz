@@ -17,16 +17,24 @@
         <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password
             :</form:label>
         <div class="col-md-4">
-            <form:input class="form-control" path="password"/>
+            <form:input type="password" class="form-control" path="password"/>
         </div>
     </div>
     <div class="form-group">
         <form:label path="passwordConfirmed" class="col-md-offset-2 col-md-2 control-label">Confirm
             password:</form:label>
         <div class="col-md-4">
-            <form:input class="form-control" path="passwordConfirmed"/>
+            <form:input type="password" class="form-control" path="passwordConfirmed"/>
         </div>
     </div>
+    <c:if test="${pageName ne 'accounts/edit-account'}">
+        <div class="form-group">
+            <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">Old password:</form:label>
+            <div class="col-md-4">
+                <form:input type="password" class="form-control" path="oldPassword"/>
+            </div>
+        </div>
+    </c:if>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
             <button type="submit" class="btn-func">Save</button>

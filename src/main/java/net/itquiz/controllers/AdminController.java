@@ -116,7 +116,7 @@ public class AdminController extends AbstractController {
             id, Model model, HttpSession session) {
         try {
             passwordForm.validate(messageSource);
-            commonService.changePassword(id, passwordForm);
+            commonService.changePassword(id, passwordForm, false);
             setMessage(session, "password.changed");
             return "redirect:/admin/accounts/edit-account?id=" + id;
         } catch (InvalidUserInputException e) {

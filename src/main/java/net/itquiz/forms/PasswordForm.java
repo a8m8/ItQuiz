@@ -12,6 +12,7 @@ public class PasswordForm implements IForm {
 
     protected String password;
     protected String passwordConfirmed;
+    protected String oldPassword;
 
     public String getPassword() {
         return password;
@@ -27,6 +28,14 @@ public class PasswordForm implements IForm {
 
     public void setPasswordConfirmed(String passwordConfirmed) {
         this.passwordConfirmed = passwordConfirmed;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 
     @Override

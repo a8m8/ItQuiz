@@ -60,7 +60,7 @@ public class CommonController extends AbstractController {
                                HttpSession session) {
         try {
             passwordForm.validate(messageSource);
-            commonService.changePassword(SecurityUtils.getCurrentIdAccount(), passwordForm);
+            commonService.changePassword(SecurityUtils.getCurrentIdAccount(), passwordForm, true);
             setMessage(session, "password.changed");
             return "redirect:/" + role + "/myaccount";
         } catch (InvalidUserInputException e) {

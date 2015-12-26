@@ -51,8 +51,18 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void changePassword(int idAccount, PasswordForm passwordForm) {
+    public void changePassword(int idAccount, PasswordForm passwordForm, boolean oldPasswordChecking) throws
+            InvalidUserInputException {
+        if (oldPasswordChecking && StringUtils.isBlank(passwordForm.getOldPassword())) {
+            throw new InvalidUserInputException(
+                    messageSource.getMessage("old.password.required", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
         Account account = accountDao.findById(idAccount);
+        if (oldPasswordChecking && !StringUtils.equals(defaultPasswordEncoder.encode(passwordForm.getOldPassword()),
+                account.getPassword())) {
+            throw new InvalidUserInputException(
+                    messageSource.getMessage("old.password.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
         String encodedPassword = defaultPasswordEncoder.encode(passwordForm.getPassword());
         account.setPassword(encodedPassword);
         account.setUpdated(new Timestamp(System.currentTimeMillis()));
