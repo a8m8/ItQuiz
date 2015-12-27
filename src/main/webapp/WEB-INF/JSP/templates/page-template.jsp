@@ -19,7 +19,7 @@
     <sec:csrfMetaTags/>
     <title>IT Quiz</title>
     <noscript>
-        <meta http-equiv="refresh" content="0; URL=/bad-browser                                             ">
+        <meta http-equiv="refresh" content="0; URL=/bad-browser">
     </noscript>
     <c:choose>
         <c:when test="${productionMode}">
