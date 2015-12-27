@@ -4,6 +4,7 @@
 .project
 /src/test
 /src/main/resources/config.properties
+/src/main/webapp/resources/images
 tasks.todo
 .idea
 it-quiz.iml
