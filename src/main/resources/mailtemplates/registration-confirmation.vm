@@ -1,12 +1,12 @@
 <html>
 <body>
-<div style="width:100%; height:50px; background-color:#F38630;">
-    <h1 align=center>IT Quiz</h1>
+<div style="width:100%; height:100px; text-align: center">
+    <img style="height: 100px; width: 221px" src="${home}/resources/images/SL0uC9OYIu4.jpg"/>
 </div>
 <div style="padding-right:10%; padding-left:10%">
     <h3 align=center>Hello, <b>${user.fio}</b></h3>
 
-    <p><i>You have registered on the <a href="${home}">www.it-quiz.net</a> with</i></p>
+    <p><i>You have registered on the <a href="${home}">${home}</a> with</i></p>
 
     <p><i>Login: <b>${user.login}</b></i></p>
 
@@ -14,7 +14,7 @@
 
     <p><i>For the confirmation of this account, please, follow this link
         <a href="${home}/account-confirmation?id=${user.idAccount}&hash=${user.accountRegistration.hash}">
-            itquiz.net/account-confirmation</a></i></p>
+	        ${home}/account-confirmation</a></i></p>
 
     <p><i>If you have not registered on IT Quiz, just ignore this message</i></p>
     <h4 align=center><b>Best regards,</b></h4>

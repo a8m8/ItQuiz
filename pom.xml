@@ -62,6 +62,7 @@
                                 <cssSourceFile>bootstrap.min.css</cssSourceFile>
                                 <cssSourceFile>bootstrap-theme.min.css</cssSourceFile>
                                 <cssSourceFile>normalize.css</cssSourceFile>
+                                <cssSourceFile>google.old.standart.tt.css</cssSourceFile>
                                 <cssSourceFile>styles.css</cssSourceFile>
                             </cssSourceFiles>
                             <cssTargetDir>/resources/css</cssTargetDir>

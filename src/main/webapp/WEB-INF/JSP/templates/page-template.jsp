@@ -32,25 +32,28 @@
 </head>
 
 <body>
-<header>
-    <div id="logo" class="col-xs-3">
-        <h1>LOGO HERE</h1>
-    </div>
-    <div id="welcome" class="col-xs-6">
-        <a href="${context }/login">
-            <img alt="IT Quiz" src="${context }/resources/images/SL0uC9OYIu4.jpg"/>
-        </a>
-    </div>
-    <sec:authorize access="isAuthenticated()">
-        <div class="col-xs-offset-1 col-xs-1">
-            <c:url var="logoutUrl" value="/logout"/>
-            <form action="${logoutUrl }" method="POST">
-                <button type="submit" class="btn-logout">Log Out</button>
-                <sec:csrfInput/>
-            </form>
+<div id="header-wrapper">
+    <header>
+        <div id="welcome" class="col-xs-5">
+            <a href="${context }/login">
+                <img alt="IT Quiz" src="${context }/resources/images/SL0uC9OYIu4.jpg"/>
+            </a>
         </div>
-    </sec:authorize>
-</header>
+        <div class="col-xs-3" id="quote">
+            <p>Live and learn.<br>
+                Knowledge is power!</p>
+        </div>
+        <sec:authorize access="isAuthenticated()">
+            <div class="col-xs-4">
+                <c:url var="logoutUrl" value="/logout"/>
+                <form action="${logoutUrl }" method="POST">
+                    <button type="submit" class="btn-logout">Log Out</button>
+                    <sec:csrfInput/>
+                </form>
+            </div>
+        </sec:authorize>
+    </header>
+</div>
 
 <div id="wrapper">
 
@@ -60,10 +63,10 @@
 
 </div>
 <footer>
-    <div class="col-xs-offset-2 col-xs-3">
+    <div class="col-xs-6">
         <p>Support email: <a href="mailto: ${supportEmail}">${supportEmail}</a></p>
     </div>
-    <div class="col-xs-offset-2 col-xs-3">
+    <div class="col-xs-6">
         <p>&copy; 2015 Artur Meshcheriakov</p>
     </div>
 </footer>
