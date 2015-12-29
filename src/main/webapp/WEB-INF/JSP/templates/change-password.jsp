@@ -13,6 +13,14 @@
 <form:form id="password-change-form" class="form-horizontal" method="POST"
            action="${context}/${role}/${pageName}/change-password" commandName="passwordForm">
     <input type="hidden" name="id" value="${idAccount}">
+    <c:if test="${pageName ne 'accounts/edit-account'}">
+        <div class="form-group">
+            <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">Old password:</form:label>
+            <div class="col-md-4">
+                <form:input type="password" class="form-control" path="oldPassword"/>
+            </div>
+        </div>
+    </c:if>
     <div class="form-group">
         <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password
             :</form:label>
@@ -27,14 +35,6 @@
             <form:input type="password" class="form-control" path="passwordConfirmed"/>
         </div>
     </div>
-    <c:if test="${pageName ne 'accounts/edit-account'}">
-        <div class="form-group">
-            <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">Old password:</form:label>
-            <div class="col-md-4">
-                <form:input type="password" class="form-control" path="oldPassword"/>
-            </div>
-        </div>
-    </c:if>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-4">
             <button type="submit" class="btn-func">Save</button>
