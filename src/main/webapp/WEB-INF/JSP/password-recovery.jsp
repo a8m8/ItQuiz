@@ -14,7 +14,8 @@
 <form:form id="password-recovery-form" class="form-horizontal" method="POST" action="${context }/password-recovery"
            commandName="passwordRecoveryForm">
     <div class="form-group">
-        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">
+            Email:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="email"/>
         </div>

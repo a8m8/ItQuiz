@@ -35,21 +35,24 @@
 <c:url var="loginUrl" value="/login"/>
 <form id="login-form" class="form-horizontal" action="${loginUrl }" method="POST">
     <div class="form-group">
-        <label for="name" class="col-md-offset-2 col-md-2 control-label">Email:</label>
+        <label for="name" class="col-md-offset-2 col-md-2 control-label">
+            Email:<span id="asterisk">*</span></label>
 
         <div class="col-md-4">
             <input id="name" type="text" class="form-control" name="username"/>
         </div>
     </div>
     <div class="form-group">
-        <label for="pass" class="col-md-offset-2 col-md-2 control-label">Password:</label>
+        <label for="pass" class="col-md-offset-2 col-md-2 control-label">
+            Password:<span id="asterisk">*</span></label>
 
         <div class="col-md-4">
             <input type="password" id="pass" class="form-control" name="password"/>
         </div>
     </div>
     <div class="form-group">
-        <label for="rol" class="col-md-offset-2 col-md-2 control-label">Role:</label>
+        <label for="rol" class="col-md-offset-2 col-md-2 control-label">
+            Role:<span id="asterisk">*</span></label>
 
         <div class="col-md-4">
             <select name="idRole" class="form-control" id="rol">

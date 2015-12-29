@@ -10,7 +10,8 @@
     <div class="col-md-offset-1 col-md-1">
         <a href="${context}/${role}/${pageName}/test/questions/page/1">&#9668; Back</a>
     </div>
-    <form:label path="content" class="col-md-2 control-label">Question content:</form:label>
+    <form:label path="content" class="col-md-2 control-label">
+        Question content:<span id="asterisk">*</span></form:label>
     <div class="col-md-4">
         <form:textarea id="question-content" type="text" rows="4" class="form-control" path="content"/>
     </div>

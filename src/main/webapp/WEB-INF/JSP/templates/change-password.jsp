@@ -15,22 +15,23 @@
     <input type="hidden" name="id" value="${idAccount}">
     <c:if test="${pageName ne 'accounts/edit-account'}">
         <div class="form-group">
-            <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">Old password:</form:label>
+            <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">
+                Old password:<span id="asterisk">*</span></form:label>
             <div class="col-md-4">
                 <form:input type="password" class="form-control" path="oldPassword"/>
             </div>
         </div>
     </c:if>
     <div class="form-group">
-        <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password
-            :</form:label>
+        <form:label path="password" class="col-md-offset-2 col-md-2 control-label">
+            Password:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input type="password" class="form-control" path="password"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="passwordConfirmed" class="col-md-offset-2 col-md-2 control-label">Confirm
-            password:</form:label>
+        <form:label path="passwordConfirmed" class="col-md-offset-2 col-md-2 control-label">
+            Confirm password:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input type="password" class="form-control" path="passwordConfirmed"/>
         </div>

@@ -20,19 +20,22 @@
     <input type="hidden" name="id" value="${idAccount }"/>
 
     <div class="form-group">
-        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">
+            Email:<span id="invisible-asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input type="text" class="form-control" path="email" readonly="true"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+        <form:label path="login" class="col-md-offset-2 col-md-2 control-label">
+            Login:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="login"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">Name:</form:label>
+        <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">
+            Name:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="fio"/>
         </div>

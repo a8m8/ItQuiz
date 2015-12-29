@@ -15,33 +15,37 @@
 <form:form id="admin-add-user-form" class="form-horizontal" method="POST" action="${context }/admin/add-user"
            commandName="adminAddUserForm">
     <div class="form-group">
-        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">Email:</form:label>
+        <form:label path="email" class="col-md-offset-2 col-md-2 control-label">
+            Email:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input type="text" class="form-control" path="email"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="password" class="col-md-offset-2 col-md-2 control-label">Password
-            :</form:label>
+        <form:label path="password" class="col-md-offset-2 col-md-2 control-label">
+            Password:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="password"/>
         </div>
     </div>
     <div class="form-group">
         <form:label path="passwordConfirmed"
-                    class="col-md-offset-2 col-md-2 control-label">Confirm password:</form:label>
+                    class="col-md-offset-2 col-md-2 control-label">
+            Confirm password:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="passwordConfirmed"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">Login:</form:label>
+        <form:label for="log" path="login" class="col-md-offset-2 col-md-2 control-label">
+            Login:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="login"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">Name:</form:label>
+        <form:label path="fio" class="col-md-offset-2 col-md-2 control-label">
+            Name:<span id="asterisk">*</span></form:label>
         <div class="col-md-4">
             <form:input class="form-control" path="fio"/>
         </div>
