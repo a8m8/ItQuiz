@@ -237,6 +237,10 @@ table thead {
     color: #d9534f;
 }
 
+#globalerror {
+    border-top: 3px solid #454545;
+}
+
 #checkbox-label {
     font-weight: bold;
 }
