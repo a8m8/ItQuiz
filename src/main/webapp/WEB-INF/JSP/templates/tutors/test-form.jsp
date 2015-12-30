@@ -8,20 +8,22 @@
 
 
 <div class="form-group">
-    <form:label path="title" class="col-md-offset-2 col-md-2 control-label">Title:</form:label>
+    <form:label path="title" class="col-md-offset-2 col-md-2 control-label">
+        Title:<span id="asterisk">*</span></form:label>
     <div class="col-md-4">
         <form:input type="text" class="form-control" path="title"/>
     </div>
 </div>
 <div class="form-group">
-    <form:label path="description" class="col-md-offset-2 col-md-2 control-label">Description:</form:label>
+    <form:label path="description" class="col-md-offset-2 col-md-2 control-label">
+        Description:<span id="invisible-asterisk">*</span></form:label>
     <div class="col-md-4">
         <form:textarea type="text" rows="4" class="form-control" path="description"/>
     </div>
 </div>
 <div class="form-group">
-    <form:label path="timePerQuestion" class="col-md-offset-2 col-md-2 control-label">Time per
-        question:</form:label>
+    <form:label path="timePerQuestion" class="col-md-offset-2 col-md-2 control-label">
+        Time per question:<span id="asterisk">*</span></form:label>
     <div class="col-md-1">
         <form:input type="text" class="form-control" path="timePerQuestion"/>
     </div>
