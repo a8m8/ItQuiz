@@ -73,11 +73,16 @@ public class TestForm implements IForm, Copyable<Test> {
                     messageSource.getMessage("test.time.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
         try {
-            Integer.parseInt(timePerQuestion);
+            int temp = Integer.parseInt(timePerQuestion);
+            if (temp < 0) {
+                throw new InvalidUserInputException(
+                        messageSource.getMessage("test.time.smaller.zero", new Object[]{},
+                                LocaleContextHolder.getLocale()));
+            }
         } catch (NumberFormatException e) {
             throw new InvalidUserInputException(
-                    messageSource.getMessage("test.time.wrong.format", new Object[]{}, LocaleContextHolder.getLocale
-                            ()));
+                    messageSource.getMessage("test.time.wrong.format", new Object[]{},
+                            LocaleContextHolder.getLocale()));
         }
     }
 }
