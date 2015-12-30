@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface CommonTutorService {
 
-    void addNewTest(int authorID, TestForm newTestForm);
+    void addNewTest(int authorID, TestForm newTestForm) throws InvalidUserInputException;
 
     TestForm generateFormBasedOnTest(long idTest) throws InvalidUserInputException;
 

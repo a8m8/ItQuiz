@@ -22,7 +22,7 @@ public class Test extends AbstractBusinessEntity {
     @JoinColumn(name = "id_account", nullable = false)
     private Account account;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, unique = true, length = 255)
     private String title;
 
     @Column

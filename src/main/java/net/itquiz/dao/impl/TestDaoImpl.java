@@ -49,4 +49,10 @@ public class TestDaoImpl extends AbstractEntityDao<Test> implements TestDao {
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("active", true)).setProjection
                 (Projections.rowCount()).uniqueResult();
     }
+
+    @Override
+    public Test findByTitle(String title) {
+        return (Test) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("title", title)
+                .ignoreCase()).uniqueResult();
+    }
 }

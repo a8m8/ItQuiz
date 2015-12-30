@@ -18,4 +18,6 @@ public interface TestDao extends IEntityDao<Test> {
     List<Test> getAvailableTest(int offset, int count);
 
     long countAvailableTest();
+
+    Test findByTitle(String title);
 }

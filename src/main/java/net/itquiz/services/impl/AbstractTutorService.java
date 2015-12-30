@@ -55,7 +55,11 @@ public abstract class AbstractTutorService implements CommonTutorService {
     }
 
     @Override
-    public void addNewTest(int authorID, TestForm newTestForm) {
+    public void addNewTest(int authorID, TestForm newTestForm) throws InvalidUserInputException {
+        if (testDao.findByTitle(newTestForm.getTitle()) != null) {
+            throw new InvalidUserInputException(messageSource.getMessage("test.title.exist",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
         Test test = entityBuilder.buildTest(accountDao.findById(authorID));
         newTestForm.copyFieldsTo(test);
         testDao.save(test);
