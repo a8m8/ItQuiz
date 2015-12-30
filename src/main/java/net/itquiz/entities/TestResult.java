@@ -34,7 +34,7 @@ public class TestResult extends AbstractEntity {
     @Column(name = "all_questions_count", nullable = false)
     private Integer allQuestionsCount;
 
-    @Column(nullable = false, insertable = false)
+    @Column(nullable = false)
     private Timestamp created;
 
     @Column(name = "test_title", nullable = false)

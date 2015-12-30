@@ -32,4 +32,10 @@ public class TestResultImpl extends AbstractEntityDao<TestResult> implements Tes
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount",
                 idAccount)).setProjection(Projections.rowCount()).uniqueResult();
     }
+
+    @Override
+    public TestResult getExistingTestResult(long idTest, int idAccount) {
+        return (TestResult) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount",
+                idAccount)).add(Restrictions.eq("test.idTest", idTest)).uniqueResult();
+    }
 }

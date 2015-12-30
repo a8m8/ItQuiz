@@ -12,4 +12,6 @@ public interface TestResultDao extends IEntityDao<TestResult> {
     List<TestResult> getUserTestResults(int idAccount, int offset, int count);
 
     long getUserTestResultsCount(int idAccount);
+
+    TestResult getExistingTestResult(long idTest, int idAccount);
 }

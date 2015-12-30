@@ -4,6 +4,7 @@ import net.itquiz.components.EntityBuilder;
 import net.itquiz.entities.*;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 /**
@@ -66,6 +67,7 @@ public class EntityBuilderImpl implements EntityBuilder {
         testResult.setTestTitle(test.getTitle());
         testResult.setCorrectCount(0);
         testResult.setAllQuestionsCount(allQuestions);
+        testResult.setCreated(new Timestamp(System.currentTimeMillis()));
         return testResult;
     }
 }
