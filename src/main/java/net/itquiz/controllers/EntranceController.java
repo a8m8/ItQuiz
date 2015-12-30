@@ -59,7 +59,7 @@ public class EntranceController extends AbstractController implements Initializi
     @RequestMapping(value = {"/login", "/loginFailed"}, method = RequestMethod.GET)
     public String showLogin(Model model) {
         if (SecurityUtils.getCurrentAccount() != null) {
-            return "redirect:crossing";
+            return "redirect:/crossing";
         }
         initRoles(model);
         return "login";

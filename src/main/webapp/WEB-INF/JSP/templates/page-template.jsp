@@ -43,6 +43,7 @@
             <p>Live and learn.<br>
                 Knowledge is power!</p>
         </div>
+
         <sec:authorize access="isAuthenticated()">
             <div class="col-xs-4">
                 <c:url var="logoutUrl" value="/logout"/>
@@ -79,6 +80,11 @@
         <script type="text/javascript" src="${context}/resources/js/final.js?v=${CSS_JS_VERSION}"></script>
     </c:otherwise>
 </c:choose>
+<c:if test="${passingTest}">
+    <script type="text/javascript">
+        $(document).ready(timer);
+    </script>
+</c:if>
 
 </body>
 </html>

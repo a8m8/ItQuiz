@@ -26,4 +26,6 @@ public interface StudentService {
     long userTestResultsCount(int idAccount);
 
     List<TestResult> getTestResults(int idAccount, Integer offset, Integer count);
+
+    int getTimePerQuestion(long idTest);
 }

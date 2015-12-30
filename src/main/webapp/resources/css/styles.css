@@ -22,7 +22,6 @@ body {
     margin: 0 auto;
     background-color: #FFF;
     width: 80%;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
     border-left: 3px solid #454545;
     border-right: 3px solid #454545;
 }
@@ -39,7 +38,7 @@ header {
     width: 80%;
     right: 10%;
     top: 25px;
-    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 4px 2px #333;
     border-top-left-radius: 4em 8em;
     border-top-right-radius: 4em 8em;
     border-bottom-right-radius: 4em 8em;
@@ -84,7 +83,6 @@ footer {
     height: 50px;
     overflow: hidden;
     margin: -50px auto 0;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
     background-color: #454545;
     width: 80%;
     line-height: 50px;
@@ -247,10 +245,17 @@ table thead {
     text-align: center;
 }
 
+#test-passing-box {
+    width: 100%;
+    border-top: 3px solid #454545;
+}
+
 .panel-default {
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin: 3%;
+}
+
+.panel-body {
+    padding: 0 0 5% 0;
 }
 
 #tests-heading {
@@ -268,4 +273,24 @@ table thead {
 
 #result p {
     text-align: center;
+}
+
+#timer-box {
+    width: 100%;
+    text-align: center;
+}
+
+#timer {
+    margin: 0 auto;
+    color: #d9534f;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+#asterisk {
+    color: #d9534f;
+}
+
+#invisible-asterisk {
+    visibility: hidden;
 }

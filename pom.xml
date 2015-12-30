@@ -75,6 +75,7 @@
                                 <jsSourceFile>jquery.validate.min.js</jsSourceFile>
                                 <jsSourceFile>jquery.form.min.js</jsSourceFile>
                                 <jsSourceFile>validation-scripts.js</jsSourceFile>
+                                <jsSourceFile>timer.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsTargetDir>/resources/js</jsTargetDir>
                             <jsFinalFile>final.js</jsFinalFile>

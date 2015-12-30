@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -66,6 +63,7 @@ public class StudentController extends AbstractController {
     @RequestMapping(value = "/pass-test", method = RequestMethod.GET)
     public String prepareToTestPassing(@RequestParam("id") long idTest, HttpSession session) {
         TestResult testResult = studentService.prepareTestResult(SecurityUtils.getCurrentIdAccount(), idTest);
+        session.setAttribute("timePerQuestion", studentService.getTimePerQuestion(idTest));
         session.setAttribute("testResult", testResult);
         session.setAttribute("idTest", idTest);
         session.setAttribute("questionNumber", 0);
@@ -75,28 +73,49 @@ public class StudentController extends AbstractController {
 
     @RequestMapping(value = "/passing-test", method = RequestMethod.GET)
     public String showQuestions(Model model, HttpSession session) {
+        if (session.getAttribute("questionNumber") == null) {
+            return "redirect:/student/tests/page/1";
+        }
         if ((int) session.getAttribute("questionNumber") == (int) session.getAttribute("maxQuestions")) {
             return "redirect:/student/test-result";
         }
         Question question = studentService.getQuestion((long) session.getAttribute("idTest"),
                 (int) session.getAttribute("questionNumber"));
         session.setAttribute("question", question);
+        model.addAttribute("passingTest", true);
         model.addAttribute("question", question);
+        model.addAttribute("timePerQuestion", session.getAttribute("timePerQuestion"));
         return "student/passing-test";
+    }
+
+    @RequestMapping(value = "/passing-test", method = RequestMethod.POST, headers = "Accept=application/json")
+    public
+    @ResponseBody
+    String nextQuestionAjax(@RequestParam(value = "answer", required = false)
+                            List<String> answerIds, HttpSession session) {
+        prepareNextQuestion(answerIds, session);
+        return "{\"redirect\":\"/student/passing-test\"}";
     }
 
     @RequestMapping(value = "/passing-test", method = RequestMethod.POST)
     public String nextQuestion(@RequestParam(value = "answer", required = false) List<String> answerIds, HttpSession
             session) {
+        prepareNextQuestion(answerIds, session);
+        return "redirect:/student/passing-test";
+    }
+
+    private void prepareNextQuestion(List<String> answerIds, HttpSession session) {
         session.setAttribute("questionNumber", ((int) session.getAttribute("questionNumber") + 1));
         TestResult testResult = studentService.checkAnswers(answerIds, (Question) session.getAttribute("question"),
                 (TestResult) session.getAttribute("testResult"));
         session.setAttribute("testResult", testResult);
-        return "redirect:/student/passing-test";
     }
 
     @RequestMapping(value = "/test-result", method = RequestMethod.GET)
     public String showTestResult(Model model, HttpSession session) {
+        if (session.getAttribute("testResult") == null) {
+            return "redirect:/student/tests/page/1";
+        }
         TestResult testResult = (TestResult) session.getAttribute("testResult");
         studentService.saveTestResult(testResult);
         model.addAttribute("testResult", testResult);

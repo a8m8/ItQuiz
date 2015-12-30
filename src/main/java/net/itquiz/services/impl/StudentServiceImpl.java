@@ -102,4 +102,10 @@ public class StudentServiceImpl implements StudentService {
     public List<TestResult> getTestResults(int idAccount, Integer offset, Integer count) {
         return testResultDao.getUserTestResults(idAccount, offset, count);
     }
+
+    @Override
+    public int getTimePerQuestion(long idTest) {
+        Test test = testDao.findById(idTest);
+        return test.getTimePerQuestion();
+    }
 }
