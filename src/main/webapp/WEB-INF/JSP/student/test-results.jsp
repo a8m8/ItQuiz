@@ -23,7 +23,7 @@
         <c:forEach items="${testResults}" var="testResult">
             <tr>
                 <td>${testResult.testTitle}</td>
-                <td><fmt:formatDate value="${testResult.created }" pattern="dd-MM-yyyy HH:mm"/></td>
+                <td><fmt:formatDate value="${testResult.created }" pattern="dd-MM-yyyy"/></td>
                 <td>${testResult.correctCount}</td>
                 <td>${testResult.allQuestionsCount}</td>
             </tr>

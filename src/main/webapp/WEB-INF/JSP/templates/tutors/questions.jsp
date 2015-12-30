@@ -36,8 +36,8 @@
                 <c:forEach items="${questions}" var="question">
                     <tr>
                         <td>${question.content}</td>
-                        <td><fmt:formatDate value="${question.created }" pattern="dd-MM-yyyy HH:mm"/></td>
-                        <td><fmt:formatDate value="${question.updated }" pattern="dd-MM-yyyy HH:mm"/></td>
+                        <td><fmt:formatDate value="${question.created }" pattern="dd-MM-yyyy"/></td>
+                        <td><fmt:formatDate value="${question.updated }" pattern="dd-MM-yyyy"/></td>
                         <td>${question.active ? "Activated" : "Deactivated" }</td>
                         <td><a href="<c:url value=
                         "/${role}/${pageName}/test/questions/edit-question?id=${question.idQuestion}"/>">

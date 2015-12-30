@@ -34,8 +34,8 @@
                         </c:if>
                         <td>${test.title}</td>
                         <td>${test.timePerQuestion} sec</td>
-                        <td><fmt:formatDate value="${test.created }" pattern="dd-MM-yyyy HH:mm"/></td>
-                        <td><fmt:formatDate value="${test.updated }" pattern="dd-MM-yyyy HH:mm"/></td>
+                        <td><fmt:formatDate value="${test.created }" pattern="dd-MM-yyyy"/></td>
+                        <td><fmt:formatDate value="${test.updated }" pattern="dd-MM-yyyy"/></td>
                         <td>${test.active ? "Activated" : "Deactivated" }</td>
                         <td><a href="<c:url value="${location}/edit-test?id=${test.idTest }"/>">Edit</a></td>
                         <td><a href="<c:url value="${location}/delete?id=${test.idTest }"/>">Delete</a></td>

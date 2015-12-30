@@ -56,8 +56,8 @@
                     <tr>
                         <td>${answer.content}</td>
                         <td>${answer.correct ? "Yes" : "No"}</td>
-                        <td><fmt:formatDate value="${answer.created }" pattern="dd-MM-yyyy HH:mm"/></td>
-                        <td><fmt:formatDate value="${answer.updated }" pattern="dd-MM-yyyy HH:mm"/></td>
+                        <td><fmt:formatDate value="${answer.created }" pattern="dd-MM-yyyy"/></td>
+                        <td><fmt:formatDate value="${answer.updated }" pattern="dd-MM-yyyy"/></td>
                         <td>${answer.active ? "Activated" : "Deactivated" }</td>
                         <td><a href="<c:url value=
                         "/${role}/${pageName}/test/questions/question/edit-answer?id=${answer.idAnswer }"/>">Edit
