@@ -4,21 +4,38 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger - %message%n</pattern>
+            <pattern>%date{dd-MM-yyyy; HH:mm:ss.SSS, Europe/Kiev} [%-5level] %logger - %message%n</pattern>
         </encoder>
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
         <file>${log.home}/it-quiz-log.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.home}/it-quiz-log-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>50MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${log.home}/it-quiz-log.%i.zip</fileNamePattern>
         </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%-5level] %logger - %message%n</pattern>
+            <pattern>%date{dd-MM-yyyy; HH:mm:ss.SSS, Europe/Kiev} [%-5level] %logger - %message%n</pattern>
         </encoder>
+    </appender>
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>localhost</smtpHost>
+        <to>${support.email}</to>
+        <from>${email.address}</from>
+        <subject>ERROR: %logger{0}</subject>
+        <layout class="ch.qos.logback.classic.html.HTMLLayout">
+            <pattern>%date{dd-MM-yyyy; HH:mm:ss.SSS, Europe/Kiev}%mdc%level%logger%message</pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
@@ -26,8 +43,9 @@
         <appender-ref ref="STDOUT"/>
     </appender>
 
-    <root level="INFO">
+    <root level="ERROR">
         <appender-ref ref="ASYNC"/>
+        <appender-ref ref="EMAIL"/>
     </root>
 
 </configuration>
