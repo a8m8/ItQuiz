@@ -91,12 +91,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveTestResult(TestResult testResult) {
-        TestResult existingTestResult = testResultDao.getExistingTestResult(testResult.getTest().getIdTest(),
+        TestResult existingTestResult = testResultDao.getExistingTestResult(testResult.getTestTitle(),
                 testResult.getAccount().getIdAccount());
         if (existingTestResult != null) {
             existingTestResult.setCorrectCount(testResult.getCorrectCount());
             existingTestResult.setAllQuestionsCount(testResult.getAllQuestionsCount());
             existingTestResult.setCreated(new Timestamp(System.currentTimeMillis()));
+            existingTestResult.setTestTitle(testResult.getTestTitle());
             testResultDao.update(existingTestResult);
         } else {
             testResultDao.save(testResult);

@@ -34,8 +34,8 @@ public class TestResultImpl extends AbstractEntityDao<TestResult> implements Tes
     }
 
     @Override
-    public TestResult getExistingTestResult(long idTest, int idAccount) {
+    public TestResult getExistingTestResult(String testTitle, int idAccount) {
         return (TestResult) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount",
-                idAccount)).add(Restrictions.eq("test.idTest", idTest)).uniqueResult();
+                idAccount)).add(Restrictions.eq("testTitle", testTitle).ignoreCase()).uniqueResult();
     }
 }
