@@ -74,7 +74,7 @@ public class TestForm implements IForm, Copyable<Test> {
         }
         try {
             int temp = Integer.parseInt(timePerQuestion);
-            if (temp < 0) {
+            if (temp <= 0) {
                 throw new InvalidUserInputException(
                         messageSource.getMessage("test.time.smaller.zero", new Object[]{},
                                 LocaleContextHolder.getLocale()));
