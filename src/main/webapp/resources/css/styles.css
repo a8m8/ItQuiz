@@ -106,6 +106,10 @@ h3, h4 {
     font-weight: bold;
 }
 
+#welcome-text {
+    text-align: center;
+}
+
 .form-control {
     text-align: center;
 }
