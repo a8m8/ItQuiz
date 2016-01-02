@@ -8,18 +8,29 @@
 
 <jsp:include page="templates/login-nav.jsp"/>
 
-<c:if test="${testServerMode}">
-    <div style="text-align: center;">
-        <p><b>This is the test server of <a href="http://www.it-quiz.net">www.it-quiz.net</a></b></p>
+<c:choose>
+    <c:when test="${testServerMode}">
+        <div id="welcome-text">
+            <p><b>This is the test server of <a href="http://www.it-quiz.net">www.it-quiz.net</a></b></p>
 
-        <p> To access the account with all roles and privileges use <b>login:</b> <i>admin@it-quiz.tk</i> <b>password:
-        </b> <i>admin</i></p>
+            <p> To access the account with all roles and privileges use <b>login:</b> <i>admin@it-quiz.tk</i> <b>password:
+            </b> <i>admin</i></p>
 
-        <p> If you find any problems, please, send an e-mail with the problem description to our support address</p>
-    </div>
-</c:if>
+            <p> If you find any problems, please, send an e-mail with the problem description to our support address</p>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <div id="welcome-text">
+            <p><b>Welcome to IT Quiz</b></p>
 
-<h3>Please login</h3>
+            <p><i>This is the resource, where you can take the tests in different IT fields</i></p>
+
+            <p>If you are a new user, please register with the help of the "sign in" menu</p>
+
+            <p>Otherwise, log in using the form below</p>
+        </div>
+    </c:otherwise>
+</c:choose>
 
 <jsp:include page="templates/message.jsp"/>
 <jsp:include page="templates/error-message.jsp"/>
@@ -52,13 +63,13 @@
     </div>
     <div class="form-group">
         <label for="rol" class="col-md-offset-2 col-md-2 control-label">
-            Role:<span id="asterisk">*</span></label>
+            Role:<span id="invisible-asterisk">*</span></label>
 
         <div class="col-md-4">
             <select name="idRole" class="form-control" id="rol">
-                <option value="0" label="--- Select ---"/>
                 <c:forEach var="role" items="${roles }">
-                    <option value="${role.idRole }">${role.title }</option>
+                    <option value="${role.idRole }"
+                            <c:if test="${role.idRole eq 4}">selected</c:if>>${role.title }</option>
                 </c:forEach>
             </select>
         </div>
