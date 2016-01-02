@@ -36,7 +36,7 @@ public class AdminAddUserForm extends AdminUserForm implements Copyable<Account>
         super.validate(messageSource);
         if (StringUtils.isBlank(password)) {
             throw new InvalidUserInputException(
-                    messageSource.getMessage("passwords.required", new Object[]{}, LocaleContextHolder.getLocale()));
+                    messageSource.getMessage("password.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
         if (password.length() > 60) {
             throw new InvalidUserInputException(
