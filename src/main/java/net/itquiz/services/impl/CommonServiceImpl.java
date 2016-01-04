@@ -58,8 +58,7 @@ public class CommonServiceImpl implements CommonService {
                     messageSource.getMessage("old.password.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
         Account account = accountDao.findById(idAccount);
-        if (oldPasswordChecking && !StringUtils.equals(passwordEncoder.encode(passwordForm.getOldPassword()),
-                account.getPassword())) {
+        if (oldPasswordChecking && !passwordEncoder.matches(passwordForm.getOldPassword(), account.getPassword())) {
             throw new InvalidUserInputException(
                     messageSource.getMessage("old.password.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
         }
