@@ -6,11 +6,7 @@
 <div style="padding-right:10%; padding-left:10%">
     <h3 align=center>Hello, <b>${user.fio}</b></h3>
 
-    <p><i>You have registered on the <a href="${home}">${home}</a> with</i></p>
-
-    <p><i>Login: <b>${user.login}</b></i></p>
-
-    <p><i>Password: <b>${user.password}</b></i></p>
+    <p><i>You have registered on the <a href="${home}">${home}</a></i></p>
 
     <p><i>For the confirmation of this account, please, follow this link
         <a href="${home}/account-confirmation?id=${user.idAccount}&hash=${user.accountRegistration.hash}">

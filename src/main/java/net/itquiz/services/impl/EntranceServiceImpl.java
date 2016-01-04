@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -133,14 +134,14 @@ public class EntranceServiceImpl implements EntranceService {
         }
 
         if (sendNotificationToEmail) {
-            emailService.sendNotificationToEmail(account);
+            emailService.sendNotificationEmail(account);
         }
 
         return accountDao.findById(account.getId());
     }
 
     @Override
-    public void sendPasswordForRecovery(String email) throws InvalidUserInputException {
+    public void sendPasswordRecoveryEmail(String email) throws InvalidUserInputException {
         Account account = accountDao.findByEmail(email);
         if (account == null) {
             throw new InvalidUserInputException(messageSource.getMessage("email.not.exist",
@@ -154,8 +155,12 @@ public class EntranceServiceImpl implements EntranceService {
             throw new InvalidUserInputException(messageSource.getMessage("account.not.confirmed",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
-
-        emailService.sendNotificationToEmail(account);
+        AccountRegistration accountRegistration = account.getAccountRegistration();
+        accountRegistration.setPassHash(UUID.randomUUID().toString());
+        accountRegistration.setPassHashCreated(new Timestamp(System.currentTimeMillis()));
+        accountRegistrationDao.update(accountRegistration);
+        account.setAccountRegistration(accountRegistration);
+        emailService.sendPasswordRecoveryEmail(account);
     }
 
     @Override
@@ -206,4 +211,21 @@ public class EntranceServiceImpl implements EntranceService {
         }
     }
 
+    @Override
+    public void checkPasswordRecoveryAccess(int id, String passHash) throws InvalidUserInputException {
+        Account account = accountDao.findById(id);
+        if (account == null) {
+            throw new InvalidUserInputException(messageSource.getMessage("cannot.recover.password",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        AccountRegistration accountRegistration = account.getAccountRegistration();
+        if (accountRegistration.getPassHash() == null) {
+            throw new InvalidUserInputException(messageSource.getMessage("cannot.recover.password",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+        if (!StringUtils.equals(accountRegistration.getPassHash(), passHash)) {
+            throw new InvalidUserInputException(messageSource.getMessage("cannot.recover.password",
+                    new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+    }
 }

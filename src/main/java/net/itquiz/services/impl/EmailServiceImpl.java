@@ -29,6 +29,9 @@ public class EmailServiceImpl implements EmailService {
     @Value("${recovery.email.filepath}")
     private String recoveryTextFileName;
 
+    @Value("${notification.email.filepath}")
+    private String notificationTextFileName;
+
     @Value("${email.address}")
     private String emailFrom;
 
@@ -49,7 +52,14 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendPasswordToEmail(Account account) {
+    public void sendNotificationEmail(Account account) {
+        String content = emailTemplateService.getEmailText(account, notificationTextFileName);
+        sendMail(account, content, messageSource.getMessage("notification.email.title",
+                new Object[]{}, LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public void sendPasswordRecoveryEmail(Account account) {
         String content = emailTemplateService.getEmailText(account, recoveryTextFileName);
         sendMail(account, content, messageSource.getMessage("recovery.email.title",
                 new Object[]{}, LocaleContextHolder.getLocale()));

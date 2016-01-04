@@ -2,6 +2,7 @@ package net.itquiz.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * @author Artur Meshcheriakov
@@ -22,6 +23,12 @@ public class AccountRegistration extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
     private String hash;
+
+    @Column(name = "pass_hash", unique = true)
+    private String passHash;
+
+    @Column(name = "pass_hash_created")
+    private Timestamp passHashCreated;
 
     public AccountRegistration() {
     }
@@ -48,6 +55,22 @@ public class AccountRegistration extends AbstractEntity {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public String getPassHash() {
+        return passHash;
+    }
+
+    public void setPassHash(String passHash) {
+        this.passHash = passHash;
+    }
+
+    public Timestamp getPassHashCreated() {
+        return passHashCreated;
+    }
+
+    public void setPassHashCreated(Timestamp passHashCreated) {
+        this.passHashCreated = passHashCreated;
     }
 
     @Override

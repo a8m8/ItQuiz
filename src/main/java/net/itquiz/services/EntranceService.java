@@ -19,7 +19,7 @@ public interface EntranceService {
 
     Account signUp(SignUpForm form) throws InvalidUserInputException;
 
-    void sendPasswordForRecovery(String email) throws InvalidUserInputException;
+    void sendPasswordRecoveryEmail(String email) throws InvalidUserInputException;
 
     void verifyAccount(int id, String hash) throws InvalidUserInputException;
 
@@ -30,4 +30,6 @@ public interface EntranceService {
     Account getAccount(String email);
 
     void checkAccess(short role, int currentIdAccount) throws InvalidUserInputException;
+
+    void checkPasswordRecoveryAccess(int id, String passHash) throws InvalidUserInputException;
 }

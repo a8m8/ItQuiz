@@ -13,7 +13,7 @@
 <form:form id="password-change-form" class="form-horizontal" method="POST"
            action="${context}/${role}/${pageName}/change-password" commandName="passwordForm">
     <input type="hidden" name="id" value="${idAccount}">
-    <c:if test="${pageName ne 'accounts/edit-account'}">
+    <c:if test="${(pageName ne 'accounts/edit-account') && (pageName ne 'account')}">
         <div class="form-group">
             <form:label path="oldPassword" class="col-md-offset-2 col-md-2 control-label">
                 Old password:<span id="asterisk">*</span></form:label>

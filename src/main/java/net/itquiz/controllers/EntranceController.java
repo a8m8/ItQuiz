@@ -5,9 +5,11 @@ import net.itquiz.entities.Account;
 import net.itquiz.entities.Role;
 import net.itquiz.exceptions.InvalidUserInputException;
 import net.itquiz.forms.EmailForm;
+import net.itquiz.forms.PasswordForm;
 import net.itquiz.forms.SignUpForm;
 import net.itquiz.security.CurrentAccount;
 import net.itquiz.security.SecurityUtils;
+import net.itquiz.services.CommonService;
 import net.itquiz.services.EntranceService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,9 @@ public class EntranceController extends AbstractController implements Initializi
 
     @Autowired
     private EntranceService entranceService;
+
+    @Autowired
+    private CommonService commonService;
 
     @RequestMapping(value = "/account-confirmation", method = RequestMethod.GET)
     public String confirmAccount(@RequestParam("id") int id, @RequestParam("hash") String hash,
@@ -140,7 +145,7 @@ public class EntranceController extends AbstractController implements Initializi
             HttpSession session) {
         try {
             passwordRecoveryForm.validate(messageSource);
-            entranceService.sendPasswordForRecovery(passwordRecoveryForm.getEmail());
+            entranceService.sendPasswordRecoveryEmail(passwordRecoveryForm.getEmail());
             setMessage(session, "password.send");
             return "redirect:/login";
         } catch (InvalidUserInputException e) {
@@ -148,4 +153,43 @@ public class EntranceController extends AbstractController implements Initializi
             return "password-recovery";
         }
     }
+
+    @RequestMapping(value = "password-recovery/check", method = RequestMethod.GET)
+    public String recoveryCheckCredentials(@RequestParam("id") int id,
+                                           @RequestParam("passHash") String passHash, HttpSession session) {
+        try {
+            entranceService.checkPasswordRecoveryAccess(id, passHash);
+            session.setAttribute("accountId", id);
+            return "redirect:/password-recovery/account/change-password";
+        } catch (InvalidUserInputException e) {
+            session.setAttribute("errorMessage", e.getMessage());
+            return "redirect:/login";
+        }
+    }
+
+    @RequestMapping(value = "password-recovery/account/change-password", method = RequestMethod.GET)
+    public String recoveryShowChangePassword(Model model) {
+        model.addAttribute("passwordForm", new PasswordForm());
+        model.addAttribute("role", "password-recovery");
+        model.addAttribute("pageName", "account");
+        return "change-password";
+    }
+
+    @RequestMapping(value = "/password-recovery/account/change-password", method = RequestMethod.POST)
+    public String recoveryChangePassword(Model model, @ModelAttribute("passwordForm") PasswordForm passwordForm,
+                                         HttpSession session) {
+        try {
+            passwordForm.validate(messageSource);
+            commonService.changePassword((int) session.getAttribute("accountId"), passwordForm, false);
+            setMessage(session, "password.changed");
+            session.removeAttribute("accountId");
+            return "redirect:/login";
+        } catch (InvalidUserInputException e) {
+            model.addAttribute("role", "password-recovery");
+            model.addAttribute("pageName", "account");
+            model.addAttribute("errorMessage", e.getMessage());
+            return "change-password";
+        }
+    }
+
 }

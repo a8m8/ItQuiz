@@ -1,0 +1,15 @@
+<html>
+<body>
+<div style="width:100%; height:100px; text-align: center">
+    <img style="height: 100px; width: 221px" src="${home}/resources/images/SL0uC9OYIu4.jpg"/>
+</div>
+<div style="padding-right:10%; padding-left:10%">
+    <h3 align=center><b>Welcome to IT Quiz</b></h3>
+
+    <p>You have logged in with the help of Facebook account. We have used a default information to fill up your
+        profile. We recommend to update your profile information and change your password</p>
+    <h4 align=center><b>Best regards,</b></h4>
+    <h4 align=center><b>The team of IT Quiz</b></h4>
+</div>
+</body>
+</html>

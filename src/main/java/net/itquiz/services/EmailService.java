@@ -9,6 +9,8 @@ public interface EmailService {
 
     void sendVerificationEmail(Account account);
 
-    void sendPasswordToEmail(Account account);
+    void sendNotificationEmail(Account account);
+
+    void sendPasswordRecoveryEmail(Account account);
 
 }
