@@ -13,7 +13,6 @@ import net.itquiz.entities.AccountRole;
 import net.itquiz.entities.Role;
 import net.itquiz.exceptions.InvalidUserInputException;
 import net.itquiz.forms.SignUpForm;
-import net.itquiz.security.DefaultPasswordEncoder;
 import net.itquiz.services.EmailService;
 import net.itquiz.services.EntranceService;
 import org.apache.commons.lang.StringUtils;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +57,7 @@ public class EntranceServiceImpl implements EntranceService {
     private MessageSource messageSource;
 
     @Autowired
-    private DefaultPasswordEncoder defaultPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     public EntranceServiceImpl() {
         super();
@@ -101,7 +101,7 @@ public class EntranceServiceImpl implements EntranceService {
     }
 
     private Account singUp(SignUpForm signUpForm, boolean sendVerificationEmail,
-                           boolean sendPasswordToEmail) throws InvalidUserInputException {
+                           boolean sendNotificationToEmail) throws InvalidUserInputException {
         if (isEmailExist(signUpForm.getEmail())) {
             throw new InvalidUserInputException(messageSource.getMessage("email.exist",
                     new Object[]{}, LocaleContextHolder.getLocale()));
@@ -111,7 +111,7 @@ public class EntranceServiceImpl implements EntranceService {
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
         Account account = entityBuilder.buildAccount();
-        String encodedPassword = defaultPasswordEncoder.encode(signUpForm.getPassword());
+        String encodedPassword = passwordEncoder.encode(signUpForm.getPassword());
         signUpForm.setPassword(encodedPassword);
         signUpForm.copyFieldsTo(account);
         accountDao.save(account);
@@ -132,8 +132,8 @@ public class EntranceServiceImpl implements EntranceService {
             emailService.sendVerificationEmail(account);
         }
 
-        if (sendPasswordToEmail) {
-            emailService.sendPasswordToEmail(account);
+        if (sendNotificationToEmail) {
+            emailService.sendNotificationToEmail(account);
         }
 
         return accountDao.findById(account.getId());
@@ -155,7 +155,7 @@ public class EntranceServiceImpl implements EntranceService {
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
 
-        emailService.sendPasswordToEmail(account);
+        emailService.sendNotificationToEmail(account);
     }
 
     @Override

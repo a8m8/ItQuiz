@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +50,9 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     @Autowired
     private EntityBuilder entityBuilder;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public long accountsCount() {
         return accountDao.accountsCount();
@@ -61,6 +65,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
         Account account = entityBuilder.buildAccount();
         adminAddUserForm.copyFieldsTo(account);
+        account.setPassword(passwordEncoder.encode(adminAddUserForm.getPassword()));
         accountDao.save(account);
 
         AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);

@@ -51,7 +51,6 @@ public class AdminAddUserForm extends AdminUserForm implements Copyable<Account>
     @Override
     public void copyFieldsTo(Account account) {
         account.setEmail(email);
-        account.setPassword(password);
         account.setLogin(login);
         account.setFio(fio);
         account.setConfirmed(confirmed);

@@ -5,7 +5,6 @@ import net.itquiz.entities.Account;
 import net.itquiz.exceptions.InvalidUserInputException;
 import net.itquiz.forms.AccountInfoForm;
 import net.itquiz.forms.PasswordForm;
-import net.itquiz.security.DefaultPasswordEncoder;
 import net.itquiz.services.CommonService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +33,7 @@ public class CommonServiceImpl implements CommonService {
     protected MessageSource messageSource;
 
     @Autowired
-    private DefaultPasswordEncoder defaultPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Account getAccountById(int idAccount) {
@@ -58,12 +58,12 @@ public class CommonServiceImpl implements CommonService {
                     messageSource.getMessage("old.password.required", new Object[]{}, LocaleContextHolder.getLocale()));
         }
         Account account = accountDao.findById(idAccount);
-        if (oldPasswordChecking && !StringUtils.equals(defaultPasswordEncoder.encode(passwordForm.getOldPassword()),
+        if (oldPasswordChecking && !StringUtils.equals(passwordEncoder.encode(passwordForm.getOldPassword()),
                 account.getPassword())) {
             throw new InvalidUserInputException(
                     messageSource.getMessage("old.password.not.match", new Object[]{}, LocaleContextHolder.getLocale()));
         }
-        String encodedPassword = defaultPasswordEncoder.encode(passwordForm.getPassword());
+        String encodedPassword = passwordEncoder.encode(passwordForm.getPassword());
         account.setPassword(encodedPassword);
         account.setUpdated(new Timestamp(System.currentTimeMillis()));
         accountDao.save(account);
