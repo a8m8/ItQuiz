@@ -137,7 +137,7 @@ public class EntranceServiceImpl implements EntranceService {
             emailService.sendNotificationEmail(account);
         }
 
-        return accountDao.findById(account.getId());
+        return account;
     }
 
     @Override
