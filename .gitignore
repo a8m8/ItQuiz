@@ -2,7 +2,6 @@
 *.*~
 .classpath
 .project
-/src/test
 /src/main/resources/config.properties
 /src/main/webapp/robots.txt
 tasks.todo
