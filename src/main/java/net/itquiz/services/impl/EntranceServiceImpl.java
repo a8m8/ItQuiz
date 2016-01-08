@@ -76,7 +76,7 @@ public class EntranceServiceImpl implements EntranceService {
                         "facebook.cannot.create", new Object[]{}, LocaleContextHolder.getLocale()));
             }
             form.setEmail(user.getEmail());
-            form.setLogin(String.valueOf(user.getEmail().hashCode()));
+            form.setLogin(UUID.randomUUID().toString());
             if (user.getName() == null) {
                 form.setFio("User");
             } else {
