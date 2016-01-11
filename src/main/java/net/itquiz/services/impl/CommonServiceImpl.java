@@ -22,7 +22,6 @@ import java.sql.Timestamp;
  * @author Artur Meshcheriakov
  */
 @Service("commonService")
-@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CommonServiceImpl implements CommonService {
 
@@ -35,13 +34,9 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
-    public Account getAccountById(int idAccount) {
-        return accountDao.findById(idAccount);
-    }
-
-    @Override
-    public AccountInfoForm generateAccountForm(int idAccount) {
+    public AccountInfoForm generateAccountInfoForm(int idAccount) {
         Account account = accountDao.findById(idAccount);
         AccountInfoForm accountInfoForm = new AccountInfoForm();
         accountInfoForm.setEmail(account.getEmail());
@@ -50,6 +45,7 @@ public class CommonServiceImpl implements CommonService {
         return accountInfoForm;
     }
 
+    @Transactional
     @Override
     public void changePassword(int idAccount, PasswordForm passwordForm, boolean oldPasswordChecking) throws
             InvalidUserInputException {
@@ -68,6 +64,7 @@ public class CommonServiceImpl implements CommonService {
         accountDao.save(account);
     }
 
+    @Transactional
     @Override
     public void editPersonalData(int idAccount, AccountInfoForm editDataForm) throws InvalidUserInputException {
         Account account = accountDao.findById(idAccount);

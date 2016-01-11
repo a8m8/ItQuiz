@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface TestResultDao extends IEntityDao<TestResult> {
 
-    List<TestResult> getUserTestResults(int idAccount, int offset, int count);
+    List<TestResult> listRelatedTo(int idAccount, int offset, int count);
 
-    long getUserTestResultsCount(int idAccount);
+    long countAllRelatedTo(int idAccount);
 
-    TestResult getExistingTestResult(String testTitle, int idAccount);
+    TestResult findByTestTitleRelatedTo(int idAccount, String testTitle);
 }

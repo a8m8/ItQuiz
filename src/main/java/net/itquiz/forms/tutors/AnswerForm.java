@@ -12,8 +12,13 @@ import org.springframework.context.i18n.LocaleContextHolder;
 public class AnswerForm implements IForm {
 
     private String content;
-    private Boolean correct = Boolean.FALSE;
-    private Boolean active = Boolean.TRUE;
+    private Boolean correct;
+    private Boolean active;
+
+    public AnswerForm() {
+        this.correct = Boolean.FALSE;
+        this.active = Boolean.TRUE;
+    }
 
     public String getContent() {
         return content;

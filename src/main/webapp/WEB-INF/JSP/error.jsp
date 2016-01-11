@@ -7,5 +7,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div id="global-frame">
-    <h3>Service temporary unavailable, please try again later</h3>
+    <h3 id="global-error">Service temporary unavailable, please try again later</h3>
 </div>

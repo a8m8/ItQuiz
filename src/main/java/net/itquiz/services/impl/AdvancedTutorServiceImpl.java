@@ -15,26 +15,29 @@ import java.util.List;
  * @author Artur Meshcheriakov
  */
 @Service("advancedTutorService")
-@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AdvancedTutorServiceImpl extends AbstractTutorService implements AdvancedTutorService {
 
+    @Transactional
     @Override
     public void removeTest(long idTest) throws InvalidUserInputException {
         Test test = testDao.findById(idTest);
         super.removeTest(test);
     }
 
+    @Transactional
     @Override
-    public long getAllTestsCount() {
-        return testDao.countAllTests();
+    public long countAllTests() {
+        return testDao.countAll();
     }
 
+    @Transactional
     @Override
-    public List<Test> getAllTests(int offset, int count) {
+    public List<Test> listTests(int offset, int count) {
         return testDao.list(offset, count);
     }
 
+    @Transactional
     @Override
     public TestForm generateFormBasedOnTest(long idTest) throws InvalidUserInputException {
         return super.generateFormBasedOnTest(idTest);

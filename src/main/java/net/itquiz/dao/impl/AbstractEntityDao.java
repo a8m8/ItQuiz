@@ -24,7 +24,7 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     @Autowired
     protected SessionFactory sessionFactory;
 
-    protected Session getSession() {
+    final protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
@@ -34,12 +34,6 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
     @Override
     public void save(final T t) {
         getSession().save(t);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void flush() {
-        getSession().flush();
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
@@ -66,10 +60,16 @@ public abstract class AbstractEntityDao<T> implements IEntityDao<T> {
         return getSession().get(getEntityClass(), id);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
+    @Override
+    public T getProxy(Serializable id) {
+        return getSession().load(getEntityClass(), id);
+    }
+
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.MANDATORY)
     @Override
-    public List<T> findAll() {
+    public List<T> list() {
         return getSession().createCriteria(getEntityClass()).list();
     }
 

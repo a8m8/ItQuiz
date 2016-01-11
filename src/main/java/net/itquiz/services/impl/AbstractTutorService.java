@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * @author Artur Meshcheriakov
  */
-@Transactional
 public abstract class AbstractTutorService implements CommonTutorService {
 
     @Autowired
@@ -46,6 +45,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
     @Autowired
     protected EntityBuilder entityBuilder;
 
+    @Transactional
     public void removeTest(Test test) throws InvalidUserInputException {
         if (test == null) {
             throw new InvalidUserInputException(messageSource.getMessage("test.not.exist",
@@ -54,17 +54,19 @@ public abstract class AbstractTutorService implements CommonTutorService {
         testDao.delete(test);
     }
 
+    @Transactional
     @Override
     public void addNewTest(int authorID, TestForm newTestForm) throws InvalidUserInputException {
         if (testDao.findByTitle(newTestForm.getTitle()) != null) {
             throw new InvalidUserInputException(messageSource.getMessage("test.title.exist",
                     new Object[]{}, LocaleContextHolder.getLocale()));
         }
-        Test test = entityBuilder.buildTest(accountDao.findById(authorID));
+        Test test = entityBuilder.buildTest(accountDao.getProxy(authorID));
         newTestForm.copyFieldsTo(test);
         testDao.save(test);
     }
 
+    @Transactional
     @Override
     public TestForm generateFormBasedOnTest(long idTest) throws InvalidUserInputException {
         Test test = testDao.findById(idTest);
@@ -80,19 +82,22 @@ public abstract class AbstractTutorService implements CommonTutorService {
         return form;
     }
 
+    @Transactional
     @Override
-    public long getTestQuestionsCount(long idTest) {
-        return questionDao.getTestQuestionsCount(idTest);
+    public long countTestQuestions(long idTest) {
+        return questionDao.countAllIn(idTest);
     }
 
+    @Transactional
     @Override
-    public List<Question> getTestQuestionsList(long idTest, int offset, int count) {
-        return questionDao.getQuestionListOfTest(idTest, offset, count);
+    public List<Question> listTestQuestions(long idTest, int offset, int count) {
+        return questionDao.listRelatedTo(idTest, offset, count);
     }
 
+    @Transactional
     @Override
     public void addNewQuestion(long idTest, QuestionForm questionForm) {
-        Test test = testDao.findById(idTest);
+        Test test = testDao.getProxy(idTest);
         Question question = entityBuilder.buildQuestion(test);
         question.setContent(questionForm.getContent());
         question.setActive(questionForm.getActive());
@@ -101,6 +106,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         questionDao.save(question);
     }
 
+    @Transactional
     @Override
     public void deleteQuestion(long idQuestion, long idTest) throws InvalidUserInputException {
         Question question = getQuestion(idQuestion, idTest);
@@ -109,6 +115,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         test.setUpdated(new Timestamp(System.currentTimeMillis()));
     }
 
+    @Transactional
     @Override
     public void editTest(long idTest, TestForm testForm) throws InvalidUserInputException {
         Test test = testDao.findById(idTest);
@@ -139,6 +146,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         }
     }
 
+    @Transactional
     @Override
     public Question getQuestion(long idQuestion, long idTest) throws InvalidUserInputException {
         Question question = questionDao.findById(idQuestion);
@@ -153,6 +161,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         return question;
     }
 
+    @Transactional
     @Override
     public QuestionForm generateFormBasedOnQuestion(Question question) {
         QuestionForm questionForm = new QuestionForm();
@@ -161,6 +170,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         return questionForm;
     }
 
+    @Transactional
     @Override
     public void editQuestion(long idQuestion, QuestionForm questionForm) throws InvalidUserInputException {
         Question question = questionDao.findById(idQuestion);
@@ -186,9 +196,10 @@ public abstract class AbstractTutorService implements CommonTutorService {
         }
     }
 
+    @Transactional
     @Override
     public void addNewAnswer(long idQuestion, AnswerForm answerForm) {
-        Question question = questionDao.findById(idQuestion);
+        Question question = questionDao.getProxy(idQuestion);
         Answer answer = entityBuilder.buildAnswer(question);
         answer.setContent(answerForm.getContent());
         answer.setCorrect(answerForm.getCorrect());
@@ -203,6 +214,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         testDao.save(test);
     }
 
+    @Transactional
     @Override
     public void deleteAnswer(long idAnswer, long idQuestion) throws InvalidUserInputException {
         Answer answer = getAnswer(idAnswer, idQuestion);
@@ -215,6 +227,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         testDao.save(test);
     }
 
+    @Transactional
     @Override
     public Answer getAnswer(long idAnswer, long idQuestion) throws InvalidUserInputException {
         Answer answer = answerDao.findById(idAnswer);
@@ -229,6 +242,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         return answer;
     }
 
+    @Transactional
     @Override
     public AnswerForm generateFormBasedOnAnswer(Answer answer) {
         AnswerForm answerForm = new AnswerForm();
@@ -238,6 +252,7 @@ public abstract class AbstractTutorService implements CommonTutorService {
         return answerForm;
     }
 
+    @Transactional
     @Override
     public void editAnswer(long idAnswer, AnswerForm answerForm) throws InvalidUserInputException {
         Answer answer = answerDao.findById(idAnswer);

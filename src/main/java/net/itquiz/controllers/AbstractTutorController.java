@@ -40,12 +40,11 @@ public abstract class AbstractTutorController extends AbstractController {
             testForm.validate(messageSource);
             commonTutorService.addNewTest(SecurityUtils.getCurrentIdAccount(), testForm);
             setMessage(session, "test.create.successful");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName)
-                    .append("/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);
-            return new StringBuilder().append(role).append("/add-test").toString();
+            return role + "/add-test";
         }
     }
 
@@ -64,8 +63,7 @@ public abstract class AbstractTutorController extends AbstractController {
             return role + "/edit-test";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/page/1";
         }
 
     }
@@ -76,8 +74,7 @@ public abstract class AbstractTutorController extends AbstractController {
             testForm.validate(messageSource);
             commonTutorService.editTest((long) session.getAttribute("idTest"), testForm);
             setMessage(session, "changes.saved");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);
@@ -90,16 +87,15 @@ public abstract class AbstractTutorController extends AbstractController {
                                 String role, String pageName, int paginationCount) {
 
         long idTest = (long) session.getAttribute("idTest");
-        Pagination pagination = new Pagination(paginationCount, commonTutorService.getTestQuestionsCount(idTest),
+        Pagination pagination = new Pagination(paginationCount, commonTutorService.countTestQuestions(idTest),
                 pageNumber);
-        List<Question> questions = commonTutorService.getTestQuestionsList(idTest, pagination.getOffset(),
+        List<Question> questions = commonTutorService.listTestQuestions(idTest, pagination.getOffset(),
                 pagination.getCount());
         model.addAttribute("questions", questions);
         model.addAttribute("role", role);
         model.addAttribute("pageName", pageName);
         model.addAttribute("pagination", pagination);
-        String location = new StringBuilder().append("/").append(role).append("/").append(pageName).append
-                ("/test/questions").toString();
+        String location = "/" + role + "/" + pageName + "/test/questions";
         model.addAttribute("location", location);
         return role + "/questions";
     }
@@ -117,8 +113,7 @@ public abstract class AbstractTutorController extends AbstractController {
             questionForm.validate(messageSource);
             commonTutorService.addNewQuestion((long) session.getAttribute("idTest"), questionForm);
             setMessage(session, "question.created");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/test/questions/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);
@@ -135,8 +130,7 @@ public abstract class AbstractTutorController extends AbstractController {
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
         }
-        return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName)
-                .append("/test/questions/page/1").toString();
+        return "redirect:/" + role + "/" + pageName + "/test/questions/page/1";
     }
 
     public String showEditQuestion(long idQuestion, HttpSession session, Model model, CommonTutorService
@@ -152,8 +146,7 @@ public abstract class AbstractTutorController extends AbstractController {
             return role + "/edit-question";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName)
-                    .append("/test/questions/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/page/1";
         }
     }
 
@@ -163,8 +156,7 @@ public abstract class AbstractTutorController extends AbstractController {
             questionForm.validate(messageSource);
             commonTutorService.editQuestion((long) session.getAttribute("idQuestion"), questionForm);
             setMessage(session, "changes.saved");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/test/questions/page/1").toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/page/1";
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);
@@ -186,8 +178,7 @@ public abstract class AbstractTutorController extends AbstractController {
             answerForm.validate(messageSource);
             commonTutorService.addNewAnswer((long) session.getAttribute("idQuestion"), answerForm);
             setMessage(session, "answer.created");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/test/questions/edit-question?id=").append(session.getAttribute("idQuestion")).toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/edit-question?id=" + session.getAttribute("idQuestion");
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);
@@ -204,8 +195,7 @@ public abstract class AbstractTutorController extends AbstractController {
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
         }
-        return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                ("/test/questions/edit-question?id=").append(session.getAttribute("idQuestion")).toString();
+        return "redirect:/" + role + "/" + pageName + "/test/questions/edit-question?id=" + session.getAttribute("idQuestion");
     }
 
     public String showEditAnswer(long idAnswer, HttpSession session, Model model,
@@ -220,8 +210,7 @@ public abstract class AbstractTutorController extends AbstractController {
             return role + "/edit-answer";
         } catch (InvalidUserInputException e) {
             session.setAttribute("errorMessage", e.getMessage());
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/test/questions/edit-question?id=").append(session.getAttribute("idQuestion")).toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/edit-question?id=" + session.getAttribute("idQuestion");
         }
     }
 
@@ -231,8 +220,7 @@ public abstract class AbstractTutorController extends AbstractController {
             answerForm.validate(messageSource);
             commonTutorService.editAnswer(idAnswer, answerForm);
             setMessage(session, "changes.saved");
-            return new StringBuilder().append("redirect:/").append(role).append("/").append(pageName).append
-                    ("/test/questions/edit-question?id=").append(session.getAttribute("idQuestion")).toString();
+            return "redirect:/" + role + "/" + pageName + "/test/questions/edit-question?id=" + session.getAttribute("idQuestion");
         } catch (InvalidUserInputException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("role", role);

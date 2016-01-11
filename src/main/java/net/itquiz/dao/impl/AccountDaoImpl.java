@@ -37,19 +37,19 @@ public class AccountDaoImpl extends AbstractEntityDao<Account> implements Accoun
     }
 
     @Override
-    public long accountsCount() {
+    public long countAll() {
         return (long) getSession().createCriteria(getEntityClass()).setProjection(Projections.rowCount())
                 .uniqueResult();
     }
 
     @Override
-    public long countUnconfirmedAccounts() {
+    public long countUnconfirmed() {
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("confirmed", false))
                 .setProjection(Projections.rowCount()).uniqueResult();
     }
 
     @Override
-    public List<Account> getAllUnconfirmed() {
+    public List<Account> listUnconfirmed() {
         return getSession().createCriteria(getEntityClass()).add(Restrictions.eq("confirmed", false)).
                 addOrder(Order.desc("created")).list();
     }

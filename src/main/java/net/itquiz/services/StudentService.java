@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface StudentService {
 
-    List<Test> getAvailableTests(int offset, int count);
+    List<Test> listAvailableTests(int offset, int count);
 
-    long availableTestsCount();
+    long countAvailableTests();
 
     TestResult prepareTestResult(int idAccount, long idTest);
 
@@ -23,9 +23,9 @@ public interface StudentService {
 
     void saveTestResult(TestResult testResult);
 
-    long userTestResultsCount(int idAccount);
+    long countAccountTestResults(int idAccount);
 
-    List<TestResult> getTestResults(int idAccount, Integer offset, Integer count);
+    List<TestResult> listTestResults(int idAccount, Integer offset, Integer count);
 
     int getTimePerQuestion(long idTest);
 }

@@ -12,7 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -33,15 +37,15 @@ public class TutorController extends AbstractTutorController {
     @Value("${tutor.question.pagination.count}")
     private int questionPaginationCount;
 
-    private String role = "tutor";
-    private String pageName = "mytests";
+    private final String role = "tutor";
+    private final String pageName = "mytests";
 
     @RequestMapping(value = "/mytests/page/{pageNumber}", method = RequestMethod.GET)
     public String showMyTests(@PathVariable int pageNumber, Model model, HttpSession session) {
         super.checkIdTestIn(session);
-        Pagination pagination = new Pagination(testPaginationCount, tutorService.getAccountTestsCount(SecurityUtils.getCurrentIdAccount
+        Pagination pagination = new Pagination(testPaginationCount, tutorService.countAccountTests(SecurityUtils.getCurrentIdAccount
                 ()), pageNumber);
-        List<Test> accountTests = tutorService.getAccountTests(SecurityUtils.getCurrentIdAccount(), pagination.getOffset()
+        List<Test> accountTests = tutorService.listAccountTests(SecurityUtils.getCurrentIdAccount(), pagination.getOffset()
                 , pagination.getCount());
         return super.showTests(model, accountTests, "/tutor/mytests", pagination);
     }
@@ -135,7 +139,7 @@ public class TutorController extends AbstractTutorController {
     }
 
     @RequestMapping(value = "mytests/test/questions/question/edit-answer", method = RequestMethod.POST)
-    public String EditAnswer(@ModelAttribute("answerForm") AnswerForm answerForm,
+    public String editAnswer(@ModelAttribute("answerForm") AnswerForm answerForm,
                              @RequestParam("id") long idAnswer,
                              HttpSession session, Model model) {
         return super.editAnswer(answerForm, idAnswer, session, model, tutorService, role, pageName);

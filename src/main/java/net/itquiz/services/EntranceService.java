@@ -15,7 +15,7 @@ public interface EntranceService {
 
     Account login(User user) throws InvalidUserInputException;
 
-    List<Role> getAllRoles();
+    List<Role> listRoles();
 
     Account signUp(SignUpForm form) throws InvalidUserInputException;
 

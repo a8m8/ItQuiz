@@ -10,6 +10,7 @@ import com.restfb.scope.ScopeBuilder;
 import com.restfb.types.User;
 import net.itquiz.constants.ApplicationConstants;
 import net.itquiz.entities.Account;
+import net.itquiz.exceptions.InvalidUserInputException;
 import net.itquiz.security.SecurityUtils;
 import net.itquiz.services.EntranceService;
 import org.springframework.beans.factory.InitializingBean;
@@ -56,7 +57,7 @@ public class FacebookController extends AbstractController implements Initializi
     }
 
     @RequestMapping(value = "/fromfb", method = RequestMethod.GET)
-    public String fromfb(@RequestParam(value = "code", required = false) String code) throws Exception {
+    public String fromfb(@RequestParam(value = "code", required = false) String code) throws InvalidUserInputException {
         if (code == null) {
             return "redirect:/login";
         }

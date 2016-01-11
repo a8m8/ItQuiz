@@ -1,7 +1,14 @@
 package net.itquiz.components.impl;
 
 import net.itquiz.components.EntityBuilder;
-import net.itquiz.entities.*;
+import net.itquiz.entities.Account;
+import net.itquiz.entities.AccountRegistration;
+import net.itquiz.entities.AccountRole;
+import net.itquiz.entities.Answer;
+import net.itquiz.entities.Question;
+import net.itquiz.entities.Role;
+import net.itquiz.entities.Test;
+import net.itquiz.entities.TestResult;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;

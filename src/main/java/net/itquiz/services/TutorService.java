@@ -12,9 +12,9 @@ public interface TutorService extends CommonTutorService {
 
     void removeTest(long idTest, int idAccount) throws InvalidUserInputException;
 
-    long getAccountTestsCount(int IdAccount);
+    long countAccountTests(int idAccount);
 
-    List<Test> getAccountTests(int currentIdAccount, int offset, int count);
+    List<Test> listAccountTests(int currentIdAccount, int offset, int count);
 
     void checkTestCreator(long idTest, int currentIdAccount) throws InvalidUserInputException;
 }

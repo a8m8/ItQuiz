@@ -18,9 +18,9 @@ public interface CommonTutorService {
 
     TestForm generateFormBasedOnTest(long idTest) throws InvalidUserInputException;
 
-    long getTestQuestionsCount(long idTest);
+    long countTestQuestions(long idTest);
 
-    List<Question> getTestQuestionsList(long idTest, int offset, int count);
+    List<Question> listTestQuestions(long idTest, int offset, int count);
 
     void addNewQuestion(long idTest, QuestionForm questionForm);
 

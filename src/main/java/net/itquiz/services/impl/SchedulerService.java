@@ -1,5 +1,6 @@
 package net.itquiz.services.impl;
 
+import net.itquiz.constants.ApplicationConstants;
 import net.itquiz.dao.AccountDao;
 import net.itquiz.dao.AccountRegistrationDao;
 import net.itquiz.entities.Account;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Service
 @EnableScheduling
-@Transactional
 public class SchedulerService {
 
     @Autowired
@@ -27,24 +27,28 @@ public class SchedulerService {
     @Autowired
     private AccountRegistrationDao accountRegistrationDao;
 
+    @Transactional
     @Scheduled(cron = "0 0 * * * *")
     public void deleteUnconfirmedAccounts() {
-        if (accountDao.countUnconfirmedAccounts() > 0) {
-            List<Account> accounts = accountDao.getAllUnconfirmed();
+        if (accountDao.countUnconfirmed() > 0) {
+            List<Account> accounts = accountDao.listUnconfirmed();
             for (Account account : accounts) {
-                if (System.currentTimeMillis() - account.getCreated().getTime() > 86400000) {
+                if (System.currentTimeMillis() - account.getCreated().getTime() >
+                        ApplicationConstants.TWENTY_FOUR_HOURS) {
                     accountDao.delete(account);
                 }
             }
         }
     }
 
+    @Transactional
     @Scheduled(cron = "0 30 * * * *")
     public void deleteOverduePasswordHash() {
-        if (accountRegistrationDao.countEntityWithPasswordHash() > 0) {
-            List<AccountRegistration> registrations = accountRegistrationDao.getAllEntityWithPasswordHash();
+        if (accountRegistrationDao.countWithPasswordHash() > 0) {
+            List<AccountRegistration> registrations = accountRegistrationDao.listWithPasswordHash();
             for (AccountRegistration registration : registrations) {
-                if (System.currentTimeMillis() - registration.getPassHashCreated().getTime() > 86400000) {
+                if (System.currentTimeMillis() - registration.getPassHashCreated().getTime() >
+                        ApplicationConstants.TWENTY_FOUR_HOURS) {
                     registration.setPassHash(null);
                     registration.setPassHashCreated(null);
                     accountRegistrationDao.update(registration);

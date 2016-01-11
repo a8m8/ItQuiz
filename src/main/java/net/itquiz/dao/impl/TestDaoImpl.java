@@ -22,30 +22,30 @@ public class TestDaoImpl extends AbstractEntityDao<Test> implements TestDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Test> listTestsCreatedBy(int idAccount, int offset, int count) {
+    public List<Test> listCreatedBy(int idAccount, int offset, int count) {
         return getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount", idAccount)).
                 addOrder(Order.asc("created")).setFirstResult(offset).setMaxResults(count).list();
     }
 
     @Override
-    public long countTestsCreatedBy(int idAccount) {
+    public long countCreatedBy(int idAccount) {
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("account.idAccount",
                 idAccount)).setProjection(Projections.rowCount()).uniqueResult();
     }
 
     @Override
-    public long countAllTests() {
+    public long countAll() {
         return (long) getSession().createCriteria(getEntityClass()).setProjection(Projections.rowCount()).uniqueResult();
     }
 
     @Override
-    public List<Test> getAvailableTest(int offset, int count) {
+    public List<Test> listAvailable(int offset, int count) {
         return getSession().createCriteria(getEntityClass()).add(Restrictions.eq("active", true)).
                 addOrder(Order.asc("created")).setFirstResult(offset).setMaxResults(count).list();
     }
 
     @Override
-    public long countAvailableTest() {
+    public long countAvailable() {
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.eq("active", true)).setProjection
                 (Projections.rowCount()).uniqueResult();
     }

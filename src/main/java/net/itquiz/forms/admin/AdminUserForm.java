@@ -12,12 +12,22 @@ public class AdminUserForm extends AccountInfoForm {
 
     private static final long serialVersionUID = -3393569577509014603L;
 
-    protected Boolean active = Boolean.FALSE;
-    protected Boolean confirmed = Boolean.FALSE;
-    protected Boolean student = Boolean.FALSE;
-    protected Boolean administrator = Boolean.FALSE;
-    protected Boolean tutor = Boolean.FALSE;
-    protected Boolean advancedTutor = Boolean.FALSE;
+    protected Boolean active;
+    protected Boolean confirmed;
+    protected Boolean student;
+    protected Boolean administrator;
+    protected Boolean tutor;
+    protected Boolean advancedTutor;
+
+    public AdminUserForm() {
+        super();
+        this.active = Boolean.FALSE;
+        this.confirmed = Boolean.FALSE;
+        this.student = Boolean.FALSE;
+        this.administrator = Boolean.FALSE;
+        this.tutor = Boolean.FALSE;
+        this.advancedTutor = Boolean.FALSE;
+    }
 
     public Boolean getConfirmed() {
         return confirmed;

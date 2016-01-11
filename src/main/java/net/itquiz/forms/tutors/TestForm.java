@@ -16,7 +16,11 @@ public class TestForm implements IForm, Copyable<Test> {
     private String title;
     private String description;
     private String timePerQuestion;
-    private Boolean active = Boolean.FALSE;
+    private Boolean active;
+
+    public TestForm() {
+        this.active = Boolean.FALSE;
+    }
 
     public String getTitle() {
         return title;

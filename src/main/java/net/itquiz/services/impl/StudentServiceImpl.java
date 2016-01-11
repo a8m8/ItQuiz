@@ -1,8 +1,15 @@
 package net.itquiz.services.impl;
 
 import net.itquiz.components.EntityBuilder;
-import net.itquiz.dao.*;
-import net.itquiz.entities.*;
+import net.itquiz.dao.AccountDao;
+import net.itquiz.dao.QuestionDao;
+import net.itquiz.dao.TestDao;
+import net.itquiz.dao.TestResultDao;
+import net.itquiz.entities.Account;
+import net.itquiz.entities.Answer;
+import net.itquiz.entities.Question;
+import net.itquiz.entities.Test;
+import net.itquiz.entities.TestResult;
 import net.itquiz.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -17,15 +24,11 @@ import java.util.List;
  * @author Artur Meshcheriakov
  */
 @Service("studentService")
-@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private TestDao testDao;
-
-    @Autowired
-    private AnswerDao answerDao;
 
     @Autowired
     private QuestionDao questionDao;
@@ -39,31 +42,36 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private EntityBuilder entityBuilder;
 
+    @Transactional
     @Override
-    public List<Test> getAvailableTests(int offset, int count) {
-        List<Test> tests = testDao.getAvailableTest(offset, count);
+    public List<Test> listAvailableTests(int offset, int count) {
+        List<Test> tests = testDao.listAvailable(offset, count);
         return tests;
     }
 
+    @Transactional
     @Override
-    public long availableTestsCount() {
-        return testDao.countAvailableTest();
+    public long countAvailableTests() {
+        return testDao.countAvailable();
     }
 
+    @Transactional
     @Override
     public TestResult prepareTestResult(int idAccount, long idTest) {
-        Account account = accountDao.findById(idAccount);
-        Test test = testDao.findById(idTest);
-        int allQuestions = (int) questionDao.getActiveQuestionCount(idTest);
+        Account account = accountDao.getProxy(idAccount);
+        Test test = testDao.getProxy(idTest);
+        int allQuestions = (int) questionDao.countActiveQuestions(idTest);
         TestResult testResult = entityBuilder.buildTestResult(account, test, allQuestions);
         return testResult;
     }
 
+    @Transactional
     @Override
     public Question getQuestion(long idTest, int question) {
-        return questionDao.getActiveQuestionListOfTest(idTest, question, 1).get(0);
+        return questionDao.listActiveRelatedTo(idTest, question, 1).get(0);
     }
 
+    @Transactional
     @Override
     public TestResult checkAnswers(List<String> answerIds, Question question, TestResult testResult) {
         if (answerIds == null) {
@@ -89,10 +97,11 @@ public class StudentServiceImpl implements StudentService {
         return testResult;
     }
 
+    @Transactional
     @Override
     public void saveTestResult(TestResult testResult) {
-        TestResult existingTestResult = testResultDao.getExistingTestResult(testResult.getTestTitle(),
-                testResult.getAccount().getIdAccount());
+        TestResult existingTestResult = testResultDao.findByTestTitleRelatedTo(testResult.getAccount().getIdAccount()
+                , testResult.getTestTitle());
         if (existingTestResult != null) {
             existingTestResult.setCorrectCount(testResult.getCorrectCount());
             existingTestResult.setAllQuestionsCount(testResult.getAllQuestionsCount());
@@ -105,16 +114,19 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    @Transactional
     @Override
-    public long userTestResultsCount(int idAccount) {
-        return testResultDao.getUserTestResultsCount(idAccount);
+    public long countAccountTestResults(int idAccount) {
+        return testResultDao.countAllRelatedTo(idAccount);
     }
 
+    @Transactional
     @Override
-    public List<TestResult> getTestResults(int idAccount, Integer offset, Integer count) {
-        return testResultDao.getUserTestResults(idAccount, offset, count);
+    public List<TestResult> listTestResults(int idAccount, Integer offset, Integer count) {
+        return testResultDao.listRelatedTo(idAccount, offset, count);
     }
 
+    @Transactional
     @Override
     public int getTimePerQuestion(long idTest) {
         Test test = testDao.findById(idTest);

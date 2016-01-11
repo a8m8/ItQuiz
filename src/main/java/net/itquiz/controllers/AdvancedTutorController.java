@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -32,14 +36,14 @@ public class AdvancedTutorController extends AbstractTutorController {
     @Value("${advanced-tutor.question.pagination.count}")
     private int questionPaginationCount;
 
-    private String role = "advanced-tutor";
-    private String pageName = "alltests";
+    private final String role = "advanced-tutor";
+    private final String pageName = "alltests";
 
     @RequestMapping(value = "/alltests/page/{pageNumber}", method = RequestMethod.GET)
     public String showAllTests(@PathVariable int pageNumber, Model model, HttpSession session) {
         super.checkIdTestIn(session);
-        Pagination pagination = new Pagination(testPaginationCount, advancedTutorService.getAllTestsCount(), pageNumber);
-        List<Test> tests = advancedTutorService.getAllTests(pagination.getOffset(), pagination.getCount());
+        Pagination pagination = new Pagination(testPaginationCount, advancedTutorService.countAllTests(), pageNumber);
+        List<Test> tests = advancedTutorService.listTests(pagination.getOffset(), pagination.getCount());
         return super.showTests(model, tests, "/advanced-tutor/alltests", pagination);
     }
 

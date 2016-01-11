@@ -26,13 +26,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Artur Meshcheriakov
  */
 @Service("entranceService")
-@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class EntranceServiceImpl implements EntranceService {
 
@@ -64,6 +67,7 @@ public class EntranceServiceImpl implements EntranceService {
         super();
     }
 
+    @Transactional
     @Override
     public Account login(User user) throws InvalidUserInputException {
         Account account = accountDao.findByEmail(user.getEmail());
@@ -91,11 +95,13 @@ public class EntranceServiceImpl implements EntranceService {
         }
     }
 
+    @Transactional
     @Override
-    public List<Role> getAllRoles() {
-        return roleDao.findAll();
+    public List<Role> listRoles() {
+        return roleDao.list();
     }
 
+    @Transactional
     @Override
     public Account signUp(SignUpForm signUpForm) throws InvalidUserInputException {
         return singUp(signUpForm, true, false);
@@ -120,7 +126,7 @@ public class EntranceServiceImpl implements EntranceService {
         AccountRegistration accountRegistration = entityBuilder.buildAccountRegistration(account);
         accountRegistrationDao.save(accountRegistration);
 
-        Role role = roleDao.findById(ApplicationConstants.STUDENT_ROLE);
+        Role role = roleDao.getProxy(ApplicationConstants.STUDENT_ROLE);
         AccountRole accountRole = entityBuilder.buildAccountRole(account, role);
         accountRoleDao.save(accountRole);
 
@@ -140,6 +146,7 @@ public class EntranceServiceImpl implements EntranceService {
         return account;
     }
 
+    @Transactional
     @Override
     public void sendPasswordRecoveryEmail(String email) throws InvalidUserInputException {
         Account account = accountDao.findByEmail(email);
@@ -163,6 +170,7 @@ public class EntranceServiceImpl implements EntranceService {
         emailService.sendPasswordRecoveryEmail(account);
     }
 
+    @Transactional
     @Override
     public void verifyAccount(int id, String hash) throws InvalidUserInputException {
         Account account = accountDao.findById(id);
@@ -183,21 +191,25 @@ public class EntranceServiceImpl implements EntranceService {
         accountDao.update(account);
     }
 
+    @Transactional
     @Override
     public boolean isEmailExist(String email) {
         return (accountDao.findByEmail(email) != null);
     }
 
+    @Transactional
     @Override
     public boolean isLoginExist(String login) {
         return (accountDao.findByLogin(login) != null);
     }
 
+    @Transactional
     @Override
     public Account getAccount(String email) {
         return accountDao.findByEmail(email);
     }
 
+    @Transactional
     @Override
     public void checkAccess(short role, int currentIdAccount) throws InvalidUserInputException {
         Account account = accountDao.findById(currentIdAccount);
@@ -211,6 +223,7 @@ public class EntranceServiceImpl implements EntranceService {
         }
     }
 
+    @Transactional
     @Override
     public void checkPasswordRecoveryAccess(int id, String passHash) throws InvalidUserInputException {
         Account account = accountDao.findById(id);

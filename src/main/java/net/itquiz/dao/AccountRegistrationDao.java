@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AccountRegistrationDao extends IEntityDao<AccountRegistration> {
 
-    long countEntityWithPasswordHash();
+    long countWithPasswordHash();
 
-    List<AccountRegistration> getAllEntityWithPasswordHash();
+    List<AccountRegistration> listWithPasswordHash();
 }

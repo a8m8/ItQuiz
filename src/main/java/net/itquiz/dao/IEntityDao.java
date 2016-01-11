@@ -16,11 +16,11 @@ public interface IEntityDao<T> {
 
     void remove(T t);
 
-    void flush();
-
     T findById(Serializable id);
 
-    List<T> findAll();
+    T getProxy(Serializable id);
+
+    List<T> list();
 
     List<T> list(int offset, int count);
 

@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -34,8 +38,8 @@ public class StudentController extends AbstractController {
     @RequestMapping(value = "/tests/page/{pageNumber}", method = RequestMethod.GET)
     public String showTests(@PathVariable int pageNumber, Model model, HttpSession session) {
         deleteValuesFromSession(session);
-        Pagination pagination = new Pagination(testsPaginationCount, studentService.availableTestsCount(), pageNumber);
-        List<Test> tests = studentService.getAvailableTests(pagination.getOffset(), pagination.getCount());
+        Pagination pagination = new Pagination(testsPaginationCount, studentService.countAvailableTests(), pageNumber);
+        List<Test> tests = studentService.listAvailableTests(pagination.getOffset(), pagination.getCount());
         model.addAttribute("tests", tests);
         model.addAttribute("location", "/student/tests");
         model.addAttribute("pagination", pagination);
@@ -127,8 +131,8 @@ public class StudentController extends AbstractController {
     public String showTestsResult(@PathVariable int pageNumber, Model model) {
         int idAccount = SecurityUtils.getCurrentIdAccount();
         Pagination pagination = new Pagination(testResultsPaginationCount,
-                studentService.userTestResultsCount(idAccount), pageNumber);
-        List<TestResult> testResults = studentService.getTestResults(idAccount, pagination.getOffset()
+                studentService.countAccountTestResults(idAccount), pageNumber);
+        List<TestResult> testResults = studentService.listTestResults(idAccount, pagination.getOffset()
                 , pagination.getCount());
         model.addAttribute("testResults", testResults);
         model.addAttribute("location", "/student/test-results");

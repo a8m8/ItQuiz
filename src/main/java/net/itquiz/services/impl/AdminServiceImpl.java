@@ -31,7 +31,6 @@ import java.util.List;
  * @author Artur Meshcheriakov
  */
 @Service("adminService")
-@Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AdminServiceImpl extends CommonServiceImpl implements AdminService {
 
@@ -53,13 +52,15 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
-    public long accountsCount() {
-        return accountDao.accountsCount();
+    public long countAllAccounts() {
+        return accountDao.countAll();
     }
 
+    @Transactional
     @Override
-    public void addUser(AdminAddUserForm adminAddUserForm) throws InvalidUserInputException {
+    public void addAccount(AdminAddUserForm adminAddUserForm) throws InvalidUserInputException {
         isEmailExist(adminAddUserForm.getEmail());
         isLoginExist(adminAddUserForm.getLogin());
 
@@ -73,28 +74,29 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         Role role;
         AccountRole accountRole;
         if (adminAddUserForm.getAdministrator()) {
-            role = roleDao.findById(ApplicationConstants.ADMIN_ROLE);
+            role = roleDao.getProxy(ApplicationConstants.ADMIN_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getAdvancedTutor()) {
-            role = roleDao.findById(ApplicationConstants.ADVANCED_TUTOR_ROLE);
+            role = roleDao.getProxy(ApplicationConstants.ADVANCED_TUTOR_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getTutor()) {
-            role = roleDao.findById(ApplicationConstants.TUTOR_ROLE);
+            role = roleDao.getProxy(ApplicationConstants.TUTOR_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
         if (adminAddUserForm.getStudent()) {
-            role = roleDao.findById(ApplicationConstants.STUDENT_ROLE);
+            role = roleDao.getProxy(ApplicationConstants.STUDENT_ROLE);
             accountRole = entityBuilder.buildAccountRole(account, role);
             accountRoleDao.save(accountRole);
         }
 
     }
 
+    @Transactional
     @Override
     public AdminUserForm generateFormBasedOnAccount(int idAccount) {
         Account account = accountDao.findById(idAccount);
@@ -124,8 +126,9 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         return adminUserForm;
     }
 
+    @Transactional
     @Override
-    public void editUser(int idAccount, AdminUserForm adminUserForm)
+    public void editAccount(int idAccount, AdminUserForm adminUserForm)
             throws InvalidUserInputException {
         Account account = accountDao.findById(idAccount);
         boolean isNewAccountInfo = false;
@@ -155,7 +158,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
         if (adminUserForm.getAdministrator() && !roles.contains(ApplicationConstants.ADMIN_ROLE)) {
             AccountRole accountRole = entityBuilder.buildAccountRole(account,
-                    roleDao.findById(ApplicationConstants.ADMIN_ROLE));
+                    roleDao.getProxy(ApplicationConstants.ADMIN_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -166,7 +169,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
         if (adminUserForm.getAdvancedTutor() && !roles.contains(ApplicationConstants.ADVANCED_TUTOR_ROLE)) {
             AccountRole accountRole = entityBuilder.buildAccountRole(account,
-                    roleDao.findById(ApplicationConstants.ADVANCED_TUTOR_ROLE));
+                    roleDao.getProxy(ApplicationConstants.ADVANCED_TUTOR_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -177,7 +180,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
         if (adminUserForm.getTutor() && !roles.contains(ApplicationConstants.TUTOR_ROLE)) {
             AccountRole accountRole = entityBuilder.buildAccountRole(account,
-                    roleDao.findById(ApplicationConstants.TUTOR_ROLE));
+                    roleDao.getProxy(ApplicationConstants.TUTOR_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -188,7 +191,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
         if (adminUserForm.getStudent() && !roles.contains(ApplicationConstants.STUDENT_ROLE)) {
             AccountRole accountRole = entityBuilder.buildAccountRole(account,
-                    roleDao.findById(ApplicationConstants.STUDENT_ROLE));
+                    roleDao.getProxy(ApplicationConstants.STUDENT_ROLE));
             accountRoleDao.save(accountRole);
             isNewRole = true;
         }
@@ -207,6 +210,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
 
     }
 
+    @Transactional
     private AccountRole getAdministratorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
@@ -217,6 +221,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         return result;
     }
 
+    @Transactional
     private AccountRole getAdvancedTutorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
@@ -227,6 +232,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         return result;
     }
 
+    @Transactional
     private AccountRole getTutorRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
@@ -237,6 +243,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         return result;
     }
 
+    @Transactional
     private AccountRole getStudentRoleOf(Account account) {
         AccountRole result = null;
         for (AccountRole accountRole : account.getAccountRoles()) {
@@ -247,6 +254,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         return result;
     }
 
+    @Transactional
     private void isEmailExist(String email) throws InvalidUserInputException {
         Account exsistingAccount = accountDao.findByEmail(email);
         if (exsistingAccount != null) {
@@ -255,6 +263,7 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         }
     }
 
+    @Transactional
     private void isLoginExist(String login) throws InvalidUserInputException {
         Account exsistingAccount = accountDao.findByLogin(login);
         if (exsistingAccount != null) {
@@ -263,9 +272,10 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         }
     }
 
+    @Transactional
     @Override
-    public void removeAccount(int accountId) throws InvalidUserInputException {
-        Account account = accountDao.findById(accountId);
+    public void removeAccount(int idAccount) throws InvalidUserInputException {
+        Account account = accountDao.findById(idAccount);
         if (account == null) {
             throw new InvalidUserInputException(messageSource.getMessage("account.not.found",
                     new Object[]{}, LocaleContextHolder.getLocale()));
@@ -273,8 +283,9 @@ public class AdminServiceImpl extends CommonServiceImpl implements AdminService 
         accountDao.delete(account);
     }
 
+    @Transactional
     @Override
-    public List<Account> getAccounts(int offset, int count) {
+    public List<Account> listAccounts(int offset, int count) {
         return accountDao.list(offset, count);
     }
 

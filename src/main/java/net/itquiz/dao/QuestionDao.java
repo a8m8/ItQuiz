@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface QuestionDao extends IEntityDao<Question> {
 
-    long getTestQuestionsCount(long idTest);
+    long countAllIn(long idTest);
 
-    List<Question> getQuestionListOfTest(long idTest, int offset, int count);
+    List<Question> listRelatedTo(long idTest, int offset, int count);
 
-    long getActiveQuestionCount(long idTest);
+    long countActiveQuestions(long idTest);
 
-    List<Question> getActiveQuestionListOfTest(long idTest, int question, int count);
+    List<Question> listActiveRelatedTo(long idTest, int offset, int count);
 }

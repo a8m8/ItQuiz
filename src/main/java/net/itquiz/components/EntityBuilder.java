@@ -1,6 +1,13 @@
 package net.itquiz.components;
 
-import net.itquiz.entities.*;
+import net.itquiz.entities.Account;
+import net.itquiz.entities.AccountRegistration;
+import net.itquiz.entities.AccountRole;
+import net.itquiz.entities.Answer;
+import net.itquiz.entities.Question;
+import net.itquiz.entities.Role;
+import net.itquiz.entities.Test;
+import net.itquiz.entities.TestResult;
 
 /**
  * @author Artur Meshcheriakov

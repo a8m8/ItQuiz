@@ -1,4 +1,4 @@
-package net.itquiz.utils;
+package net.itquiz.forms.utils;
 
 import java.util.regex.Pattern;
 

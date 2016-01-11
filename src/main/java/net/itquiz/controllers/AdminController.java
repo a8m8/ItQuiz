@@ -10,10 +10,13 @@ import net.itquiz.services.CommonService;
 import net.itquiz.utils.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -29,9 +32,6 @@ public class AdminController extends AbstractController {
     private AdminService adminService;
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
     private CommonService commonService;
 
     @Value("${admin.pagination.count}")
@@ -40,8 +40,8 @@ public class AdminController extends AbstractController {
     @RequestMapping(value = "/accounts/page/{pageNumber}", method = RequestMethod.GET)
     public String showAllAccounts(@PathVariable int pageNumber, Model model) {
 
-        Pagination pagination = new Pagination(paginationCount, adminService.accountsCount(), pageNumber);
-        List<Account> accounts = adminService.getAccounts(pagination.getOffset(), pagination.getCount());
+        Pagination pagination = new Pagination(paginationCount, adminService.countAllAccounts(), pageNumber);
+        List<Account> accounts = adminService.listAccounts(pagination.getOffset(), pagination.getCount());
         model.addAttribute("accounts", accounts);
         model.addAttribute("location", "/admin/accounts");
         model.addAttribute("pagination", pagination);
@@ -60,7 +60,7 @@ public class AdminController extends AbstractController {
                              Model model, HttpSession session) {
         try {
             adminAddUserForm.validate(messageSource);
-            adminService.addUser(adminAddUserForm);
+            adminService.addAccount(adminAddUserForm);
             setMessage(session, "admin.user.created");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {
@@ -93,7 +93,7 @@ public class AdminController extends AbstractController {
                               @RequestParam("id") int id, HttpSession session, Model model) {
         try {
             adminUserForm.validate(messageSource);
-            adminService.editUser(id, adminUserForm);
+            adminService.editAccount(id, adminUserForm);
             setMessage(session, "changes.saved");
             return "redirect:/admin/accounts/page/1";
         } catch (InvalidUserInputException e) {

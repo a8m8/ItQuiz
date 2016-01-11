@@ -12,7 +12,7 @@ public interface AdvancedTutorService extends CommonTutorService {
 
     void removeTest(long idTest) throws InvalidUserInputException;
 
-    long getAllTestsCount();
+    long countAllTests();
 
-    List<Test> getAllTests(int offset, int count);
+    List<Test> listTests(int offset, int count);
 }

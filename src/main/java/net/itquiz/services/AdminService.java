@@ -12,16 +12,16 @@ import java.util.List;
  */
 public interface AdminService {
 
-    long accountsCount();
+    long countAllAccounts();
+
+    List<Account> listAccounts(int offset, int count);
 
     AdminUserForm generateFormBasedOnAccount(int idAccount);
 
-    List<Account> getAccounts(int offset, int count);
+    void addAccount(AdminAddUserForm form) throws InvalidUserInputException;
 
-    void addUser(AdminAddUserForm form) throws InvalidUserInputException;
+    void editAccount(int idAccount, AdminUserForm form) throws InvalidUserInputException;
 
-    void editUser(int idAccount, AdminUserForm form) throws InvalidUserInputException;
-
-    void removeAccount(int accountId) throws InvalidUserInputException;
+    void removeAccount(int idAccount) throws InvalidUserInputException;
 
 }

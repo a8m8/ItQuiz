@@ -13,9 +13,9 @@ public interface AccountDao extends IEntityDao<Account> {
 
     Account findByLogin(String login);
 
-    long accountsCount();
+    long countAll();
 
-    long countUnconfirmedAccounts();
+    long countUnconfirmed();
 
-    List<Account> getAllUnconfirmed();
+    List<Account> listUnconfirmed();
 }

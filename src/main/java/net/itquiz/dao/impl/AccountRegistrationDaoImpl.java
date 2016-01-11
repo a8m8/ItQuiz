@@ -22,13 +22,13 @@ public class AccountRegistrationDaoImpl extends AbstractEntityDao<AccountRegistr
     }
 
     @Override
-    public long countEntityWithPasswordHash() {
+    public long countWithPasswordHash() {
         return (long) getSession().createCriteria(getEntityClass()).add(Restrictions.isNotNull("passHash"))
                 .setProjection(Projections.rowCount()).uniqueResult();
     }
 
     @Override
-    public List<AccountRegistration> getAllEntityWithPasswordHash() {
+    public List<AccountRegistration> listWithPasswordHash() {
         return getSession().createCriteria(getEntityClass()).add(Restrictions.isNotNull("passHash")).
                 addOrder(Order.desc("passHashCreated")).list();
     }

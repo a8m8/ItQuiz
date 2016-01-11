@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface TestDao extends IEntityDao<Test> {
 
-    List<Test> listTestsCreatedBy(int idAccount, int offset, int count);
+    long countCreatedBy(int idAccount);
 
-    long countTestsCreatedBy(int idAccount);
+    long countAll();
 
-    long countAllTests();
+    long countAvailable();
 
-    List<Test> getAvailableTest(int offset, int count);
+    List<Test> listCreatedBy(int idAccount, int offset, int count);
 
-    long countAvailableTest();
+    List<Test> listAvailable(int offset, int count);
 
     Test findByTitle(String title);
 }

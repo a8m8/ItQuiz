@@ -1,7 +1,7 @@
 package net.itquiz.forms;
 
 import net.itquiz.exceptions.InvalidUserInputException;
-import net.itquiz.utils.EmailValidator;
+import net.itquiz.forms.utils.EmailValidator;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

@@ -55,8 +55,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, IEnt
 
     @Override
     public String toString() {
-        return new StringBuilder().append(this.getClass().getSimpleName()).append(" ")
-                .append(this.getId()).toString();
+        return this.getClass().getSimpleName() + " " + this.getId();
     }
 
 }
