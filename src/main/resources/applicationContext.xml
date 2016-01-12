@@ -99,12 +99,14 @@
     <context:component-scan base-package="net.itquiz.security"/>
 
     <security:http use-expressions="true" auto-config="true">
+        <security:access-denied-handler ref="defaultAccessDeniedHandler"/>
         <security:intercept-url pattern="/login" access="permitAll"/>
         <security:intercept-url pattern="/logout" access="permitAll"/>
         <security:intercept-url pattern="/account-confirmation" access="permitAll"/>
         <security:intercept-url pattern="/signup" access="permitAll"/>
         <security:intercept-url pattern="/password-recovery" access="permitAll"/>
         <security:intercept-url pattern="/error" access="permitAll"/>
+        <security:intercept-url pattern="/access-denied" access="permitAll"/>
         <security:intercept-url pattern="/resources/**" access="permitAll"/>
         <security:intercept-url pattern="/favicon.ico" access="permitAll"/>
         <security:intercept-url pattern="/fbLogin" access="permitAll"/>
@@ -134,6 +136,11 @@
         <security:csrf/>
 
         <security:remember-me key="testOnlineKey" token-repository-ref="tokenRepository"/>
+
+        <!--For production server-->
+        <!--<security:session-management>
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>-->
 
     </security:http>
 

@@ -12,6 +12,14 @@
         <listener-class>net.itquiz.listeners.InitContextListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:/applicationContext.xml</param-value>
