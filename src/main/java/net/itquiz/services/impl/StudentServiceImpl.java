@@ -58,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     @Override
     public TestResult prepareTestResult(int idAccount, long idTest) {
-        Account account = accountDao.getProxy(idAccount);
+        Account account = accountDao.findById(idAccount);
         Test test = testDao.getProxy(idTest);
         int allQuestions = (int) questionDao.countActiveQuestions(idTest);
         TestResult testResult = entityBuilder.buildTestResult(account, test, allQuestions);
