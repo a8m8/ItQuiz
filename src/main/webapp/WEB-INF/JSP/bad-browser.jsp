@@ -6,4 +6,4 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<h3>JavaScript and Cookies need to be supported in order to use the site.</h3>
+<h3>Sorry, JavaScript and Cookies need to be supported in order to use the site.</h3>
